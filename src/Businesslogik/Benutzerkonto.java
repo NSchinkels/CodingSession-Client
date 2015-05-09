@@ -1,17 +1,4 @@
-<<<<<<< HEAD
-package Businesslogik;
 
-public class Benutzerkonto {
-//test von niko
-}
-=======
-<<<<<<< HEAD
-package Businesslogik;
-
-public class Benutzerkonto {
-
-}
-=======
 package Businesslogik;
 
 import java.util.LinkedList;
@@ -24,5 +11,3 @@ public abstract class Benutzerkonto {
 	private static int id;
 	private LinkedList<Benutzerkonto> freunde;
 }
->>>>>>> origin/master
->>>>>>> origin/master
