@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+package Businesslogik;
+
+public class CodingSession {
+
+}
+=======
+>>>>>>> origin/master
 package Businesslogik;
 
 public class CodingSession {
@@ -18,3 +28,7 @@ public CodingSession(String titel,boolean speichern){
 
 
 }
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
