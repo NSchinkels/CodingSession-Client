@@ -11,7 +11,7 @@ public abstract class Benutzerkonto {
 	private String emailAdresse;
 	private String passwort;
 	private static int id;
-	private LinkedList<Benutzerkonto> freunde;
+	private LinkedList<Benutzerkonto> freunde = new LinkedList<Benutzerkonto>();
 	
 	public Benutzerkonto(String email, String pw) {
 		this.emailAdresse = email;
