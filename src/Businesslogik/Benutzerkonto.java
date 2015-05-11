@@ -25,16 +25,24 @@ public abstract class Benutzerkonto {
 		return emailAdresse;
 	}
 	
+	public int getID() {
+		return id;
+	}
+	
 	public abstract String getName();
 	
 	public void addFreund(Benutzerkonto fr) {
-		if(!freunde.contains(fr))
+		if(!freunde.contains(fr)) {
 			freunde.add(fr);
+		    fr.addFreund(this);
+		}
 	}
 	
 	public void delFreund(Benutzerkonto fr) {
-		if(freunde.contains(fr))
+		if(freunde.contains(fr)) {
 			freunde.remove(fr);
+			fr.delFreund(this);
+		}
 	}
 	
 	public LinkedList<Benutzerkonto> getFreunde() {
