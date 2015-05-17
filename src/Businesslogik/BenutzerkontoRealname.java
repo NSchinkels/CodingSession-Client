@@ -1,6 +1,6 @@
 package Businesslogik;
 
-public class BenutzerkontoRealname extends Benutzerkonto {
+public class BenutzerkontoRealname extends BenutzerkontoOriginal {
 
 	private String vorname;
 	private String nachname;

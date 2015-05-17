@@ -2,7 +2,7 @@ package Businesslogik;
 
 import java.util.LinkedList;
 
-public abstract class Benutzerkonto {
+public abstract class BenutzerkontoOriginal {
 
 	// Wir haben im UML hier das PW als String, sollten wir schnellstmoeglich durch DB mit Verschluesselung etc
 	// ersetzen, ich implementier es trotzdem mal stumpf mit dem Passwort
@@ -11,9 +11,9 @@ public abstract class Benutzerkonto {
 	private String emailAdresse;
 	private String passwort;
 	private static int id;
-	private LinkedList<Benutzerkonto> freunde = new LinkedList<Benutzerkonto>();
+	private LinkedList<BenutzerkontoOriginal> freunde = new LinkedList<BenutzerkontoOriginal>();
 	
-	public Benutzerkonto(String email, String pw) {
+	public BenutzerkontoOriginal(String email, String pw) {
 		this.emailAdresse = email;
 		this.passwort = pw;
 		id++;
@@ -31,21 +31,21 @@ public abstract class Benutzerkonto {
 	
 	public abstract String getName();
 	
-	public void addFreund(Benutzerkonto fr) {
+	public void addFreund(BenutzerkontoOriginal fr) {
 		if(!freunde.contains(fr)) {
 			freunde.add(fr);
 		    fr.addFreund(this);
 		}
 	}
 	
-	public void delFreund(Benutzerkonto fr) {
+	public void delFreund(BenutzerkontoOriginal fr) {
 		if(freunde.contains(fr)) {
 			freunde.remove(fr);
 			fr.delFreund(this);
 		}
 	}
 	
-	public LinkedList<Benutzerkonto> getFreunde() {
+	public LinkedList<BenutzerkontoOriginal> getFreunde() {
 		return freunde;
 	}
 	
