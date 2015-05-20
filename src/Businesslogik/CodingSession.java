@@ -2,7 +2,7 @@ package Businesslogik;
 
 import java.io.*;
 import java.net.*;
-
+//wird noch durch JMS ersetzt!!!!
 public class CodingSession {
 	// nicht im Diagramm,aber bestimmt wichtig
 	private int benutzerId;
