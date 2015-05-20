@@ -1,6 +1,9 @@
 
 package Businesslogik;
 
+import java.io.*;
+import java.net.*;
+
 public class CodingSession {
 //nicht im Diagramm,aber bestimmt wichtig 
 private int benutzerId;
@@ -12,9 +15,13 @@ private boolean speichern;
 private String code;
 //Cs nur mit titel und speichern erstellbar
 private Thread warteAufCode;
-public CodingSession(String titel,boolean speichern){
+
+private Socket sock;
+private ObjectOutputStream obj=null;
+public CodingSession(String titel,boolean speichern,Socket Sock){
 	this.titel=titel;
 	this.speichern=speichern;
+	this.sock=sock;
 	//Hier noch tricky:Der Client wartet auf Code der von andern Personen geschrieben wird
 	warteAufCode =new Thread(){
 		public void run(){
@@ -41,6 +48,30 @@ public synchronized void aktualsiereCode(String text){
 }
 public String codeVeroeffentlichen(){
 	//Server Magic. Die anderne clienenten wird der neue code gegeben
+	try {
+		OutputStream obj =sock.getOutputStream();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		obj=new ObjectOutputStream(obj);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		obj.writeObject(code);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		obj.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	return code;
 }
 
