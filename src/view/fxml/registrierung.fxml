@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="vboxRoot" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="267.0" prefWidth="355.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Businesslogik.Registrierung">
+   <children>
+      <HBox>
+         <children>
+            <Label prefHeight="17.0" prefWidth="82.0" text="Benutzername:">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets left="40.0" />
+               </HBox.margin>
+            </Label>
+            <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="181.0">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </ChoiceBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="18.0" top="40.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox fx:id="hboxVorname">
+         <children>
+            <Label text="Vorname:">
+               <HBox.margin>
+                  <Insets left="40.0" />
+               </HBox.margin>
+            </Label>
+            <TextField prefHeight="25.0" prefWidth="181.0" promptText="Vorname">
+               <HBox.margin>
+                  <Insets left="41.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets bottom="18.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox fx:id="hboxNachname">
+         <children>
+            <Label text="Nachname:">
+               <HBox.margin>
+                  <Insets left="40.0" top="2.0" />
+               </HBox.margin>
+            </Label>
+            <TextField prefHeight="25.0" prefWidth="181.0" promptText="Nachname">
+               <HBox.margin>
+                  <Insets bottom="2.0" left="32.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets bottom="18.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox fx:id="hboxNickname">
+         <children>
+            <Label text="Nickname:">
+               <HBox.margin>
+                  <Insets left="40.0" />
+               </HBox.margin>
+            </Label>
+            <TextField prefHeight="25.0" prefWidth="181.0" promptText="Nickname">
+               <HBox.margin>
+                  <Insets left="36.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets bottom="18.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox>
+         <children>
+            <Label text="E-Mail:">
+               <HBox.margin>
+                  <Insets left="40.0" />
+               </HBox.margin>
+            </Label>
+            <TextField prefHeight="25.0" prefWidth="181.0" promptText="E-Mail">
+               <HBox.margin>
+                  <Insets left="55.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets bottom="18.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox>
+         <children>
+            <Label text="Passwort:">
+               <HBox.margin>
+                  <Insets left="40.0" />
+               </HBox.margin>
+            </Label>
+            <PasswordField prefHeight="25.0" prefWidth="181.0" promptText="Passwort">
+               <HBox.margin>
+                  <Insets left="42.0" />
+               </HBox.margin>
+            </PasswordField>
+         </children>
+         <VBox.margin>
+            <Insets bottom="18.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox>
+         <children>
+            <Button mnemonicParsing="false" onAction="#registrierenGeklickt" text="Registrieren">
+               <HBox.margin>
+                  <Insets left="80.0" right="40.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#abbrechenGeklickt" text="Abbrechen" />
+         </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="40.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>

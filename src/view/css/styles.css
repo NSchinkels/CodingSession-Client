@@ -1,0 +1,35 @@
+#choiceBox .label{
+	-fx-text-fill: #383838;
+}
+
+.label{
+	-fx-text-fill: #F8F8F8;
+}
+
+.root{
+	-fx-background-color: #282828;
+}
+
+.tab .tab-label { 
+    -fx-text-fill: #B8B8B8;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label { 
+    -fx-text-fill: #96b946;
+}
+
+.tab, .tab-pane{
+    -fx-tab-min-width:90px;
+    -fx-background-insets: 0 1 0 1;
+}
+
+.tab-pane .tab{
+    -fx-background-color: #484848;
+}
+
+.tab-pane .tab:selected{
+    -fx-background-color: #282828;
+}
+
+ 

@@ -1,7 +1,34 @@
+import java.io.IOException;
 
-public class Mainklasse {
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class Mainklasse extends Application{
+
+   /**
+    * Automatischer Startpunkt der Applikation. Das erste Fenster (login.fxml) wird geladen und dem User angezeigt.
+	* Exception wird geworfen, falls login.fxml nicht geladen werden kann.
+	*/
+	@Override
+	public void start(Stage primaryStage){
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/login.fxml"));
+			Parent root = (Parent) loader.load();
+			Scene scene = new Scene(root);		
+			primaryStage.setTitle("Login");
+			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
+			primaryStage.show();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 	public static void main(String[] args){
-		// habs mal als "Mainklasse" umbenannt, da Eclipse denkt, dass "main" n Konstruktor ist
-		new Controller();
+		launch(args);
 	}
 }
