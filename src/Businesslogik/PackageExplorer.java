@@ -4,7 +4,7 @@ package Businesslogik;
 import java.util.HashMap;
 
 public class PackageExplorer {
-	//CodingSessions werden über den Titel der ihnen im PE gegeben wurde sortiert
-	private HashMap<String,CodingSession> inhalt;
+	//CodingSessions werden über die ID geholt
+	private HashMap<Integer,CodingSession> inhalt;
 	
 }
