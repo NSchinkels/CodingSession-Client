@@ -13,26 +13,43 @@ public class CodingSession {
 	// Im Moment noch als ein String,später was besseres
 	private String code;
 	// Cs nur mit titel und speichern erstellbar
-
+	Kommunikation com;
 	private Profil[] teilnehmer;
 	private int anzahlTeilnehmer = 0;
 
 	public CodingSession(String titel, boolean speichern, Kommunikation com) {
 		this.titel = titel;
 		this.speichern = speichern;
+		this.com=com;
 		// teilnehmer= new Profil[10];
+		
+		Thread codeWaiter=new Thread(){
+			public void run(){
+				while(true){
+					try {
+						com.test.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					aktualisiereCode(com.getNeuerCode(),false);
+				}
+			}
+		};
 	}
 
 	// Methode die zeitlich aufgrufen wird um den alten code mit dem neuen zu
 	// erstetzen
-	public synchronized void aktualsiereCode(String text) {
+	public synchronized void aktualisiereCode(String text,boolean selbst) {
 		this.code = text;
-		codeVeroeffentlichen();
+		if(selbst)
+			codeVeroeffentlichen();
+		
 	}
 
-	public String codeVeroeffentlichen() {
+	public void codeVeroeffentlichen() {
 		// Server Magic. Die anderne clienenten wird der neue code gegeben
-		return null;
+		com.veröffentlichCode(code);
 	}
 
 	public boolean addTeilnehmer(Profil b) {
