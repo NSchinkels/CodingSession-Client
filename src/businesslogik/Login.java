@@ -1,4 +1,4 @@
-package Businesslogik;
+package businesslogik;
 
 import java.io.IOException;
 

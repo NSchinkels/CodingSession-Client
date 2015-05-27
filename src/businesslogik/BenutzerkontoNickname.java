@@ -1,4 +1,4 @@
-package Businesslogik;
+package businesslogik;
 
 public class BenutzerkontoNickname extends BenutzerkontoOriginal {
 	

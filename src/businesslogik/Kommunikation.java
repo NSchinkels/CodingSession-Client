@@ -1,4 +1,4 @@
-package Businesslogik;
+package businesslogik;
 //hier wird sobald jms läuft sachen passiern
 //jetzt erstmal ziemlich theroitsche methoden
 	

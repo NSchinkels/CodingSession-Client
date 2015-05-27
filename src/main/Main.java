@@ -1,3 +1,4 @@
+package main;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -6,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Mainklasse extends Application{
+public class Main extends Application{
 
    /**
     * Automatischer Startpunkt der Applikation. Das erste Fenster (login.fxml) wird geladen und dem User angezeigt.

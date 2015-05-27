@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<javafx.scene.layout.AnchorPane prefHeight="243.0" prefWidth="309.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Businesslogik.Login">
+<javafx.scene.layout.AnchorPane prefHeight="243.0" prefWidth="309.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="businesslogik.Login">
    <children>
       <Label layoutX="42.0" layoutY="46.0" text="E-Mail:" />
       <Label layoutX="42.0" layoutY="91.0" text="Passwort:" />

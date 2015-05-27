@@ -1,4 +1,4 @@
-package Businesslogik;
+package businesslogik;
 
 public class Beitrag {
 	private CodingSession session;
