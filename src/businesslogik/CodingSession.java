@@ -1,8 +1,5 @@
 package businesslogik;
 
-import java.io.*;
-import java.net.*;
-
 //wird noch durch JMS ersetzt!!!!
 public class CodingSession {
 	// nicht im Diagramm,aber bestimmt wichtig
@@ -17,39 +14,62 @@ public class CodingSession {
 	private Profil[] teilnehmer;
 	private int anzahlTeilnehmer = 0;
 
-	public CodingSession(String titel, boolean speichern, Kommunikation com) {
+	public CodingSession(String titel, boolean speichern, Kommunikation com,
+			int benutzerid, int id) {
 		this.titel = titel;
 		this.speichern = speichern;
-		this.com=com;
+		this.com = com;
+		this.benutzerId = benutzerId;
+		this.id = id;
 		// teilnehmer= new Profil[10];
-		
-		Thread codeWaiter=new Thread(){
-			public void run(){
-				while(true){
-					try {
-						com.test.wait();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+		// com.bekomme("CodingSession"+id,"Benutzer"+benutzerId);
+		new Thread() {
+			public void run() {
+				synchronized (com.neuerCode) {
+					com.bekomme("CodingSession" + id, "Benutzer" + benutzerId);
+					while (true) {
+						try {
+							com.neuerCode.wait();
+							// code=com.neuerCode;
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						aktualisiereCode(com.neuerCode, false);
 					}
-					aktualisiereCode(com.getNeuerCode(),false);
 				}
 			}
-		};
+		}.start();
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public int getBenutzerId() {
+		return benutzerId;
+	}
+
+	public void setBenutzerId(int benutzerId) {
+		this.benutzerId = benutzerId;
 	}
 
 	// Methode die zeitlich aufgrufen wird um den alten code mit dem neuen zu
 	// erstetzen
-	public synchronized void aktualisiereCode(String text,boolean selbst) {
+	public synchronized void aktualisiereCode(String text, boolean selbst) {
 		this.code = text;
-		if(selbst)
+		if (selbst)
 			codeVeroeffentlichen();
-		
+
 	}
 
 	public void codeVeroeffentlichen() {
 		// Server Magic. Die anderne clienenten wird der neue code gegeben
-		com.veröffentlichCode(code);
+		com.veröffentliche(code, "CodingSession" + id, "Benutzer" + benutzerId);
 	}
 
 	public boolean addTeilnehmer(Profil b) {

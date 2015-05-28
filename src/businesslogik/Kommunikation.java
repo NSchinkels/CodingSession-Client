@@ -14,7 +14,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 //KOMENTARE SPÄTER,ALLES NOCH WIP
 public class Kommunikation {
-	public Object test;
+	public String neuerCode;
 	ActiveMQConnectionFactory connectionFactory;
 	Session session;
 	Destination destination;
@@ -23,7 +23,7 @@ public class Kommunikation {
 	Connection connection;
 
 	public Kommunikation() {
-		this.test = new Object();
+		neuerCode = new String();
 		// Verbindung mit JMS
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
 		connectionFactory.setBrokerURL("tcp://localhost:61616");
@@ -31,6 +31,7 @@ public class Kommunikation {
 			connection = connectionFactory.createConnection();
 			connection.start();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			System.out.println("Verbunden");
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -38,7 +39,7 @@ public class Kommunikation {
 
 	}
 
-	public void veröffentliche(String code, String topic, String sender) {
+	public synchronized void veröffentliche(String nachricht, String topic, String sender) {
 		// code an topic geschrieben
 		try {
 			Destination destination = session.createTopic(topic);
@@ -49,6 +50,7 @@ public class Kommunikation {
 			textMessage.setStringProperty("sender", sender);
 			textMessage.setJMSCorrelationID("1234");
 			producer.send(textMessage);
+			System.out.println("Veröffentlicht");
 			// session.close();
 			// connection.close();
 		} catch (Exception e2) {
@@ -57,19 +59,22 @@ public class Kommunikation {
 
 	}
 
-	public void bekomme(String topic, String selector) {
+	public synchronized void bekomme(String topic, String selector) {
 		// hier wartet später das JMS
 		try {
 			destination = session.createTopic(topic);
 			String mySelector = selector;
 			messageConsumer = session.createConsumer(destination, mySelector);
+			System.out.println("Empfänger gestartet");
 			// Message message = messageConsumer.receive(20000);
 			listner = new MessageListener() {
 				public void onMessage(Message message) {
 					try {
 						if (message instanceof TextMessage) {
 							TextMessage textMessage = (TextMessage) message;
-							textMessage.getText();
+							neuerCode=textMessage.getText();
+							neuerCode.notifyAll();
+							System.out.println("Empfangen");
 						}
 					} catch (JMSException e) {
 						System.out.println("Caught:" + e);
@@ -79,10 +84,11 @@ public class Kommunikation {
 			};
 
 			messageConsumer.setMessageListener(listner);
+			while(true){}
 			// messageConsumer.close();
 			// session.close();
 			// connection.close();
-			test.notify();
+			// test.notify();
 
 		} catch (Exception e1) {
 
