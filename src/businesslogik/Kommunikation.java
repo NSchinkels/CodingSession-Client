@@ -30,7 +30,7 @@ public class Kommunikation {
 		try {
 			connection = connectionFactory.createConnection();
 			connection.start();
-			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			
 			System.out.println("Verbunden");
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
@@ -39,9 +39,11 @@ public class Kommunikation {
 
 	}
 
-	public synchronized void veröffentliche(String nachricht, String topic, String sender) {
+	public synchronized void veröffentliche(String nachricht, String topic,
+			String sender) {
 		// code an topic geschrieben
 		try {
+			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			Destination destination = session.createTopic(topic);
 			javax.jms.MessageProducer producer = session
 					.createProducer(destination);
@@ -61,38 +63,43 @@ public class Kommunikation {
 
 	public synchronized void bekomme(String topic, String selector) {
 		// hier wartet später das JMS
-		try {
-			destination = session.createTopic(topic);
-			String mySelector = selector;
-			messageConsumer = session.createConsumer(destination, mySelector);
-			System.out.println("Empfänger gestartet");
-			// Message message = messageConsumer.receive(20000);
-			listner = new MessageListener() {
-				public void onMessage(Message message) {
-					try {
-						if (message instanceof TextMessage) {
-							TextMessage textMessage = (TextMessage) message;
-							neuerCode=textMessage.getText();
-							neuerCode.notifyAll();
-							System.out.println("Empfangen");
+		new Thread() {
+			public void run() {
+				try {
+					Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+					destination = session.createTopic(topic);
+					String mySelector = selector;
+					messageConsumer = session.createConsumer(destination);
+					System.out.println("Empfänger gestartet");
+					// Message message = messageConsumer.receive(20000);
+					listner = new MessageListener() {
+						public void onMessage(Message message) {
+							try {
+								if (message instanceof TextMessage) {
+									TextMessage textMessage = (TextMessage) message;
+									neuerCode = textMessage.getText();
+									neuerCode.notifyAll();
+									System.out.println("Empfangen");
+								}
+							} catch (JMSException e) {
+								System.out.println("Caught:" + e);
+								e.printStackTrace();
+							}
 						}
-					} catch (JMSException e) {
-						System.out.println("Caught:" + e);
-						e.printStackTrace();
-					}
+					};
+
+					messageConsumer.setMessageListener(listner);
+					System.in.read();
+					// messageConsumer.close();
+					// session.close();
+					// connection.close();
+					// test.notify();
+
+				} catch (Exception e1) {
+
 				}
-			};
-
-			messageConsumer.setMessageListener(listner);
-			while(true){}
-			// messageConsumer.close();
-			// session.close();
-			// connection.close();
-			// test.notify();
-
-		} catch (Exception e1) {
-
-		}
+			}
+		}.start();
 	}
 
 	public String getNeuerCode() {
