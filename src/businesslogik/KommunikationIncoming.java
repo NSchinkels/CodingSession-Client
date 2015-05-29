@@ -24,56 +24,51 @@ public class KommunikationIncoming {
 	Connection connection;
 	Topic topic1;
 	TopicSubscriber topsub;
+	Object lock;
 
-	public KommunikationIncoming() {
+	public KommunikationIncoming(Object lock) {
 		neuerCode = new String();
+		this.lock=lock;
 	}
 
-	public synchronized void bekomme(String topic, String selector) {
+	public void bekomme(String topic, String selector) {
 		// hier wartet später das JMS
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
 		connectionFactory.setBrokerURL("tcp://localhost:61616");
 		try {
 			connection = connectionFactory.createConnection();
-			connection.setClientID(String.valueOf(connection.hashCode()));
+			connection.setClientID(String.valueOf(Math.random()));
 			connection.start();
-			session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
+			session = connection.createSession(false,
+					Session.CLIENT_ACKNOWLEDGE);
 			System.out.println("Verbunden");
 			topic1 = session.createTopic(topic);
 			String mySelector = selector;
-			topsub = session.createDurableSubscriber(topic1, String.valueOf(connection.hashCode()));
+			topsub = session.createDurableSubscriber(topic1,
+					String.valueOf(connection.hashCode()));
 			System.out.println("Empfänger gestartet");
-			// Message message = messageConsumer.receive(20000);
 			listner = new MessageListener() {
 				public void onMessage(Message message) {
 					try {
-						System.out.println(((TextMessage)message).getText());
+						synchronized (lock) {
+							System.out.println(((TextMessage) message)
+									.getText());
+							neuerCode = ((TextMessage) message).getText();
+							lock.notify();
+						}
 					} catch (JMSException e1) {
 						// TODO Auto-generated catch block
+						lock.notifyAll();
 						e1.printStackTrace();
 					}
-					try {
-						if (message instanceof TextMessage) {
-							TextMessage textMessage = (TextMessage) message;
-							message.acknowledge();
-							neuerCode = textMessage.getText();
-							neuerCode.notifyAll();
-							System.out.println("Empfangen");
-						}
-					} catch (JMSException e) {
-						System.out.println("Caught:" + e);
-						e.printStackTrace();
-					}
+					lock.notifyAll();
 				}
 			};
 			topsub.setMessageListener(listner);
-			//System.in.read();
 			// messageConsumer.close();
 			// session.close();
 			// connection.close();
-			// test.notify();
 		} catch (Exception e1) {
-
 		}
 	}
 

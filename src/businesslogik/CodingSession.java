@@ -1,6 +1,5 @@
 package businesslogik;
 
-//wird noch durch JMS ersetzt!!!!
 public class CodingSession {
 	// nicht im Diagramm,aber bestimmt wichtig
 	private int benutzerId;
@@ -8,36 +7,40 @@ public class CodingSession {
 	private String titel;
 	private boolean speichern;
 	// Im Moment noch als ein String,später was besseres
-	private String code;
+	private String code="HUU";
 	// Cs nur mit titel und speichern erstellbar
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
 	private Profil[] teilnehmer;
 	private int anzahlTeilnehmer = 0;
 
-	public CodingSession(String titel, boolean speichern, KommunikationIncoming comi,KommunikationOutgoing como,
-			int benutzerid, int id) {
+	public CodingSession(String titel, boolean speichern,
+			KommunikationIncoming comi, KommunikationOutgoing como,
+			int benutzerid, int id, Object lock) {
 		this.titel = titel;
 		this.speichern = speichern;
 		this.comi = comi;
-		this.como=como;
+		this.como = como;
 		this.benutzerId = benutzerId;
 		this.id = id;
 		// teilnehmer= new Profil[10];
 		// com.bekomme("CodingSession"+id,"Benutzer"+benutzerId);
 		new Thread() {
 			public void run() {
-				synchronized (comi.neuerCode) {
-					comi.bekomme("CodingSession" + id, "Benutzer" + benutzerId);
-					while (true) {
+				while (true) {
+					synchronized (lock) {
+						comi.bekomme("CodingSession" + id, "Benutzer"+ benutzerId);
+						System.out.println("Warte auf neuen Code");
 						try {
-							comi.neuerCode.wait();
-							// code=com.neuerCode;
+							lock.wait();
+							code=comi.neuerCode;
+							System.out.println("Warte auf neuen Code");
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+						} finally {
+							aktualisiereCode(comi.neuerCode, false);
 						}
-						aktualisiereCode(comi.neuerCode, false);
 					}
 				}
 			}

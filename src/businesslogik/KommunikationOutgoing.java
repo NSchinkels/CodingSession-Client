@@ -19,7 +19,7 @@ public class KommunikationOutgoing {
 	MessageListener listner;
 	Connection connection;
 
-	public KommunikationOutgoing() {
+	public KommunikationOutgoing(Object lock) {
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
 		connectionFactory.setBrokerURL("tcp://localhost:61616");
 		try {
@@ -41,8 +41,6 @@ public class KommunikationOutgoing {
 			javax.jms.MessageProducer producer = session.createProducer(destination);
 			producer.setDeliveryMode(DeliveryMode.PERSISTENT);
 			TextMessage textMessage = session.createTextMessage(nachricht);
-			//textMessage.setStringProperty("sender", sender);
-			//textMessage.setJMSCorrelationID("1234");
 			producer.send(textMessage);
 			System.out.println("Veröffentlicht");
 			// session.close();
