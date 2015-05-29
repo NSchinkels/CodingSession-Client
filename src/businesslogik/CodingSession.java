@@ -10,32 +10,34 @@ public class CodingSession {
 	// Im Moment noch als ein String,später was besseres
 	private String code;
 	// Cs nur mit titel und speichern erstellbar
-	Kommunikation com;
+	KommunikationIncoming comi;
+	KommunikationOutgoing como;
 	private Profil[] teilnehmer;
 	private int anzahlTeilnehmer = 0;
 
-	public CodingSession(String titel, boolean speichern, Kommunikation com,
+	public CodingSession(String titel, boolean speichern, KommunikationIncoming comi,KommunikationOutgoing como,
 			int benutzerid, int id) {
 		this.titel = titel;
 		this.speichern = speichern;
-		this.com = com;
+		this.comi = comi;
+		this.como=como;
 		this.benutzerId = benutzerId;
 		this.id = id;
 		// teilnehmer= new Profil[10];
 		// com.bekomme("CodingSession"+id,"Benutzer"+benutzerId);
 		new Thread() {
 			public void run() {
-				synchronized (com.neuerCode) {
-					com.bekomme("CodingSession" + id, "Benutzer" + benutzerId);
+				synchronized (comi.neuerCode) {
+					comi.bekomme("CodingSession" + id, "Benutzer" + benutzerId);
 					while (true) {
 						try {
-							com.neuerCode.wait();
+							comi.neuerCode.wait();
 							// code=com.neuerCode;
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						aktualisiereCode(com.neuerCode, false);
+						aktualisiereCode(comi.neuerCode, false);
 					}
 				}
 			}
@@ -69,7 +71,7 @@ public class CodingSession {
 
 	public void codeVeroeffentlichen() {
 		// Server Magic. Die anderne clienenten wird der neue code gegeben
-		com.veröffentliche(code, "CodingSession" + id, "Benutzer" + benutzerId);
+		como.veröffentliche(code, "CodingSession" + id, "Benutzer" + benutzerId);
 	}
 
 	public boolean addTeilnehmer(Profil b) {
