@@ -2,45 +2,44 @@ package businesslogik;
 
 import java.io.Serializable;
 
-public class CodingSession implements Serializable{
-	/**
-	 * 
-	 */
+public class CodingSession  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// nicht im Diagramm,aber bestimmt wichtig
-	private int benutzerId;
-	private int id;
-	private String titel;
-	private boolean speichern;
+	int benutzerId;
+	int id;
+	String titel;
+	boolean speichern;
 	// Im Moment noch als ein String,später was besseres
-	private String code="HUU";
+	String code = "HUU";
 	// Cs nur mit titel und speichern erstellbar
+	
+
+	Profil[] teilnehmer;
+	int anzahlTeilnehmer = 0;
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
-	private Profil[] teilnehmer;
-	private int anzahlTeilnehmer = 0;
-
+	
 	public CodingSession(String titel, boolean speichern,
 			KommunikationIncoming comi, KommunikationOutgoing como,
 			int benutzerid, int id, Object lock) {
 		this.titel = titel;
 		this.speichern = speichern;
-		this.comi = comi;
-		this.como = como;
 		this.benutzerId = benutzerId;
 		this.id = id;
-		// teilnehmer= new Profil[10];
-		comi.bekommeCode("CodingSession"+id,"Benutzer"+benutzerId);
+		this.comi = comi;
+		this.como = como;
+		comi.bekommeCode("CodingSession" + id, "Benutzer" + benutzerId);
 		new Thread() {
 			public void run() {
 				while (true) {
 					synchronized (lock) {
-						//comi.bekomme("CodingSession" + id, "Benutzer"+ benutzerId);
-						System.out.println("Warte auf neuen Code");
+						// comi.bekomme("CodingSession" + id, "Benutzer"+
+						// benutzerId);
+						// System.out.println("Warte auf neuen Code");
 						try {
 							lock.wait();
-							code=comi.neuerCode;
-							System.out.println("Warte auf neuen Code");
+							code = comi.neuerCode;
+							// System.out.println("Warte auf neuen Code");
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -51,22 +50,6 @@ public class CodingSession implements Serializable{
 				}
 			}
 		}.start();
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public int getBenutzerId() {
-		return benutzerId;
-	}
-
-	public void setBenutzerId(int benutzerId) {
-		this.benutzerId = benutzerId;
 	}
 
 	// Methode die zeitlich aufgrufen wird um den alten code mit dem neuen zu
@@ -80,7 +63,8 @@ public class CodingSession implements Serializable{
 
 	public void codeVeroeffentlichen() {
 		// Server Magic. Die anderne clienenten wird der neue code gegeben
-		como.veröffentlicheCode(code, "CodingSession" + id, "Benutzer" + benutzerId);
+		como.veröffentlicheCode(code, "CodingSession" + id, "Benutzer"
+				+ benutzerId);
 	}
 
 	public boolean addTeilnehmer(Profil b) {
@@ -89,6 +73,8 @@ public class CodingSession implements Serializable{
 			return true;
 		}
 		return false;
+	}
+	public void sendeEinladung(int benutzer){
 	}
 
 	public int getId() {
@@ -106,4 +92,18 @@ public class CodingSession implements Serializable{
 	public void setSpeichern(boolean speichern) {
 		this.speichern = speichern;
 	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public int getBenutzerId() {
+		return benutzerId;
+	}
+
+	public void setBenutzerId(int benutzerId) {
+		this.benutzerId = benutzerId;
+	}
+	
+
 }

@@ -1,6 +1,9 @@
 package businesslogik;
 
+import java.io.Serializable;
+
 import javax.jms.JMSException;
+import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
@@ -8,8 +11,12 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.TopicSubscriber;
 
-public class KommunikationIncoming extends Kommunikation{
+public class KommunikationIncoming  extends Kommunikation implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public String neuerCode;
 	MessageListener listnerFuerCode;
 	MessageListener listnerFuerEinladung;
@@ -73,28 +80,34 @@ public class KommunikationIncoming extends Kommunikation{
 		try {
 			sessionEinladung = connection.createSession(false,
 					Session.CLIENT_ACKNOWLEDGE);
-			System.out.println("Verbunden");
-			topicEinladung = sessionEinladung.createTopic("Einladungen");
+			topicEinladung = sessionEinladung.createTopic("Einladung");
 			// topsubEinladung =
 			// sessionEinladung.createDurableSubscriber(topicEinladung,"Subname","selector",true);
 			topsubEinladung = sessionEinladung.createDurableSubscriber(
 					topicEinladung, "einlader");
-			System.out.println("Empfänger gestartet");
+			
 			listnerFuerEinladung = new MessageListener() {
 				public void onMessage(Message message) {
+					//System.out.println("OM bekommen");
 					if (message instanceof ObjectMessage) {
-						System.out.println("OM bekommen");
+						//System.out.println("OM bekommen");
 						synchronized (lockEinladung) {
-							csEinladung = (CodingSession) message;
 							lockEinladung.notifyAll();
-							System.out.println(csEinladung.getCode());
+							try {
+								csEinladung=(CodingSession)((ObjectMessage)message).getObject();
+								System.out.println(csEinladung.id);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					}
 				}
 			};
-			topsubCode.setMessageListener(listnerFuerCode);
+			topsubEinladung.setMessageListener(listnerFuerEinladung);
+			System.out.println("Empfänger für om gestartet");
 		} catch (Exception e1) {
-
+			e1.printStackTrace();
 		}
 	}
 	public CodingSession getEinladung(){

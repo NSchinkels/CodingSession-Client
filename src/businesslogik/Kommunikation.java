@@ -1,5 +1,7 @@
 package businesslogik;
 
+import java.io.Serializable;
+
 import javax.jms.Connection;
 import javax.jms.Session;
 import javax.jms.Topic;
@@ -7,7 +9,11 @@ import javax.jms.Topic;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 //KOMENTARE SPÄTER,ALLES NOCH WIP
-public abstract class Kommunikation {
+public abstract class Kommunikation implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ActiveMQConnectionFactory connectionFactory;
 	Connection connection;
 	Session sessionCode;

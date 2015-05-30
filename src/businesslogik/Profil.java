@@ -1,5 +1,7 @@
 package businesslogik;
 
-public class Profil {
+import java.io.Serializable;
+
+public class Profil implements Serializable{
 
 }
