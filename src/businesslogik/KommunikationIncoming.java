@@ -1,75 +1,107 @@
 package businesslogik;
 
-import javax.jms.Connection;
-import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.jms.TextMessage;
-import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-
-public class KommunikationIncoming {
+public class KommunikationIncoming extends Kommunikation{
 
 	public String neuerCode;
-	ActiveMQConnectionFactory connectionFactory;
-	Session session;
-	Destination destination;
-	MessageConsumer messageConsumer;
-	MessageListener listner;
-	Connection connection;
-	Topic topic1;
-	TopicSubscriber topsub;
-	Object lock;
+	MessageListener listnerFuerCode;
+	MessageListener listnerFuerEinladung;
+	TopicSubscriber topsubCode;
+	TopicSubscriber topsubEinladung;
+	CodingSession csEinladung;
+	Object lockCode;
+	Object lockEinladung;
 
-	public KommunikationIncoming(Object lock) {
-		neuerCode = new String();
-		this.lock=lock;
-	}
 
-	public void bekomme(String topic, String selector) {
-		// hier wartet später das JMS
-		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
-		connectionFactory.setBrokerURL("tcp://localhost:61616");
+	public KommunikationIncoming(Object lockCode, Object lockEinladung) {
+		super(lockCode,lockEinladung);
+		this.lockCode=lockCode;
+		this.lockEinladung=lockEinladung;
 		try {
 			connection = connectionFactory.createConnection();
+			// Kreigt natülich noch ne vernünftige id soblad benutzer am laufen
+			// sind
 			connection.setClientID(String.valueOf(Math.random()));
 			connection.start();
-			session = connection.createSession(false,
+		} catch (Exception e2) {
+
+		}
+	}
+
+	public void bekommeCode(String topic, String selector) {
+		// hier wartet später das JMS aud Code von Csen
+		try {
+			sessionCode = connection.createSession(false,
 					Session.CLIENT_ACKNOWLEDGE);
-			System.out.println("Verbunden");
-			topic1 = session.createTopic(topic);
-			String mySelector = selector;
-			topsub = session.createDurableSubscriber(topic1,
+			//System.out.println("Verbunden");
+			topicCode = sessionCode.createTopic(topic);
+			topsubCode = sessionCode.createDurableSubscriber(topicCode,
 					String.valueOf(connection.hashCode()));
 			System.out.println("Empfänger gestartet");
-			listner = new MessageListener() {
+			listnerFuerCode = new MessageListener() {
 				public void onMessage(Message message) {
-					try {
-						synchronized (lock) {
-							System.out.println(((TextMessage) message)
-									.getText());
-							neuerCode = ((TextMessage) message).getText();
-							lock.notify();
+					if (message instanceof TextMessage) {
+						try {
+							synchronized (lockCode) {
+								neuerCode = ((TextMessage) message).getText();
+								lockCode.notify();
+							}
+						} catch (JMSException e1) {
+							// TODO Auto-generated catch blockCode
+							lockCode.notifyAll();
+							e1.printStackTrace();
 						}
-					} catch (JMSException e1) {
-						// TODO Auto-generated catch block
-						lock.notifyAll();
-						e1.printStackTrace();
 					}
-					lock.notifyAll();
 				}
 			};
-			topsub.setMessageListener(listner);
+			topsubCode.setMessageListener(listnerFuerCode);
 			// messageConsumer.close();
 			// session.close();
 			// connection.close();
 		} catch (Exception e1) {
 		}
+	}
+
+	public void bekommeEinladung() {
+		try {
+			sessionEinladung = connection.createSession(false,
+					Session.CLIENT_ACKNOWLEDGE);
+			System.out.println("Verbunden");
+			topicEinladung = sessionEinladung.createTopic("Einladungen");
+			// topsubEinladung =
+			// sessionEinladung.createDurableSubscriber(topicEinladung,"Subname","selector",true);
+			topsubEinladung = sessionEinladung.createDurableSubscriber(
+					topicEinladung, "einlader");
+			System.out.println("Empfänger gestartet");
+			listnerFuerEinladung = new MessageListener() {
+				public void onMessage(Message message) {
+					if (message instanceof ObjectMessage) {
+						System.out.println("OM bekommen");
+						synchronized (lockEinladung) {
+							csEinladung = (CodingSession) message;
+							lockEinladung.notifyAll();
+							System.out.println(csEinladung.getCode());
+						}
+					}
+				}
+			};
+			topsubCode.setMessageListener(listnerFuerCode);
+		} catch (Exception e1) {
+
+		}
+	}
+	public CodingSession getEinladung(){
+		return this.csEinladung;
+	}
+	public String getCode(){
+		return this.neuerCode;
 	}
 
 }

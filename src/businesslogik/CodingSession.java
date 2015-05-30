@@ -1,6 +1,12 @@
 package businesslogik;
 
-public class CodingSession {
+import java.io.Serializable;
+
+public class CodingSession implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// nicht im Diagramm,aber bestimmt wichtig
 	private int benutzerId;
 	private int id;
@@ -24,12 +30,12 @@ public class CodingSession {
 		this.benutzerId = benutzerId;
 		this.id = id;
 		// teilnehmer= new Profil[10];
-		// com.bekomme("CodingSession"+id,"Benutzer"+benutzerId);
+		comi.bekommeCode("CodingSession"+id,"Benutzer"+benutzerId);
 		new Thread() {
 			public void run() {
 				while (true) {
 					synchronized (lock) {
-						comi.bekomme("CodingSession" + id, "Benutzer"+ benutzerId);
+						//comi.bekomme("CodingSession" + id, "Benutzer"+ benutzerId);
 						System.out.println("Warte auf neuen Code");
 						try {
 							lock.wait();
@@ -74,7 +80,7 @@ public class CodingSession {
 
 	public void codeVeroeffentlichen() {
 		// Server Magic. Die anderne clienenten wird der neue code gegeben
-		como.veröffentliche(code, "CodingSession" + id, "Benutzer" + benutzerId);
+		como.veröffentlicheCode(code, "CodingSession" + id, "Benutzer" + benutzerId);
 	}
 
 	public boolean addTeilnehmer(Profil b) {
