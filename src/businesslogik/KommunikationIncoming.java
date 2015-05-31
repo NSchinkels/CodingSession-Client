@@ -1,17 +1,15 @@
 package businesslogik;
 
-import java.io.Serializable;
+import java.util.HashMap;
 
 import javax.jms.JMSException;
-import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
-import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.TopicSubscriber;
 
-public class KommunikationIncoming  extends Kommunikation implements Serializable{
+public class KommunikationIncoming  extends Kommunikation{
 
 	/**
 	 * 
@@ -22,7 +20,7 @@ public class KommunikationIncoming  extends Kommunikation implements Serializabl
 	MessageListener listnerFuerEinladung;
 	TopicSubscriber topsubCode;
 	TopicSubscriber topsubEinladung;
-	CodingSession csEinladung;
+	HashMap<String,String> csEinladung;
 	Object lockCode;
 	Object lockEinladung;
 
@@ -32,25 +30,18 @@ public class KommunikationIncoming  extends Kommunikation implements Serializabl
 		this.lockCode=lockCode;
 		this.lockEinladung=lockEinladung;
 		try {
-			connection = connectionFactory.createConnection();
-			// Kreigt natülich noch ne vernünftige id soblad benutzer am laufen
-			// sind
-			connection.setClientID(String.valueOf(Math.random()));
-			connection.start();
+			
 		} catch (Exception e2) {
 
 		}
 	}
 
-	public void bekommeCode(String topic, String selector) {
+	public void bekommeCode(String topic, String benutzer) {
 		// hier wartet später das JMS aud Code von Csen
 		try {
-			sessionCode = connection.createSession(false,
-					Session.CLIENT_ACKNOWLEDGE);
 			//System.out.println("Verbunden");
-			topicCode = sessionCode.createTopic(topic);
-			topsubCode = sessionCode.createDurableSubscriber(topicCode,
-					String.valueOf(connection.hashCode()));
+			topicCode = session.createTopic(topic);
+			topsubCode = session.createDurableSubscriber(topicCode,benutzer);
 			System.out.println("Empfänger gestartet");
 			listnerFuerCode = new MessageListener() {
 				public void onMessage(Message message) {
@@ -59,6 +50,7 @@ public class KommunikationIncoming  extends Kommunikation implements Serializabl
 							synchronized (lockCode) {
 								neuerCode = ((TextMessage) message).getText();
 								lockCode.notify();
+								message.acknowledge();
 							}
 						} catch (JMSException e1) {
 							// TODO Auto-generated catch blockCode
@@ -69,23 +61,14 @@ public class KommunikationIncoming  extends Kommunikation implements Serializabl
 				}
 			};
 			topsubCode.setMessageListener(listnerFuerCode);
-			// messageConsumer.close();
-			// session.close();
-			// connection.close();
 		} catch (Exception e1) {
 		}
 	}
 
-	public void bekommeEinladung() {
+	public void bekommeEinladung(int id) {
 		try {
-			sessionEinladung = connection.createSession(false,
-					Session.CLIENT_ACKNOWLEDGE);
-			topicEinladung = sessionEinladung.createTopic("Einladung");
-			// topsubEinladung =
-			// sessionEinladung.createDurableSubscriber(topicEinladung,"Subname","selector",true);
-			topsubEinladung = sessionEinladung.createDurableSubscriber(
-					topicEinladung, "einlader");
-			
+			topicEinladung = session.createTopic("Einladung");
+			topsubEinladung =session.createDurableSubscriber(topicEinladung,"einlader","id = "+id,false);
 			listnerFuerEinladung = new MessageListener() {
 				public void onMessage(Message message) {
 					//System.out.println("OM bekommen");
@@ -94,8 +77,9 @@ public class KommunikationIncoming  extends Kommunikation implements Serializabl
 						synchronized (lockEinladung) {
 							lockEinladung.notifyAll();
 							try {
-								csEinladung=(CodingSession)((ObjectMessage)message).getObject();
-								System.out.println(csEinladung.id);
+								csEinladung=((HashMap<String,String>)((ObjectMessage)message).getObject());
+								System.out.println(csEinladung.get("id"));
+								message.acknowledge();
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -110,11 +94,10 @@ public class KommunikationIncoming  extends Kommunikation implements Serializabl
 			e1.printStackTrace();
 		}
 	}
-	public CodingSession getEinladung(){
+	public HashMap<String,String> getEinladung(){
 		return this.csEinladung;
 	}
 	public String getCode(){
 		return this.neuerCode;
 	}
-
 }

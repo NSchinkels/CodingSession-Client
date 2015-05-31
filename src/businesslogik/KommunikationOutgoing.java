@@ -1,18 +1,14 @@
 package businesslogik;
 
-import java.io.Serializable;
-
-import javax.jms.DeliveryMode;
-import javax.jms.Destination;
+import java.util.HashMap;
 import javax.jms.JMSException;
-import javax.jms.MapMessage;
+import javax.jms.DeliveryMode;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
-import javax.jms.Session;
 import javax.jms.TextMessage;
 
-public class KommunikationOutgoing extends Kommunikation implements Serializable{
-	
+public class KommunikationOutgoing extends Kommunikation{
+
 	/**
 	 * 
 	 */
@@ -20,49 +16,47 @@ public class KommunikationOutgoing extends Kommunikation implements Serializable
 	MessageProducer producerCode;
 	TextMessage textMessage;
 
-	public KommunikationOutgoing(Object lockCode,Object lockEinladung) {
-		super(lockCode,lockEinladung);
+	public KommunikationOutgoing(Object lockCode, Object lockEinladung) {
+		super(lockCode, lockEinladung);
 		try {
-			connection = connectionFactory.createConnection();
-			connection.start();
-			//System.out.println("Verbunden");
+			topicEinladung = session.createTopic("Einladung");
+			producerCode = session.createProducer(topicEinladung);
+			producerCode.setDeliveryMode(DeliveryMode.PERSISTENT);
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+
+	}
+	public void starteCsKommu(String topic){
+		try {
+			topicCode = session.createTopic(topic);
+			producerCode = session.createProducer(topicCode);
+			producerCode.setDeliveryMode(DeliveryMode.PERSISTENT);
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void veröffentlicheCode(String nachricht, String sender) {
+		// code an topic geschrieben
+		try {
+			textMessage = session.createTextMessage(nachricht);
+			producerCode.send(textMessage);
+		} catch (JMSException e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public void veröffentlicheCode(String nachricht, String topic, String sender) {
-		// code an topic geschrieben
+	public void ladeEin(HashMap<String, String> cs, int freund) {
 		try {
-			sessionCode = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			Destination topicCode = sessionCode.createTopic(topic);
-			producerCode = sessionCode.createProducer(topicCode);
-			producerCode.setDeliveryMode(DeliveryMode.PERSISTENT);
-			textMessage = sessionCode.createTextMessage(nachricht);
-			producerCode.send(textMessage);
-			//System.out.println("Veröffentlicht");
-			// sessionCode.close();
-			// connection.close();
-		} catch (Exception e2) {
-
-		}
-
-	}
-
-	public void ladeEin(CodingSession cs,String freund) {
-		try {
-			sessionEinladung = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			topicEinladung = sessionEinladung.createTopic("Einladung");
-			producerCode = sessionEinladung.createProducer(topicEinladung);
-			producerCode.setDeliveryMode(DeliveryMode.PERSISTENT);
-			ObjectMessage om=sessionEinladung.createObjectMessage(cs);
+			ObjectMessage om = session.createObjectMessage(cs);
+			om.setIntProperty("id", freund);
 			System.out.println("om erstellt");
 			producerCode.send(om);
 			System.out.println("Veröffentlicht");
-			// sessionCode.close();
-			// connection.close();
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
