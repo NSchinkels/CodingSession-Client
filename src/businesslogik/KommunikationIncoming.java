@@ -9,50 +9,49 @@ import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 import javax.jms.TopicSubscriber;
 
-public class KommunikationIncoming  extends Kommunikation{
+public class KommunikationIncoming extends Kommunikation {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public String neuerCode;
+	public String neuerCode="";
 	MessageListener listnerFuerCode;
 	MessageListener listnerFuerEinladung;
 	TopicSubscriber topsubCode;
 	TopicSubscriber topsubEinladung;
-	HashMap<String,String> csEinladung;
+	HashMap<String, String> csEinladung;
 	Object lockCode;
 	Object lockEinladung;
 
-
 	public KommunikationIncoming(Object lockCode, Object lockEinladung) {
-		super(lockCode,lockEinladung);
-		this.lockCode=lockCode;
-		this.lockEinladung=lockEinladung;
+		super(lockCode, lockEinladung);
+		this.lockCode = lockCode;
+		this.lockEinladung = lockEinladung;
 		try {
-			
+
 		} catch (Exception e2) {
 
 		}
 	}
 
-	public void bekommeCode(String topic, String benutzer) {
+	public void bekommeCode(String topic, int benutzer) {
 		// hier wartet später das JMS aud Code von Csen
 		try {
-			//System.out.println("Verbunden");
 			topicCode = session.createTopic(topic);
-			topsubCode = session.createDurableSubscriber(topicCode,benutzer);
-			System.out.println("Empfänger gestartet");
+			topsubCode = session.createDurableSubscriber(topicCode,"Benutzer"+benutzer);
+			System.out.println("Empfänger "+ benutzer+" gestartet");
 			listnerFuerCode = new MessageListener() {
 				public void onMessage(Message message) {
 					if (message instanceof TextMessage) {
 						try {
 							synchronized (lockCode) {
-								neuerCode = ((TextMessage) message).getText();
-								lockCode.notify();
-								message.acknowledge();
+								if (!neuerCode.equals(((TextMessage) message).getText())&&message.getIntProperty("sender")!=benutzer) {
+									neuerCode = ((TextMessage) message).getText();
+									lockCode.notify();
+								}		
 							}
-						} catch (JMSException e1) {
+						} catch (Exception e1) {
 							// TODO Auto-generated catch blockCode
 							lockCode.notifyAll();
 							e1.printStackTrace();
@@ -68,16 +67,18 @@ public class KommunikationIncoming  extends Kommunikation{
 	public void bekommeEinladung(int id) {
 		try {
 			topicEinladung = session.createTopic("Einladung");
-			topsubEinladung =session.createDurableSubscriber(topicEinladung,"einlader","id = "+id,false);
+			topsubEinladung = session.createDurableSubscriber(topicEinladung,
+					"einlader", "id = " + id, false);
 			listnerFuerEinladung = new MessageListener() {
 				public void onMessage(Message message) {
-					//System.out.println("OM bekommen");
+					System.out.println("OM bekommen");
 					if (message instanceof ObjectMessage) {
-						//System.out.println("OM bekommen");
+						// System.out.println("OM bekommen");
 						synchronized (lockEinladung) {
 							lockEinladung.notifyAll();
 							try {
-								csEinladung=((HashMap<String,String>)((ObjectMessage)message).getObject());
+								csEinladung = ((HashMap<String, String>) ((ObjectMessage) message)
+										.getObject());
 								System.out.println(csEinladung.get("id"));
 								message.acknowledge();
 							} catch (Exception e) {
@@ -94,10 +95,12 @@ public class KommunikationIncoming  extends Kommunikation{
 			e1.printStackTrace();
 		}
 	}
-	public HashMap<String,String> getEinladung(){
+
+	public HashMap<String, String> getEinladung() {
 		return this.csEinladung;
 	}
-	public String getCode(){
+
+	public String getCode() {
 		return this.neuerCode;
 	}
 }

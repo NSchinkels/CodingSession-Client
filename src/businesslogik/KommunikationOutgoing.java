@@ -21,7 +21,7 @@ public class KommunikationOutgoing extends Kommunikation{
 		try {
 			topicEinladung = session.createTopic("Einladung");
 			producerCode = session.createProducer(topicEinladung);
-			producerCode.setDeliveryMode(DeliveryMode.PERSISTENT);
+			producerCode.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
@@ -31,7 +31,6 @@ public class KommunikationOutgoing extends Kommunikation{
 		try {
 			topicCode = session.createTopic(topic);
 			producerCode = session.createProducer(topicCode);
-			producerCode.setDeliveryMode(DeliveryMode.PERSISTENT);
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,11 +38,13 @@ public class KommunikationOutgoing extends Kommunikation{
 		
 	}
 
-	public void veröffentlicheCode(String nachricht, String sender) {
+	public void veröffentlicheCode(String nachricht, int sender) {
 		// code an topic geschrieben
 		try {
 			textMessage = session.createTextMessage(nachricht);
+			textMessage.setIntProperty("sender",sender);
 			producerCode.send(textMessage);
+			System.out.println("Code veröffentlicht von "+sender);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

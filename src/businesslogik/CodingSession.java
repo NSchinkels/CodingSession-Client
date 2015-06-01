@@ -11,8 +11,10 @@ public class CodingSession implements Serializable {
 	private String titel;
 	private HashMap<String, String> daten;
 	private boolean speichern;
+	private boolean neuerCode = false;
 	// Im Moment noch als ein String,später was besseres
-	private String code = "HUU";
+	private String code = "";
+	private String netCode = "";
 	// Cs nur mit titel und speichern erstellbar
 	private Profil[] teilnehmer;
 	private int anzahlTeilnehmer = 0;
@@ -21,30 +23,32 @@ public class CodingSession implements Serializable {
 
 	public CodingSession(String titel, boolean speichern,
 			KommunikationIncoming comi, KommunikationOutgoing como,
-			int benutzerid, int id, Object lock) {
+			int benutzerId, int id, Object lock) {
 		this.titel = titel;
 		this.speichern = speichern;
 		this.benutzerId = benutzerId;
 		this.id = id;
 		this.comi = comi;
 		this.como = como;
-		como.starteCsKommu("CodingSession"+id);
-		comi.bekommeCode("CodingSession" + id, "Benutzer" + benutzerId);
+		como.starteCsKommu("CodingSession" + id);
+		comi.bekommeCode("CodingSession" + id, benutzerId);
 		new Thread() {
 			public void run() {
 				while (true) {
 					synchronized (lock) {
-						// comi.bekomme("CodingSession" + id, "Benutzer"+
-						// benutzerId);
-						// System.out.println("Warte auf neuen Code");
+						System.out.println("In cs von " + benutzerId
+								+ " wird gewartet");
 						try {
 							lock.wait();
-							// System.out.println("Warte auf neuen Code");
+							if (!netCode.equals(comi.getCode())&&!comi.getCode().equals(code)) {
+								code = netCode = comi.getCode();
+								neuerCode = true;
+							}
+							System.out.println("In cs von " + benutzerId
+									+ " wurde aktualisert");
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						} finally {
-							aktualisiereCode(comi.getCode(), false);
 						}
 					}
 				}
@@ -55,15 +59,22 @@ public class CodingSession implements Serializable {
 	// Methode die zeitlich aufgrufen wird um den alten code mit dem neuen zu
 	// erstetzen
 	public synchronized void aktualisiereCode(String text, boolean selbst) {
-		this.code = text;
-		if (selbst)
-			codeVeroeffentlichen();
-
+		code = text;
+		if (selbst){
+			como.veröffentlicheCode(code, benutzerId);
+			netCode = text;
+			neuerCode = false;
+		}
 	}
 
-	public void codeVeroeffentlichen() {
-		// Server Magic. Die anderne clienenten wird der neue code gegeben
-		como.veröffentlicheCode(code,"Benutzer"+id);
+	public boolean hasChanged() {
+		return neuerCode;
+	}
+
+	public void neuerCodeGUI(String text) {
+		if (!text.equals(netCode)) {
+			aktualisiereCode(text, true);
+		}
 	}
 
 	public boolean addTeilnehmer(Profil b) {
@@ -108,6 +119,7 @@ public class CodingSession implements Serializable {
 	}
 
 	public String getCode() {
+		neuerCode = false;
 		return code;
 	}
 
