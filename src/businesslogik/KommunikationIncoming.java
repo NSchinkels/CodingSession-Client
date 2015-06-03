@@ -1,55 +1,58 @@
 package businesslogik;
 
 import java.util.HashMap;
-
+import java.util.LinkedList;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
+import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.TopicSubscriber;
 
-public class KommunikationIncoming extends Kommunikation {
+public class KommunikationIncoming {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	public String neuerCode="";
+	public String neuerCode = "";
+	KommunikationStart komser;
 	MessageListener listnerFuerCode;
 	MessageListener listnerFuerEinladung;
+	MessageListener listnerFuerChat;
 	TopicSubscriber topsubCode;
 	TopicSubscriber topsubEinladung;
+	TopicSubscriber tobsubChat;
 	HashMap<String, String> csEinladung;
+	Session session;
 	Object lockCode;
 	Object lockEinladung;
+	int benutzerId;
 
-	public KommunikationIncoming(Object lockCode, Object lockEinladung) {
-		super(lockCode, lockEinladung);
+	public KommunikationIncoming(int benutzerId,KommunikationStart komser, Object lockCode,
+			Object lockEinladung) {
+
+		this.session=komser.getSession();
 		this.lockCode = lockCode;
 		this.lockEinladung = lockEinladung;
-		try {
-
-		} catch (Exception e2) {
-
-		}
+		this.benutzerId=benutzerId;
+		this.komser = komser;
 	}
 
 	public void bekommeCode(String topic, int benutzer) {
 		// hier wartet später das JMS aud Code von Csen
 		try {
-			topicCode = session.createTopic(topic);
-			topsubCode = session.createDurableSubscriber(topicCode,"Benutzer"+benutzer);
-			System.out.println("Empfänger "+ benutzer+" gestartet");
+			topsubCode = session.createDurableSubscriber(komser.getTopicCode(), "Benutzer"+ benutzer);
+			System.out.println("Empfänger " + benutzer + " gestartet");
 			listnerFuerCode = new MessageListener() {
 				public void onMessage(Message message) {
 					if (message instanceof TextMessage) {
 						try {
 							synchronized (lockCode) {
-								if (!neuerCode.equals(((TextMessage) message).getText())&&message.getIntProperty("sender")!=benutzer) {
-									neuerCode = ((TextMessage) message).getText();
+								if (!neuerCode.equals(((TextMessage) message)
+										.getText())
+										&& message.getIntProperty("sender") != benutzer) {
+									neuerCode = ((TextMessage) message)
+											.getText();
 									lockCode.notify();
-								}		
+								}
 							}
 						} catch (Exception e1) {
 							// TODO Auto-generated catch blockCode
@@ -64,12 +67,10 @@ public class KommunikationIncoming extends Kommunikation {
 		}
 	}
 
-	public void bekommeEinladung(int id) {
+	public void bekommeEinladung() {
 		try {
-			topicEinladung = session.createTopic("Einladung");
-			topsubEinladung = session.createDurableSubscriber(topicEinladung,
-					"einlader", "id = " + id, false);
 			listnerFuerEinladung = new MessageListener() {
+				@SuppressWarnings("unchecked")
 				public void onMessage(Message message) {
 					System.out.println("OM bekommen");
 					if (message instanceof ObjectMessage) {
@@ -89,11 +90,34 @@ public class KommunikationIncoming extends Kommunikation {
 					}
 				}
 			};
-			topsubEinladung.setMessageListener(listnerFuerEinladung);
+			komser.getTopsubEinladung().setMessageListener(listnerFuerEinladung);
 			System.out.println("Empfänger für om gestartet");
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	public void bekommeChat(int chatId, LinkedList<String> chatLog) {
+		try {
+			tobsubChat = session.createDurableSubscriber(komser.getTopicChat(), "Chatter"+ benutzerId);
+			listnerFuerChat = new MessageListener() {
+				public void onMessage(Message message) {
+					if (message instanceof TextMessage) {
+						try {
+							chatLog.addLast(message.getStringProperty("sender")
+									+ ": " + ((TextMessage) message).getText());
+						} catch (JMSException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+
+			};
+			tobsubChat.setMessageListener(listnerFuerChat);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
 	}
 
 	public HashMap<String, String> getEinladung() {

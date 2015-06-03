@@ -1,66 +1,89 @@
 package businesslogik;
 
 import java.util.HashMap;
+
 import javax.jms.JMSException;
-import javax.jms.DeliveryMode;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
+import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.jms.Topic;
 
-public class KommunikationOutgoing extends Kommunikation{
+public class KommunikationOutgoing {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	KommunikationStart komser;
 	MessageProducer producerCode;
+	MessageProducer producerChat;
 	TextMessage textMessage;
+	Session session;
+	int benutzerId;
 
-	public KommunikationOutgoing(Object lockCode, Object lockEinladung) {
-		super(lockCode, lockEinladung);
-		try {
-			topicEinladung = session.createTopic("Einladung");
-			producerCode = session.createProducer(topicEinladung);
-			producerCode.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
-		} catch (JMSException e) {
-			e.printStackTrace();
-		}
+	public KommunikationOutgoing(int benutzerId,KommunikationStart komser) {
+		this.session=komser.getSession();
+		this.benutzerId=benutzerId;
+		this.komser=komser;
 
 	}
-	public void starteCsKommu(String topic){
+	public void starteCs(String topic){
+		System.out.println(session.toString());
 		try {
-			topicCode = session.createTopic(topic);
-			producerCode = session.createProducer(topicCode);
+			komser.setTopicCode(session.createTopic(topic));
+			producerCode = session.createProducer(komser.getTopicCode());
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
+	public void starteChat(String topic){
+		try {
+			komser.setTopicChat(session.createTopic(topic));
+			producerChat = session.createProducer(komser.getTopicChat());
+		} catch (JMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 
-	public void veröffentlicheCode(String nachricht, int sender) {
+	public void veröffentlicheCode(String nachricht) {
 		// code an topic geschrieben
 		try {
 			textMessage = session.createTextMessage(nachricht);
-			textMessage.setIntProperty("sender",sender);
+			textMessage.setIntProperty("sender",benutzerId);
 			producerCode.send(textMessage);
-			System.out.println("Code veröffentlicht von "+sender);
+			System.out.println("Code veröffentlicht von "+benutzerId);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
 
 	}
+	
+	public void veröffentlicheChat(String nachricht, String sender) {
+		// code an topic geschrieben
+		try {
+			textMessage = session.createTextMessage(nachricht);
+			textMessage.setStringProperty("sender",sender);
+			producerChat.send(textMessage);
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
 
-	public void ladeEin(HashMap<String, String> cs, int freund) {
+	}
+	
+
+	public void ladeEin(HashMap<String, String> cs, int freundId) {
 		try {
 			ObjectMessage om = session.createObjectMessage(cs);
-			om.setIntProperty("id", freund);
+			om.setIntProperty("id", freundId);
 			System.out.println("om erstellt");
-			producerCode.send(om);
+			komser.getProducerEinladung().send(om);
 			System.out.println("Veröffentlicht");
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
 
 	}
+	
 }

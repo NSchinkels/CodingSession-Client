@@ -30,7 +30,7 @@ public class CodingSession implements Serializable {
 		this.id = id;
 		this.comi = comi;
 		this.como = como;
-		como.starteCsKommu("CodingSession" + id);
+		como.starteCs("CodingSession" + id);
 		comi.bekommeCode("CodingSession" + id, benutzerId);
 		new Thread() {
 			public void run() {
@@ -61,7 +61,7 @@ public class CodingSession implements Serializable {
 	public synchronized void aktualisiereCode(String text, boolean selbst) {
 		code = text;
 		if (selbst){
-			como.veröffentlicheCode(code, benutzerId);
+			como.veröffentlicheCode(code);
 			netCode = text;
 			neuerCode = false;
 		}

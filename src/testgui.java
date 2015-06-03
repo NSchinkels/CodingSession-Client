@@ -2,8 +2,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 import businesslogik.CodingSession;
-import businesslogik.KommunikationIncoming;
-import businesslogik.KommunikationOutgoing;
+
 
 public class testgui extends JFrame {
 
@@ -17,13 +16,11 @@ public class testgui extends JFrame {
 	Object lock2 = new Object();
 	int id1 =(int) (Math.random() * 123123 + 1);
 
-	public testgui() {
+	public testgui(CodingSession cs) {
 		super();
 		setSize(200, 200);
 		add(ar);
-		KommunikationIncoming ki= new KommunikationIncoming(lock1,lock2);
-		cs = new CodingSession("Title", true, ki, new KommunikationOutgoing(lock1, lock2),
-				id1, 12, lock1);
+		this.cs=cs;
 		new Thread() {
 			public void run() {
 				while (true) {
