@@ -30,7 +30,7 @@ public class KommunikationStart {
 		this.benutzerId=benutzerId;
 		try {
 			connectionFactory = new ActiveMQConnectionFactory();
-			connectionFactory.setBrokerURL("tcp://localhost:61616");
+			connectionFactory.setBrokerURL("tcp://84.200.247.147:61616");
 			connection = connectionFactory.createConnection();
 			connection.setClientID("Benutzer: "+benutzerId);
 			connection.start();
