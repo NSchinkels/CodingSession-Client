@@ -76,10 +76,11 @@ public class KommunikationIncoming {
 					if (message instanceof ObjectMessage) {
 						// System.out.println("OM bekommen");
 						synchronized (lockEinladung) {
-							lockEinladung.notifyAll();
+							
 							try {
 								csEinladung = ((HashMap<String, String>) ((ObjectMessage) message)
 										.getObject());
+								lockEinladung.notifyAll();
 								System.out.println(csEinladung.get("id"));
 								message.acknowledge();
 							} catch (Exception e) {
