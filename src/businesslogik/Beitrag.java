@@ -5,6 +5,18 @@ public class Beitrag {
 	private String betreff;
 	private String beschreibung;
 	private boolean schreibschutz;
+	private int id;
+	long date;
+	
+	public Beitrag(CodingSession session, String betreff, String beschreibung,
+			boolean schreibschutz) {
+		
+		this.session = session;
+		this.betreff = betreff;
+		this.beschreibung = beschreibung;
+		this.schreibschutz = schreibschutz;
+		date=System.currentTimeMillis();
+	}
 	public CodingSession getSession() {
 		return session;
 	}
