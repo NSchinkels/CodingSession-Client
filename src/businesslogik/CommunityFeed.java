@@ -2,7 +2,7 @@ package businesslogik;
 
 public class CommunityFeed {
 	private Beitrag[] beitraege;
-	int anzahl;
+	static int anzahl;
 
 	public CommunityFeed() {
 		// hier werden noch die Sachen vom Server gezogen
@@ -16,7 +16,7 @@ public class CommunityFeed {
 	public void refresh(){
 		//Neue Beitreage vom Server bekommen
 	}
-	public int getAnzahl(){
+	public static int getAnzahl(){
 		//zuerst aktualiern vom server
 		return anzahl;
 	}

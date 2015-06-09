@@ -16,6 +16,7 @@ public class Beitrag {
 		this.beschreibung = beschreibung;
 		this.schreibschutz = schreibschutz;
 		date=System.currentTimeMillis();
+		id=CommunityFeed.getAnzahl();
 	}
 	public CodingSession getSession() {
 		return session;
