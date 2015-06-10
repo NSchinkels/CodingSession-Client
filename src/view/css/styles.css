@@ -16,7 +16,7 @@
 }
 
 .tab:selected .tab-label { 
-    -fx-text-fill: #96b946;
+    -fx-text-fill: #489CDF;
 }
 
 .tab, .tab-pane{

@@ -1,13 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="businesslogik.CommunityFeed">
+   <top>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Desktop/CodingSession.png" />
+               </image>
+            </ImageView>
+            <Region HBox.hgrow="ALWAYS" />
+            <Hyperlink text="CommunityFeed aktualisieren">
+               <HBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </HBox.margin>
+            </Hyperlink>
+            <Hyperlink text="Abmelden">
+               <HBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </HBox.margin>
+            </Hyperlink>
+            <TextField promptText="Suche nach Freunden..">
+               <HBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+   </top>
    <center>
-      <Label text="CommunityFeed" BorderPane.alignment="CENTER" />
+      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox prefHeight="316.0" prefWidth="427.0" />
+         </content>
+      </ScrollPane>
    </center>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" text="CodingSession starten">
+               <HBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </HBox.margin>
+            </Button>
+            <Region HBox.hgrow="ALWAYS" />
+            <Hyperlink text="Impressum">
+               <HBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </HBox.margin>
+            </Hyperlink>
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

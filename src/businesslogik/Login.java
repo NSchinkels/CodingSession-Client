@@ -38,6 +38,7 @@ public class Login{
 				Stage stage = new Stage();
 				Scene scene = new Scene(root);		
 				stage.setScene(scene);
+			    stage.setMaximized(true); 
 				stage.show();
 			} catch(IOException e){
 				e.printStackTrace();
