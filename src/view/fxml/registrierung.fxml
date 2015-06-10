@@ -5,6 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
+
 <VBox fx:id="vboxRoot" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="267.0" prefWidth="355.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="businesslogik.Registrierung">
    <children>
       <HBox>
@@ -112,14 +113,18 @@
             <Insets bottom="18.0" />
          </VBox.margin>
       </HBox>
-      <HBox>
+      <HBox fillHeight="false">
          <children>
             <Button mnemonicParsing="false" onAction="#registrierenGeklickt" text="Registrieren">
                <HBox.margin>
                   <Insets left="80.0" right="40.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#abbrechenGeklickt" text="Abbrechen" />
+            <Button mnemonicParsing="false" onAction="#abbrechenGeklickt" text="Abbrechen">
+               <HBox.margin>
+                  <Insets right="80.0" />
+               </HBox.margin>
+            </Button>
          </children>
          <VBox.margin>
             <Insets top="10.0" />
