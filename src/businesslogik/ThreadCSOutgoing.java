@@ -1,16 +1,15 @@
 package businesslogik;
 
-import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
 
-public class ThreadGui implements Runnable {
+public class ThreadCSOutgoing implements Runnable {
 
 	TextArea csGUI;
 	CodingSession cs;
 	TextArea chatGUI;
 	Chat chat;
 
-	public ThreadGui(TextArea csGUI, CodingSession cs, TextArea chatGUI,
+	public ThreadCSOutgoing(TextArea csGUI, CodingSession cs, TextArea chatGUI,
 			Chat chat) {
 		this.csGUI = csGUI;
 		this.cs = cs;

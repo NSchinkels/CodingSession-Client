@@ -1,25 +1,36 @@
 package businesslogik;
 
-import java.io.Serializable;
 import java.util.HashMap;
+import javafx.scene.control.TextArea;
 
-public class CodingSession implements Serializable {
-	private static final long serialVersionUID = 1L;
-	// nicht im Diagramm,aber bestimmt wichtig
+public class CodingSession {
+	// Ids
 	private int benutzerId;
 	private int id;
+	// Daten der CS
 	private String titel;
-	private HashMap<String, String> daten;
 	private boolean speichern;
 	private boolean neuerCode = false;
-	// Im Moment noch als ein String,später was besseres
+	//Aktueller Code
 	private String code = "";
+	//Neuster Code aus der JMS, zu überprüfungs Zwecken notwenidig
 	private String netCode = "";
 	// Cs nur mit titel und speichern erstellbar
 	private Profil[] teilnehmer;
 	private int anzahlTeilnehmer = 0;
+	//Für Einladungen
+	private HashMap<String, String> daten;
+	//Kommunikation
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
+	//Textarear aus der fxml
+	TextArea txtCodingSession;
+	//Chat von dieser CS
+	Chat chat;
+	//Guielement von dem Chat
+	TextArea txtChatRead;
+	//Threads für einkommen und auskommende Kommunikation hauptsächlich nur am warten
+	ThreadCSOutgoing threadOut;
 
 	public CodingSession(String titel, boolean speichern,
 			KommunikationIncoming comi, KommunikationOutgoing como,
@@ -30,9 +41,12 @@ public class CodingSession implements Serializable {
 		this.id = id;
 		this.comi = comi;
 		this.como = como;
+		chat=new Chat(como,comi,""+benutzerId,id);
+		threadOut=new ThreadCSOutgoing(txtCodingSession,this,txtChatRead,chat);
+		new Thread(threadOut).start();
 		como.starteCs("CodingSession" + id);
 		comi.bekommeCode("CodingSession" + id, benutzerId);
-		new Thread() {
+		new Thread(){
 			public void run() {
 				while (true) {
 					synchronized (lock) {
@@ -52,8 +66,10 @@ public class CodingSession implements Serializable {
 						}
 					}
 				}
+				
 			}
 		}.start();
+		
 	}
 
 	// Methode die zeitlich aufgrufen wird um den alten code mit dem neuen zu
