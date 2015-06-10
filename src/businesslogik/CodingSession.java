@@ -1,9 +1,20 @@
 package businesslogik;
 
+import java.net.URL;
 import java.util.HashMap;
+import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
-public class CodingSession {
+public class CodingSession{
+	
+	@FXML
+	private Button btnTest;
+	
 	// Ids
 	private int benutzerId;
 	private int id;
@@ -32,6 +43,10 @@ public class CodingSession {
 	//Threads für einkommen und auskommende Kommunikation hauptsächlich nur am warten
 	ThreadCSOutgoing threadOut;
 
+	public CodingSession(){
+		
+	}
+	
 	public CodingSession(String titel, boolean speichern,
 			KommunikationIncoming comi, KommunikationOutgoing como,
 			int benutzerId, int id, Object lock) {
@@ -69,6 +84,11 @@ public class CodingSession {
 				
 			}
 		}.start();
+		
+	}
+	
+	@FXML
+	public void testMethode(ActionEvent event){
 		
 	}
 
