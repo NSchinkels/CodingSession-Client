@@ -14,7 +14,9 @@ public class CodingSession implements Initializable{
 	
 	@FXML
 	private Button btnTest;
+	@FXML
 	private TextArea txtCodingSession;
+	@FXML
 	private TextArea txtChatRead;
 	
 	// Ids
@@ -136,11 +138,10 @@ public class CodingSession implements Initializable{
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		txtCodingSession=new TextArea();
-		txtChatRead=new TextArea();
 		chat=new Chat(como,comi,""+benutzerId,id);
 		como.starteCs("CodingSession" + id);
 		comi.bekommeCode("CodingSession" + id, benutzerId);
+		System.out.println("Initilizer");
 		new Thread(){
 			public void run() {
 				while (true) {
@@ -166,18 +167,19 @@ public class CodingSession implements Initializable{
 		}.start();
 		//threadOut=new ThreadCSOutgoing(txtCodingSession,this,txtChatRead,chat);
 		//new Thread(threadOut).start();
+		
 		new Thread(){
 			public void run() {
 				while (true) {
 					try {
-						if (neuerCode) {
+						if (CodingSession.this.hasChanged()) {
 							txtCodingSession.setText(CodingSession.this.getCode());
+							System.out.println("hab neuen code");
 						} else {
-							CodingSession.this.neuerCodeGUI(
-									txtCodingSession.getText());
+							CodingSession.this.neuerCodeGUI(txtCodingSession.getText());
+							System.out.println("nix verändert");
 						}
 						Thread.sleep(2000);
-						txtCodingSession.setText("");
 						for(String text:chat.empfangen()){
 							txtChatRead.appendText(text);
 						}

@@ -25,9 +25,10 @@ public class Hauptfenster {
 	public void testMethode(ActionEvent event){
 		benId=(int)(Math.random()*123123)+1;
 		com=new KommunikationStart(benId);
+		lock=new Object();
 		comi=new KommunikationIncoming(benId, com, lock, new Object());
 		como=new KommunikationOutgoing(benId, com);
-		lock=new Object();
+	
 		
 		try{
 			((Node) (event.getSource())).getScene().getWindow().hide();
