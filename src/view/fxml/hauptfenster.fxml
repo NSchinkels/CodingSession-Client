@@ -51,7 +51,7 @@
                      <bottom>
                         <HBox BorderPane.alignment="CENTER">
                            <children>
-                              <Button mnemonicParsing="false" text="CodingSession starten" onAction="#testMethode" fx:id="btnTest">
+                              <Button mnemonicParsing="false" onAction="#testMethode" text="CodingSession starten">
                                  <HBox.margin>
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </HBox.margin>
@@ -163,7 +163,7 @@
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="btnTest" mnemonicParsing="false" onAction="#testMethode" text="CodingSession schließen">
+                              <Button mnemonicParsing="false" onAction="#testMethode" text="CodingSession schließen">
                                  <HBox.margin>
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </HBox.margin>

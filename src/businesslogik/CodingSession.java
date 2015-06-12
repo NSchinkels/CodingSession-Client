@@ -9,41 +9,51 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class CodingSession implements Initializable{
 	
 	@FXML
 	private Button btnTest;
+	
 	@FXML
 	private TextArea txtCodingSession;
+	
 	@FXML
 	private TextArea txtChatRead;
 	
-	// Ids
+	// IDs
 	private int benutzerId;
 	private int id;
+	
 	// Daten der CS
 	private String titel;
 	private boolean speichern;
 	private boolean neuerCode = false;
+	
 	//Aktueller Code
 	private String code = "";
-	//Neuster Code aus der JMS, zu überprüfungs Zwecken notwenidig
+	
+	//Neuester Code aus der JMS, zu Überprüfungszwecken notwendig
 	private String netCode = "";
-	// Cs nur mit titel und speichern erstellbar
+	
+	// Cs nur mit Titel und speichern erstellbar
 	private Profil[] teilnehmer;
 	private int anzahlTeilnehmer = 0;
+	
 	//Für Einladungen
 	private HashMap<String, String> daten;
 	private Object lock;
+	
 	//Kommunikation
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
-	//Textarear aus der fxml
+	
 	//Chat von dieser CS
 	Chat chat;
-	//Guielement von dem Chat
-	//Threads für einkommen und auskommende Kommunikation hauptsächlich nur am warten
+
+	//Threads für einkommende und auskommende Kommunikation. Hauptsächlich nur am warten
 	ThreadCSOutgoing threadOut;
 
 	
@@ -57,13 +67,71 @@ public class CodingSession implements Initializable{
 		this.comi = comi;
 		this.como = como;
 		this.lock=lock;
-		
 	}
-	public void testMethode(ActionEvent a){
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		chat=new Chat(como,comi,""+benutzerId,id);
+		como.starteCs("CodingSession" + id);
+		comi.bekommeCode("CodingSession" + id, benutzerId);
+		System.out.println("Initilizer");
+		new Thread(){
+			public void run() {
+				while (true) {
+					synchronized (lock) {
+						System.out.println("In cs von " + benutzerId
+								+ " wird gewartet");
+						try {
+							lock.wait();
+							if (!netCode.equals(comi.getCode())&&!comi.getCode().equals(code)) {
+								code = netCode = comi.getCode();
+								neuerCode = true;
+							}
+							System.out.println("In cs von " + benutzerId
+									+ " wurde aktualisert");
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				
+			}
+		}.start();
+		//threadOut=new ThreadCSOutgoing(txtCodingSession,this,txtChatRead,chat);
+		//new Thread(threadOut).start();
 		
+		new Thread(){
+			public void run() {
+				while (true) {
+					try {
+						if (CodingSession.this.hasChanged()) {
+							txtCodingSession.setText(CodingSession.this.getCode());
+							System.out.println("hab neuen code");
+						} else {
+							CodingSession.this.neuerCodeGUI(txtCodingSession.getText());
+							System.out.println("nix verändert");
+						}
+						Thread.sleep(2000);
+						for(String text:chat.empfangen()){
+							txtChatRead.appendText(text);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
 	}
-	// Methode die zeitlich aufgrufen wird um den alten code mit dem neuen zu
-	// erstetzen
+	
+	@FXML
+	public void txtChatEnterGeklickt(KeyEvent event){
+		if (event.getCode() == KeyCode.ENTER) {
+	        //Hier dein Code rein
+	    }
+	}
+	
+	// Methode die zeitlich aufgrufen wird, um den alten Code mit dem neuen zu ersetzen
 	public synchronized void aktualisiereCode(String text, boolean selbst) {
 		code = text;
 		if (selbst){
@@ -72,10 +140,12 @@ public class CodingSession implements Initializable{
 			neuerCode = false;
 		}
 	}
+	
 	public void chatsenden(ActionEvent a){
 		chat.senden(txtChatRead.getText());
 		txtChatRead.setText("");
 	}
+	
 	public boolean hasChanged() {
 		return neuerCode;
 	}
@@ -139,59 +209,4 @@ public class CodingSession implements Initializable{
 	public void setBenutzerId(int benutzerId) {
 		this.benutzerId = benutzerId;
 	}
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		chat=new Chat(como,comi,""+benutzerId,id);
-		como.starteCs("CodingSession" + id);
-		comi.bekommeCode("CodingSession" + id, benutzerId);
-		System.out.println("Initilizer");
-		new Thread(){
-			public void run() {
-				while (true) {
-					synchronized (lock) {
-						System.out.println("In cs von " + benutzerId
-								+ " wird gewartet");
-						try {
-							lock.wait();
-							if (!netCode.equals(comi.getCode())&&!comi.getCode().equals(code)) {
-								code = netCode = comi.getCode();
-								neuerCode = true;
-							}
-							System.out.println("In cs von " + benutzerId
-									+ " wurde aktualisert");
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				
-			}
-		}.start();
-		//threadOut=new ThreadCSOutgoing(txtCodingSession,this,txtChatRead,chat);
-		//new Thread(threadOut).start();
-		
-		new Thread(){
-			public void run() {
-				while (true) {
-					try {
-						if (CodingSession.this.hasChanged()) {
-							txtCodingSession.setText(CodingSession.this.getCode());
-							System.out.println("hab neuen code");
-						} else {
-							CodingSession.this.neuerCodeGUI(txtCodingSession.getText());
-							System.out.println("nix verändert");
-						}
-						Thread.sleep(2000);
-						for(String text:chat.empfangen()){
-							txtChatRead.appendText(text);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}.start();
-	}
-
 }

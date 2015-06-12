@@ -3,11 +3,13 @@ package businesslogik;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 
@@ -19,9 +21,8 @@ public class Hauptfenster {
 	int csId;
 	Object lock;
 	CodingSession cs;
-	
-	private Button btnTest;
-	
+
+	@FXML
 	public void testMethode(ActionEvent event){
 		benId=(int)(Math.random()*123123)+1;
 		com=new KommunikationStart(benId);
@@ -29,7 +30,6 @@ public class Hauptfenster {
 		comi=new KommunikationIncoming(benId, com, lock, new Object());
 		como=new KommunikationOutgoing(benId, com);
 	
-		
 		try{
 			((Node) (event.getSource())).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
