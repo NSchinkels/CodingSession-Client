@@ -72,7 +72,10 @@ public class CodingSession implements Initializable{
 			neuerCode = false;
 		}
 	}
-
+	public void chatsenden(ActionEvent a){
+		chat.senden(txtChatRead.getText());
+		txtChatRead.setText("");
+	}
 	public boolean hasChanged() {
 		return neuerCode;
 	}
