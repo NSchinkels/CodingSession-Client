@@ -23,6 +23,9 @@ public class CodingSession implements Initializable{
 	@FXML
 	private TextArea txtChatRead;
 	
+	@FXML
+	private TextArea txtChatWrite;
+	
 	// IDs
 	private int benutzerId;
 	private int id;
@@ -113,6 +116,7 @@ public class CodingSession implements Initializable{
 							System.out.println("nix verändert");
 						}
 						Thread.sleep(2000);
+						txtChatRead.setText("");
 						for(String text:chat.empfangen()){
 							txtChatRead.appendText(text);
 						}
@@ -127,7 +131,8 @@ public class CodingSession implements Initializable{
 	@FXML
 	public void txtChatEnterGeklickt(KeyEvent event){
 		if (event.getCode() == KeyCode.ENTER) {
-	        //Hier dein Code rein
+			chat.senden(txtChatWrite.getText()+"\n");
+			txtChatWrite.setText("");
 	    }
 	}
 	
@@ -140,12 +145,7 @@ public class CodingSession implements Initializable{
 			neuerCode = false;
 		}
 	}
-	
-	public void chatsenden(ActionEvent a){
-		chat.senden(txtChatRead.getText());
-		txtChatRead.setText("");
-	}
-	
+
 	public boolean hasChanged() {
 		return neuerCode;
 	}
