@@ -14,18 +14,6 @@ import javafx.scene.input.KeyEvent;
 
 public class CodingSession implements Initializable{
 	
-	@FXML
-	private Button btnTest;
-	
-	@FXML
-	private TextArea txtCodingSession;
-	
-	@FXML
-	private TextArea txtChatRead;
-	
-	@FXML
-	private TextArea txtChatWrite;
-	
 	// IDs
 	private int benutzerId;
 	private int id;
@@ -59,6 +47,17 @@ public class CodingSession implements Initializable{
 	//Threads für einkommende und auskommende Kommunikation. Hauptsächlich nur am warten
 	ThreadCSOutgoing threadOut;
 
+	@FXML
+	private Button btnTest;
+	
+	@FXML
+	private TextArea txtCodingSession;
+	
+	@FXML
+	private TextArea txtChatRead;
+	
+	@FXML
+	private TextArea txtChatWrite;
 	
 	public CodingSession(String titel, boolean speichern,
 			KommunikationIncoming comi, KommunikationOutgoing como,
@@ -73,7 +72,7 @@ public class CodingSession implements Initializable{
 	}
 	
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL url, ResourceBundle rb) {
 		chat=new Chat(como,comi,""+benutzerId,id);
 		como.starteCs("CodingSession" + id);
 		comi.bekommeCode("CodingSession" + id, benutzerId);
