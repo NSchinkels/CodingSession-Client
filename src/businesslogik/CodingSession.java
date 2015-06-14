@@ -12,53 +12,54 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class CodingSession implements Initializable{
-	
+public class CodingSession implements Initializable {
+
 	// IDs
 	private int benutzerId;
 	private int id;
-	
+
 	// Daten der CS
 	private String titel;
 	private boolean speichern;
 	private boolean neuerCode = false;
-	
-	//Aktueller Code
+
+	// Aktueller Code
 	private String code = "";
-	
-	//Neuester Code aus der JMS, zu �berpr�fungszwecken notwendig
+
+	// Neuester Code aus der JMS, zu �berpr�fungszwecken notwendig
 	private String netCode = "";
-	
+
 	// Cs nur mit Titel und speichern erstellbar
 	private Profil[] teilnehmer;
 	private int anzahlTeilnehmer = 0;
-	
-	//F�r Einladungen
+
+	// F�r Einladungen
 	private HashMap<String, String> daten;
 	private Object lock;
-	
-	//Kommunikation
+
+	// Kommunikation
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
-	
-	//Chat von dieser CS
+
+	// Chat von dieser CS
 	Chat chat;
 
-	//Threads f�r einkommende und auskommende Kommunikation. Haupts�chlich nur am warten
+	// Threads f�r einkommende und auskommende Kommunikation. Haupts�chlich nur
+	// am warten
 	ThreadCSOutgoing threadOut;
 
 	@FXML
 	private Button btnTest;
-	
+
 	@FXML
 	private TextArea txtCodingSession;
-	
+
 	@FXML
 	private TextArea txtChatRead;
-	
+
 	@FXML
 	private TextArea txtChatWrite;
-	
+
 	public CodingSession(String titel, boolean speichern,
 			KommunikationIncoming comi, KommunikationOutgoing como,
 			int benutzerId, int id, Object lock) {
@@ -68,55 +69,46 @@ public class CodingSession implements Initializable{
 		this.id = id;
 		this.comi = comi;
 		this.como = como;
-		this.lock=lock;
+		this.lock = lock;
 	}
-	
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		chat=new Chat(como,comi,""+benutzerId,id);
+		chat = new Chat(como, comi, "" + benutzerId, id);
 		como.starteCs("CodingSession" + id);
 		comi.bekommeCode("CodingSession" + id, benutzerId);
 		System.out.println("Initilizer");
-		new Thread(){
-			public void run() {
-				while (true) {
-					synchronized (lock) {
-						System.out.println("In cs von " + benutzerId
-								+ " wird gewartet");
-						try {
-							lock.wait();
-							if (!netCode.equals(comi.getCode())&&!comi.getCode().equals(code)) {
-								code = netCode = comi.getCode();
-								neuerCode = true;
-							}
-							System.out.println("In cs von " + benutzerId
-									+ " wurde aktualisert");
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				
-			}
-		}.start();
-		//threadOut=new ThreadCSOutgoing(txtCodingSession,this,txtChatRead,chat);
-		//new Thread(threadOut).start();
-		
-		new Thread(){
+		/*
+		 * new Thread(){ public void run() { while (true) { synchronized (lock)
+		 * { System.out.println("In cs von " + benutzerId + " wird gewartet");
+		 * try { lock.wait(); if
+		 * (!netCode.equals(comi.getCode())&&!comi.getCode().equals(code)) {
+		 * code = netCode = comi.getCode(); neuerCode = true; }
+		 * System.out.println("In cs von " + benutzerId + " wurde aktualisert");
+		 * } catch (InterruptedException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } } }
+		 * 
+		 * } }.start(); threadOut=new
+		 * ThreadCSOutgoing(txtCodingSession,this,txtChatRead,chat); new
+		 * Thread(threadOut).start();
+		 */
+		new Thread() {
 			public void run() {
 				while (true) {
 					try {
-						if (CodingSession.this.hasChanged()) {
-							txtCodingSession.setText(CodingSession.this.getCode());
-							System.out.println("hab neuen code");
-						} else {
-							CodingSession.this.neuerCodeGUI(txtCodingSession.getText());
-							System.out.println("nix ver�ndert");
+						if (comi.hasChanged()) {
+							netCode = comi.getCode();
+							if (!netCode.equals(code)) {
+								code = netCode;
+								txtCodingSession.setText(CodingSession.this
+										.getCode());
+							}
 						}
+						CodingSession.this.neuerCodeGUI(txtCodingSession
+								.getText());
 						Thread.sleep(2000);
 						txtChatRead.setText("");
-						for(String text:chat.empfangen()){
+						for (String text : chat.empfangen()) {
 							txtChatRead.appendText(text);
 						}
 					} catch (Exception e) {
@@ -126,19 +118,20 @@ public class CodingSession implements Initializable{
 			}
 		}.start();
 	}
-	
+
 	@FXML
-	public void txtChatEnterGeklickt(KeyEvent event){
+	public void txtChatEnterGeklickt(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
-			chat.senden(txtChatWrite.getText()+"\n");
+			chat.senden(txtChatWrite.getText() + "\n");
 			txtChatWrite.setText("");
-	    }
+		}
 	}
-	
-	// Methode die zeitlich aufgrufen wird, um den alten Code mit dem neuen zu ersetzen
+
+	// Methode die zeitlich aufgrufen wird, um den alten Code mit dem neuen zu
+	// ersetzen
 	public synchronized void aktualisiereCode(String text, boolean selbst) {
 		code = text;
-		if (selbst){
+		if (selbst) {
 			como.veroeffentlicheCode(code);
 			netCode = text;
 			neuerCode = false;
