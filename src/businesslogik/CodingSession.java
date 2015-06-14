@@ -26,14 +26,14 @@ public class CodingSession implements Initializable{
 	//Aktueller Code
 	private String code = "";
 	
-	//Neuester Code aus der JMS, zu Überprüfungszwecken notwendig
+	//Neuester Code aus der JMS, zu ï¿½berprï¿½fungszwecken notwendig
 	private String netCode = "";
 	
 	// Cs nur mit Titel und speichern erstellbar
 	private Profil[] teilnehmer;
 	private int anzahlTeilnehmer = 0;
 	
-	//Für Einladungen
+	//Fï¿½r Einladungen
 	private HashMap<String, String> daten;
 	private Object lock;
 	
@@ -44,7 +44,7 @@ public class CodingSession implements Initializable{
 	//Chat von dieser CS
 	Chat chat;
 
-	//Threads für einkommende und auskommende Kommunikation. Hauptsächlich nur am warten
+	//Threads fï¿½r einkommende und auskommende Kommunikation. Hauptsï¿½chlich nur am warten
 	ThreadCSOutgoing threadOut;
 
 	@FXML
@@ -112,7 +112,7 @@ public class CodingSession implements Initializable{
 							System.out.println("hab neuen code");
 						} else {
 							CodingSession.this.neuerCodeGUI(txtCodingSession.getText());
-							System.out.println("nix verändert");
+							System.out.println("nix verï¿½ndert");
 						}
 						Thread.sleep(2000);
 						txtChatRead.setText("");
@@ -139,7 +139,7 @@ public class CodingSession implements Initializable{
 	public synchronized void aktualisiereCode(String text, boolean selbst) {
 		code = text;
 		if (selbst){
-			como.veröffentlicheCode(code);
+			como.veroeffentlicheCode(code);
 			netCode = text;
 			neuerCode = false;
 		}

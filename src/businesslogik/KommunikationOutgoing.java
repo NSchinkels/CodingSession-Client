@@ -47,7 +47,7 @@ public class KommunikationOutgoing {
 	}
 	
 
-	public void veröffentlicheCode(String nachricht) {
+	public void veroeffentlicheCode(String nachricht) {
 		// code an topic geschrieben
 		try {
 			textMessage = session.createTextMessage(nachricht);
@@ -60,7 +60,7 @@ public class KommunikationOutgoing {
 
 	}
 	
-	public void veröffentlicheChat(String nachricht, String sender) {
+	public void veroeffentlicheChat(String nachricht, String sender) {
 		// code an topic geschrieben
 		try {
 			textMessage = session.createTextMessage(nachricht);

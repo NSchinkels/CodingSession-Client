@@ -19,7 +19,7 @@ public class Chat {
 		comi.bekommeChat(id, verlauf);
 	}
 	public void senden(String nachricht){
-		como.veröffentlicheChat(nachricht, sender);
+		como.veroeffentlicheChat(nachricht, sender);
 	}
 	public LinkedList<String> empfangen(){
 		return this.verlauf;
