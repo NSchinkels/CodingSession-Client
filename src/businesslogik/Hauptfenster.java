@@ -84,7 +84,7 @@ public class Hauptfenster implements Initializable{
 		try{
 			((Node) (event.getSource())).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
-			codingSession =new CodingSession("huhu", false, comi, como, benId, 1, lock);
+			codingSession =new CodingSession("huhu", false, comi, como, benId, 1);
 			loader.setController(codingSession);
 			Parent root = (Parent) loader.load();
 			Stage stage = new Stage();

@@ -35,7 +35,6 @@ public class CodingSession implements Initializable {
 
 	// F�r Einladungen
 	private HashMap<String, String> daten;
-	private Object lock;
 
 	// Kommunikation
 	KommunikationIncoming comi;
@@ -43,10 +42,6 @@ public class CodingSession implements Initializable {
 
 	// Chat von dieser CS
 	Chat chat;
-
-	// Threads f�r einkommende und auskommende Kommunikation. Haupts�chlich nur
-	// am warten
-	ThreadCSOutgoing threadOut;
 
 	@FXML
 	private Button btnTest;
@@ -62,14 +57,13 @@ public class CodingSession implements Initializable {
 
 	public CodingSession(String titel, boolean speichern,
 			KommunikationIncoming comi, KommunikationOutgoing como,
-			int benutzerId, int id, Object lock) {
+			int benutzerId, int id) {
 		this.titel = titel;
 		this.speichern = speichern;
 		this.benutzerId = benutzerId;
 		this.id = id;
 		this.comi = comi;
 		this.como = como;
-		this.lock = lock;
 	}
 
 	@Override
@@ -77,7 +71,6 @@ public class CodingSession implements Initializable {
 		chat = new Chat(como, comi, "" + benutzerId, id);
 		como.starteCs("CodingSession" + id);
 		comi.bekommeCode("CodingSession" + id, benutzerId);
-		System.out.println("Initilizer");
 		/*
 		 * new Thread(){ public void run() { while (true) { synchronized (lock)
 		 * { System.out.println("In cs von " + benutzerId + " wird gewartet");
@@ -106,11 +99,11 @@ public class CodingSession implements Initializable {
 						}
 						CodingSession.this.neuerCodeGUI(txtCodingSession
 								.getText());
-						Thread.sleep(2000);
 						txtChatRead.setText("");
 						for (String text : chat.empfangen()) {
 							txtChatRead.appendText(text);
 						}
+						Thread.sleep(2000);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -129,7 +122,7 @@ public class CodingSession implements Initializable {
 
 	// Methode die zeitlich aufgrufen wird, um den alten Code mit dem neuen zu
 	// ersetzen
-	public synchronized void aktualisiereCode(String text, boolean selbst) {
+	public void aktualisiereCode(String text, boolean selbst) {
 		code = text;
 		if (selbst) {
 			como.veroeffentlicheCode(code);
