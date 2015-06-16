@@ -6,6 +6,7 @@ public abstract class BenutzerkontoOriginal {
 
 	// Wir haben im UML hier das PW als String, sollten wir schnellstmoeglich durch DB mit Verschluesselung etc
 	// ersetzen, ich implementier es trotzdem mal stumpf mit dem Passwort
+	//Test
 	
 	
 	private String emailAdresse;
