@@ -1,15 +1,24 @@
 package businesslogik;
 
-public class BenutzerkontoRealname extends BenutzerkontoOriginal {
+import javax.persistence.*;
 
+import java.io.*;
+
+@Entity
+public class BenutzerkontoRealname extends BenutzerkontoOriginal{
+	@Id
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private String vorname;
 	private String nachname;
 	
-	public BenutzerkontoRealname(String email, String pw, String vor, String nach) {
-		super(email,pw);
+	public BenutzerkontoRealname(String email, String pw, String vor, String nach,int id) {
+		super(email,pw,id);
 		this.vorname = vor;
 		this.nachname = nach;
 	}
+	//default Konstruktor hinzugefügt,da für JPA notwendig
+	public BenutzerkontoRealname(){}
 	
 	public String getName() {
 		return nachname + ", " + vorname;
