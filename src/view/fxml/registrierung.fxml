@@ -5,7 +5,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <VBox fx:id="vboxRoot" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="267.0" prefWidth="355.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="businesslogik.Registrierung">
    <children>
       <HBox>
@@ -35,7 +34,7 @@
                   <Insets left="40.0" />
                </HBox.margin>
             </Label>
-            <TextField prefHeight="25.0" prefWidth="181.0" promptText="Vorname">
+            <TextField fx:id="txtVorname" prefHeight="25.0" prefWidth="181.0" promptText="Vorname">
                <HBox.margin>
                   <Insets left="41.0" />
                </HBox.margin>
@@ -52,7 +51,7 @@
                   <Insets left="40.0" top="2.0" />
                </HBox.margin>
             </Label>
-            <TextField prefHeight="25.0" prefWidth="181.0" promptText="Nachname">
+            <TextField fx:id="txtNachname" prefHeight="25.0" prefWidth="181.0" promptText="Nachname">
                <HBox.margin>
                   <Insets bottom="2.0" left="32.0" />
                </HBox.margin>
@@ -69,7 +68,7 @@
                   <Insets left="40.0" />
                </HBox.margin>
             </Label>
-            <TextField prefHeight="25.0" prefWidth="181.0" promptText="Nickname">
+            <TextField fx:id="txtNickname" prefHeight="25.0" prefWidth="181.0" promptText="Nickname">
                <HBox.margin>
                   <Insets left="36.0" />
                </HBox.margin>
@@ -86,7 +85,7 @@
                   <Insets left="40.0" />
                </HBox.margin>
             </Label>
-            <TextField prefHeight="25.0" prefWidth="181.0" promptText="E-Mail">
+            <TextField fx:id="txtEmail" prefHeight="25.0" prefWidth="181.0" promptText="E-Mail">
                <HBox.margin>
                   <Insets left="55.0" />
                </HBox.margin>
@@ -103,7 +102,7 @@
                   <Insets left="40.0" />
                </HBox.margin>
             </Label>
-            <PasswordField prefHeight="25.0" prefWidth="181.0" promptText="Passwort">
+            <PasswordField fx:id="txtPasswort" prefHeight="25.0" prefWidth="181.0" promptText="Passwort">
                <HBox.margin>
                   <Insets left="42.0" />
                </HBox.margin>
