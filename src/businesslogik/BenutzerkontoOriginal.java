@@ -48,6 +48,10 @@ public abstract class BenutzerkontoOriginal implements Serializable {
 		return id;
 	}
 	
+	public String getPasswort(){
+		return this.passwort;
+	}
+	
 	public abstract String getName();
 	
 	public void addFreund(BenutzerkontoOriginal fr) {
