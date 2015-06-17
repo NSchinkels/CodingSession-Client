@@ -15,7 +15,7 @@ public class CodingSessionModell implements Serializable{
 		private boolean speichern;
 		
 		// Teilnehmer
-		private Profil[] teilnehmer;
+		private String[] teilnehmer;
 		private int anzahlTeilnehmer = 0;
 		
 		//Geschriebener Code
@@ -23,11 +23,11 @@ public class CodingSessionModell implements Serializable{
 
 		
 		public CodingSessionModell(){
-			
+			teilnehmer = new String[10];
 		}
 		
 		public CodingSessionModell(int benutzerId, int id, String titel,
-				boolean speichern, Profil[] teilnehmer, int anzahlTeilnehmer,
+				boolean speichern, String[] teilnehmer, int anzahlTeilnehmer,
 				String code) {
 			this.benutzerId = benutzerId;
 			this.id = id;
@@ -70,18 +70,18 @@ public class CodingSessionModell implements Serializable{
 			this.speichern = speichern;
 		}
 
-		public Profil[] getTeilnehmer() {
+		public String[] getTeilnehmer() {
 			return teilnehmer;
 		}
 
-		public void setTeilnehmer(Profil[] teilnehmer) {
+		public void setTeilnehmer(String[] teilnehmer) {
 			this.teilnehmer = teilnehmer;
 		}
-		public Profil getTeilnehmer(int i) {
+		public String getTeilnehmer(int i) {
 			return teilnehmer[i];
 		}
 
-		public void addTeilnehmer(Profil teilnehmer) {
+		public void addTeilnehmer(String teilnehmer) {
 			this.teilnehmer[anzahlTeilnehmer] = teilnehmer;
 		}
 		

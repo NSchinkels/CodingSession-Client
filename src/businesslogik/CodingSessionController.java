@@ -112,7 +112,7 @@ public class CodingSessionController implements Initializable{
 		}
 	}
 
-	public boolean addTeilnehmer(Profil b) {
+	public boolean addTeilnehmer(String b) {
 		if (csmod.getAnzahlTeilnehmer() < 10) {
 			csmod.addTeilnehmer(b);
 			return true;
