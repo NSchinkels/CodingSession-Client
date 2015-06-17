@@ -77,7 +77,7 @@ public class Hauptfenster implements Initializable{
 		benId=(int)(Math.random()*123123)+1;
 		com=new KommunikationStart(benId);
 		lock=new Object();
-		comi=new KommunikationIncoming(benId, com, lock, new Object());
+		comi=new KommunikationIncoming(benId, com, new Object());
 		como=new KommunikationOutgoing(benId, com);
 	
 		try{

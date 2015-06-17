@@ -3,11 +3,12 @@ package businesslogik;
 import java.util.LinkedList;
 
 public class Chat {
-	int id;
+	private int id;
 	private LinkedList<String> verlauf;
-	String sender;
-	KommunikationOutgoing como;
-	KommunikationIncoming comi;
+	private int size=0;
+	private String sender;
+	private KommunikationOutgoing como;
+	private KommunikationIncoming comi;
 	
 	public Chat(KommunikationOutgoing como,KommunikationIncoming comi,String sender,int id){
 		this.id=id;
@@ -23,5 +24,8 @@ public class Chat {
 	}
 	public LinkedList<String> empfangen(){
 		return this.verlauf;
+	}
+	public int getSize(){
+		return this.size;
 	}
 }

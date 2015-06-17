@@ -1,10 +1,7 @@
 package businesslogik;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,10 +9,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class CodingSessionController implements Initializable{
+public class CodingSessionController implements Initializable {
 
 	private CodingSessionModell csmod;
-	private boolean neuerCode = false;
 
 	// Aktueller Code
 	private String code = "";
@@ -62,19 +58,19 @@ public class CodingSessionController implements Initializable{
 							netCode = comi.getCode();
 							if (!netCode.equals(code)) {
 								code = netCode;
-								txtCodingSession
-										.setText(CodingSessionController.this
-												.getCode());
+								txtCodingSession.setText(code);
+							}
+						} else {
+							CodingSessionController.this
+									.neuerCodeGUI(txtCodingSession.getText());
+						}
+						if (chat.empfangen().size() > chat.getSize()) {
+							txtChatRead.setText("");
+							for (String text : chat.empfangen()) {
+								txtChatRead.appendText(text);
 							}
 						}
-						CodingSessionController.this
-								.neuerCodeGUI(txtCodingSession.getText());
-						txtChatRead.setText("");
-						for (String text : chat.empfangen()) {
-							txtChatRead.appendText(text);
-						}
-						Thread.sleep(2000);
-						csmod.setCode(code);
+						Thread.sleep(200);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -98,12 +94,7 @@ public class CodingSessionController implements Initializable{
 		if (selbst) {
 			como.veroeffentlicheCode(code);
 			netCode = text;
-			neuerCode = false;
 		}
-	}
-
-	public boolean hasChanged() {
-		return neuerCode;
 	}
 
 	public void neuerCodeGUI(String text) {
@@ -122,11 +113,6 @@ public class CodingSessionController implements Initializable{
 
 	public void sendeEinladung(int benutzer) {
 		como.ladeEin(csmod, benutzer);
-	}
-
-	public String getCode() {
-		neuerCode = false;
-		return code;
 	}
 
 }
