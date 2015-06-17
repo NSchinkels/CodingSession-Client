@@ -56,4 +56,19 @@ public class DatenhaltungKonto {
 					"Fehler bei der Synchronisation mit der Datenbank");
 		}
 	}
+	/**
+	 * Methode die ein gegebens Credential prüft
+	 * @param email
+	 * @param passwort
+	 * @throws PersistenzException
+	 * @throws FalschesPasswortException
+	 */
+	public void passwortRichtig(String email,String passwort) throws PersistenzException,FalschesPasswortException{
+		try{
+			if(this.leseDB(email).getPasswort() != passwort)
+				throw new FalschesPasswortException();
+		}catch(Exception e){
+			throw new PersistenzException();
+		}
+	}
 }
