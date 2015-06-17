@@ -1,6 +1,5 @@
 package businesslogik;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -22,16 +21,14 @@ public class KommunikationIncoming {
 	TopicSubscriber tobsubChat;
 	CodingSessionModell csEinladung;
 	Session session;
-	Object lockCode;
 	Object lockEinladung;
 	int benutzerId;
 	boolean change;
 
 	public KommunikationIncoming(int benutzerId, KommunikationStart komser,
-			Object lockCode, Object lockEinladung) {
+			Object lockEinladung) {
 
 		this.session = komser.getSession();
-		this.lockCode = lockCode;
 		this.lockEinladung = lockEinladung;
 		this.benutzerId = benutzerId;
 		this.komser = komser;
@@ -42,7 +39,6 @@ public class KommunikationIncoming {
 		try {
 			topsubCode = session.createDurableSubscriber(komser.getTopicCode(),
 					"Benutzer" + benutzer);
-			System.out.println("Empfänger " + benutzer + " gestartet");
 			listnerFuerCode = new MessageListener() {
 				public void onMessage(Message message) {
 					try {
@@ -50,11 +46,10 @@ public class KommunikationIncoming {
 								.equals(((TextMessage) message).getText())
 								&& message.getIntProperty("sender") != benutzer) {
 							neuerCode = ((TextMessage) message).getText();
-							change=true;
+							change = true;
 						}
 					} catch (JMSException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						// throw new Exception("Konnte nicht den Code teilen");
 					}
 				}
 			};
@@ -66,19 +61,17 @@ public class KommunikationIncoming {
 	public void bekommeEinladung() {
 		try {
 			listnerFuerEinladung = new MessageListener() {
-				@SuppressWarnings("unchecked")
 				public void onMessage(Message message) {
-					System.out.println("OM bekommen");
 					if (message instanceof ObjectMessage) {
-						// System.out.println("OM bekommen");
 						synchronized (lockEinladung) {
 							try {
-								csEinladung = ((CodingSessionModell) ((ObjectMessage) message).getObject());
+								csEinladung = ((CodingSessionModell) ((ObjectMessage) message)
+										.getObject());
 								lockEinladung.notifyAll();
 								message.acknowledge();
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								// throw new
+								// Exception("Konnte nicht eingeladen werden");
 							}
 						}
 					}
@@ -86,9 +79,8 @@ public class KommunikationIncoming {
 			};
 			komser.getTopsubEinladung()
 					.setMessageListener(listnerFuerEinladung);
-			System.out.println("Empfänger für om gestartet");
 		} catch (Exception e1) {
-			e1.printStackTrace();
+			// throw new Exception("Konnte den Einlader nicht starten");
 		}
 	}
 
@@ -117,14 +109,21 @@ public class KommunikationIncoming {
 	}
 
 	public CodingSessionModell getEinladung() {
-		return this.csEinladung;
+		if (csEinladung != null){
+			return this.csEinladung;
+		}
+		else{
+			// throw new Exception("Konnte den Einlader nicht starten");
+			return null;
+		}
 	}
 
 	public String getCode() {
-		change=false;
+		change = false;
 		return this.neuerCode;
 	}
-	public boolean hasChanged(){
+
+	public boolean hasChanged() {
 		return change;
 	}
 }

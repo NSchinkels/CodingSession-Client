@@ -1,10 +1,7 @@
 package businesslogik;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,7 +12,6 @@ import javafx.scene.input.KeyEvent;
 public class CodingSessionController implements Initializable{
 
 	private CodingSessionModell csmod;
-	private boolean neuerCode = false;
 
 	// Aktueller Code
 	private String code = "";
@@ -63,17 +59,15 @@ public class CodingSessionController implements Initializable{
 							if (!netCode.equals(code)) {
 								code = netCode;
 								txtCodingSession
-										.setText(CodingSessionController.this
-												.getCode());
+										.setText(code);
 							}
 						}
-						CodingSessionController.this
-								.neuerCodeGUI(txtCodingSession.getText());
+						CodingSessionController.this.neuerCodeGUI(txtCodingSession.getText());
 						txtChatRead.setText("");
 						for (String text : chat.empfangen()) {
 							txtChatRead.appendText(text);
 						}
-						Thread.sleep(2000);
+						Thread.sleep(200);
 						csmod.setCode(code);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -98,14 +92,8 @@ public class CodingSessionController implements Initializable{
 		if (selbst) {
 			como.veroeffentlicheCode(code);
 			netCode = text;
-			neuerCode = false;
 		}
 	}
-
-	public boolean hasChanged() {
-		return neuerCode;
-	}
-
 	public void neuerCodeGUI(String text) {
 		if (!text.equals(netCode)) {
 			aktualisiereCode(text, true);
@@ -122,11 +110,6 @@ public class CodingSessionController implements Initializable{
 
 	public void sendeEinladung(int benutzer) {
 		como.ladeEin(csmod, benutzer);
-	}
-
-	public String getCode() {
-		neuerCode = false;
-		return code;
 	}
 
 }
