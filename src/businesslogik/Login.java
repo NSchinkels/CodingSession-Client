@@ -14,9 +14,6 @@ import javafx.stage.Stage;
 
 public class Login{
 	
-	private String emailAdresse;
-	private String passwort;
-	
 	@FXML
 	private TextField txtEmail;
 	
@@ -24,9 +21,11 @@ public class Login{
 	private PasswordField pwdPasswort;
 	
 	/**
-	 * Falls die eingegeben Daten valide sind (Methode 'ueberpruefeDaten(String email, String pw)') wird 
-	 * die Loginmaske geschlossen und das Hauptfenster der Anwendung geladen. 
-	 * IOException wird gefangen, falls main.fxml nicht geladen werden kann.
+	 * Wenn der Button 'Anmelden' geklickt wird und die Daten valide
+	 * sind wird die Loginmaske geschlossen und das Hauptfenster 
+	 * der Anwendung geladen. 
+	 * 
+	 * @throws IOException Falls main.fxml nicht geladen werden kann.
 	 */
 	@FXML
 	private void anmeldenGeklickt(ActionEvent event){
@@ -47,8 +46,10 @@ public class Login{
 	}
 		
 	/**
-	 * Schliesst die Loginmaske und laedt die Registrierungsmaske (registrierung.fxml).
-	 * IOException wird gefangen, falls registrierung.fxml nicht geladen werden kann.
+	 * Wenn der Hyperlink geklickt wird, schliesst die Loginmaske 
+	 * und die Registrierungsmaske wird geladen.
+	 * 
+	 * @throws IOException Falls registrierung.fxml nicht geladen werden kann.
 	 */
 	@FXML
 	private void oeffneRegistrierungGeklickt(ActionEvent event){
