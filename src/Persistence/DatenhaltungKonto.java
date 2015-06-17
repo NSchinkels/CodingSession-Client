@@ -57,7 +57,7 @@ public class DatenhaltungKonto {
 		}
 	}
 	/**
-	 * Methode die ein gegebens Credential prüft
+	 * Methode die ein gegebenes Credential prueft
 	 * @param email
 	 * @param passwort
 	 * @throws PersistenzException
