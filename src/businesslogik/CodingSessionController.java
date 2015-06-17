@@ -9,7 +9,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class CodingSessionController implements Initializable{
+public class CodingSessionController implements Initializable {
 
 	private CodingSessionModell csmod;
 
@@ -58,17 +58,19 @@ public class CodingSessionController implements Initializable{
 							netCode = comi.getCode();
 							if (!netCode.equals(code)) {
 								code = netCode;
-								txtCodingSession
-										.setText(code);
+								txtCodingSession.setText(code);
+							}
+						} else {
+							CodingSessionController.this
+									.neuerCodeGUI(txtCodingSession.getText());
+						}
+						if (chat.empfangen().size() > chat.getSize()) {
+							txtChatRead.setText("");
+							for (String text : chat.empfangen()) {
+								txtChatRead.appendText(text);
 							}
 						}
-						CodingSessionController.this.neuerCodeGUI(txtCodingSession.getText());
-						txtChatRead.setText("");
-						for (String text : chat.empfangen()) {
-							txtChatRead.appendText(text);
-						}
 						Thread.sleep(200);
-						csmod.setCode(code);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -94,6 +96,7 @@ public class CodingSessionController implements Initializable{
 			netCode = text;
 		}
 	}
+
 	public void neuerCodeGUI(String text) {
 		if (!text.equals(netCode)) {
 			aktualisiereCode(text, true);
