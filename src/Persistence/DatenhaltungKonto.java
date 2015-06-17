@@ -2,7 +2,6 @@ package Persistence;
 
 import javax.persistence.*;
 
-import businesslogik.BenutzerkontoNickname;
 import businesslogik.BenutzerkontoOriginal;
 
 public class DatenhaltungKonto {
@@ -38,7 +37,7 @@ public class DatenhaltungKonto {
 			factory = Persistence
 					.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 			EntityManager em = factory.createEntityManager();
-			konto = em.find(BenutzerkontoNickname.class,email);
+			konto = em.find(BenutzerkontoOriginal.class,email);
 		} catch (Exception e) {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
