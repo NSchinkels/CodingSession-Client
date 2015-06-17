@@ -62,6 +62,7 @@ public class DatenhaltungKonto {
 	 * @param passwort
 	 * @throws PersistenzException
 	 * @throws FalschesPasswortException
+	 * 
 	 */
 	public void passwortRichtig(String email,String passwort) throws PersistenzException,FalschesPasswortException{
 		try{
