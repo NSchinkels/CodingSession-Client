@@ -21,7 +21,6 @@ import javafx.stage.Stage;
 public class Hauptfenster implements Initializable{
 	
 	Object lock;
-	CodingSession codingSession;
 	Profil profil;
 	CommunityFeed communityFeed;
 	KommunikationStart com;
@@ -84,8 +83,9 @@ public class Hauptfenster implements Initializable{
 		try{
 			((Node) (event.getSource())).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
-			codingSession =new CodingSession("huhu", false, comi, como, benId, 1);
-			loader.setController(codingSession);
+			CodingSessionModell csmod =new CodingSessionModell(benId,1,"Testtitel",true,null,1,"sd");
+			CodingSessionController cs=new CodingSessionController(csmod,comi,como);
+			loader.setController(cs);
 			Parent root = (Parent) loader.load();
 			Stage stage = new Stage();
 			Scene scene = new Scene(root);

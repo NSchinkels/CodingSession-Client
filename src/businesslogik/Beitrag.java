@@ -1,14 +1,16 @@
 package businesslogik;
 
-public class Beitrag {
-	private CodingSession session;
+import java.io.Serializable;
+
+public class Beitrag implements Serializable{
+	private CodingSessionModell session;
 	private String betreff;
 	private String beschreibung;
 	private boolean schreibschutz;
 	private int id;
 	long date;
 	
-	public Beitrag(CodingSession session, String betreff, String beschreibung,
+	public Beitrag(CodingSessionModell session, String betreff, String beschreibung,
 			boolean schreibschutz) {
 		
 		this.session = session;
@@ -18,10 +20,10 @@ public class Beitrag {
 		date=System.currentTimeMillis();
 		id=CommunityFeed.getAnzahl();
 	}
-	public CodingSession getSession() {
+	public CodingSessionModell getSession() {
 		return session;
 	}
-	public void setSession(CodingSession session) {
+	public void setSession(CodingSessionModell session) {
 		this.session = session;
 	}
 	public String getBetreff() {

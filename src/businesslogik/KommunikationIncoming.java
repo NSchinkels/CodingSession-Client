@@ -20,7 +20,7 @@ public class KommunikationIncoming {
 	TopicSubscriber topsubCode;
 	TopicSubscriber topsubEinladung;
 	TopicSubscriber tobsubChat;
-	HashMap<String, String> csEinladung;
+	CodingSessionModell csEinladung;
 	Session session;
 	Object lockCode;
 	Object lockEinladung;
@@ -72,12 +72,9 @@ public class KommunikationIncoming {
 					if (message instanceof ObjectMessage) {
 						// System.out.println("OM bekommen");
 						synchronized (lockEinladung) {
-
 							try {
-								csEinladung = ((HashMap<String, String>) ((ObjectMessage) message)
-										.getObject());
+								csEinladung = ((CodingSessionModell) ((ObjectMessage) message).getObject());
 								lockEinladung.notifyAll();
-								System.out.println(csEinladung.get("id"));
 								message.acknowledge();
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
@@ -119,7 +116,7 @@ public class KommunikationIncoming {
 
 	}
 
-	public HashMap<String, String> getEinladung() {
+	public CodingSessionModell getEinladung() {
 		return this.csEinladung;
 	}
 

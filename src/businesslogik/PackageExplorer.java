@@ -4,12 +4,12 @@ import java.util.HashMap;
 
 public class PackageExplorer {
 	// CodingSessions werden über die ID geholt
-	private HashMap<Integer, CodingSession> inhalt;
+	private HashMap<Integer, CodingSessionModell> inhalt;
 
-	public void add(CodingSession cs) {
+	public void add(CodingSessionModell cs) {
 		inhalt.put(cs.getId(),cs);
 	}
-	public CodingSession get(int id){
+	public CodingSessionModell get(int id){
 		return inhalt.get(id);
 	}
 }

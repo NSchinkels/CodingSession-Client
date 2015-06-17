@@ -73,7 +73,7 @@ public class KommunikationOutgoing {
 	}
 	
 
-	public void ladeEin(HashMap<String, String> cs, int freundId) {
+	public void ladeEin(CodingSessionModell cs, int freundId) {
 		try {
 			ObjectMessage om = session.createObjectMessage(cs);
 			om.setIntProperty("id", freundId);
