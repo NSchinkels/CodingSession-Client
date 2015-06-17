@@ -18,12 +18,12 @@
                </image>
             </ImageView>
             <Region HBox.hgrow="ALWAYS" />
-            <Hyperlink onAction="#linkGeklickt" prefHeight="23.0" prefWidth="96.0" text="Profil bearbeiten">
+            <Hyperlink onAction="#profilBearbeitenGeklickt" prefHeight="23.0" prefWidth="96.0" text="Profil bearbeiten">
                <HBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </HBox.margin>
             </Hyperlink>
-            <Hyperlink text="Abmelden">
+            <Hyperlink onAction="#abmeldenGeklickt" text="Abmelden">
                <HBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </HBox.margin>
@@ -46,7 +46,7 @@
    <bottom>
       <HBox BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="CodingSession starten">
+            <Button mnemonicParsing="false" onAction="#codingSessionStartenGeklickt" text="CodingSession starten">
                <HBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </HBox.margin>

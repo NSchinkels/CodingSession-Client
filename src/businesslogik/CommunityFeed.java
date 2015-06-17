@@ -1,11 +1,40 @@
 package businesslogik;
 
-public class CommunityFeed {
+import java.util.Optional;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.layout.GridPane;
+
+public class CommunityFeed extends CodingSessionDialoge{
+	
 	private Beitrag[] beitraege;
-	static int anzahl;
+	private static int anzahl;
+	
+	private TextField txtTitel;
 
 	public CommunityFeed() {
 		// hier werden noch die Sachen vom Server gezogen
+	}
+	
+	@FXML
+	public void communityFeedAktualisierenGeklickt(ActionEvent event){
+		System.out.println("Test");
+	}
+	
+	@FXML
+	public void abmeldenGeklickt(ActionEvent event){
+		System.out.println("Test");
+	}
+	
+	@FXML
+	public void codingSessionStartenGeklickt(ActionEvent event){
+		erstelleStartDialog();
 	}
 
 	public void addBeitrag(Beitrag beitrag) {
@@ -14,14 +43,13 @@ public class CommunityFeed {
 		//hier wird dann gespeichert
 	}
 	public void refresh(){
-		//Neue Beitreage vom Server bekommen
+		//Neue Beitraege vom Server bekommen
 	}
 	public static int getAnzahl(){
-		//zuerst aktualiern vom server
+		//zuerst aktualisieren vom server
 		return anzahl;
 	}
 	public Beitrag[] getBeitraege() {
 		return beitraege;
 	}
-
 }
