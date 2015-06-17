@@ -6,7 +6,9 @@ import businesslogik.BenutzerkontoOriginal;
 
 public class DatenhaltungKonto {
 	private final String PERSISTENCE_UNIT_NAME = "Benutzerkonten";
-	private EntityManagerFactory factory;
+	private EntityManagerFactory factory = Persistence
+			.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	EntityManager em = factory.createEntityManager();
 	/**
 	 * Methode die ein Benzuterkonto in der Datenbank speichert
 	 * @param bk
@@ -14,9 +16,6 @@ public class DatenhaltungKonto {
 	 */
 	public void schreibeDB(BenutzerkontoOriginal konto) throws PersistenzException {
 		try {
-			factory = Persistence
-					.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-			EntityManager em = factory.createEntityManager();
 			em.getTransaction().begin();
 			em.persist(konto);
 			em.getTransaction().commit();
@@ -34,14 +33,27 @@ public class DatenhaltungKonto {
 	public BenutzerkontoOriginal leseDB(String email) throws PersistenzException{
 		BenutzerkontoOriginal konto = null;
 		try {
-			factory = Persistence
-					.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-			EntityManager em = factory.createEntityManager();
 			konto = em.find(BenutzerkontoOriginal.class,email);
 		} catch (Exception e) {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		}
 		return konto;
+	}
+	/**
+	 * Methode die Prueft, ob eine E-Mail Addresse schon vergeben ist
+	 * @param email
+	 * @throws PersistenzException
+	 * @throws EmailVorhandenException
+	 */
+	public void mailVorhanden(String email) throws PersistenzException,EmailVorhandenException{
+		try {
+			if(em.find(BenutzerkontoOriginal.class,email)!=null){
+				throw new EmailVorhandenException();
+			}
+		} catch (Exception e) {
+			throw new PersistenzException(
+					"Fehler bei der Synchronisation mit der Datenbank");
+		}
 	}
 }
