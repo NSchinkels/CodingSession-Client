@@ -2,6 +2,10 @@ package businesslogik;
 
 import java.io.Serializable;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="CodingSessionModell")
 public class CodingSessionModell implements Serializable{
 
 	
@@ -11,6 +15,7 @@ public class CodingSessionModell implements Serializable{
 		private int id;
 
 		// Daten der CS
+		@Id
 		private String titel;
 		private boolean speichern;
 		
