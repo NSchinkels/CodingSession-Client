@@ -56,8 +56,7 @@ public class Datenhaltung {
 	}
 
 	/**
-	 * Methode die anhand einer E-Mail Addresse ein Konto aus der Datenbank
-	 * liest
+	 * Methode die anhand einer E-Mail Addresse ein Konto aus der Datenbank  liest
 	 * 
 	 * @param email
 	 * @return BenutzerKontoOriginal
