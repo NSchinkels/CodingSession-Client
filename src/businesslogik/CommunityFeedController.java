@@ -1,5 +1,6 @@
 package businesslogik;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -19,7 +20,7 @@ public class CommunityFeedController{
 	
 	@FXML
 	public void abmeldenGeklickt(ActionEvent event){
-		System.out.println("Test");
+		Platform.exit();
 	}
 	
 	@FXML

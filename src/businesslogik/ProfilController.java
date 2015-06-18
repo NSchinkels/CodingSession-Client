@@ -2,6 +2,7 @@ package businesslogik;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +32,7 @@ public class ProfilController extends CodingSessionDialog{
 	
 	@FXML
 	public void abmeldenGeklickt(ActionEvent event){
-		System.out.println("Test");
+		Platform.exit();
 	}
 	
 	@FXML 

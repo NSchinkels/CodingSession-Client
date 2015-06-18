@@ -39,7 +39,7 @@ public class Hauptfenster implements Initializable{
 	private Tab tabProfil;
 	
 	@FXML
-	private Tab tabCommunityFeedController;
+	private Tab tabCommunityFeed;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb){
@@ -56,7 +56,7 @@ public class Hauptfenster implements Initializable{
 		tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>(){
 			@Override
 			public void changed(ObservableValue<? extends Tab> ov, Tab alterTab, Tab neuerTab){
-				if(neuerTab == tabCommunityFeedController && neuerTab.getContent() == null){
+				if(neuerTab == tabCommunityFeed && neuerTab.getContent() == null){
 		           try{
 		        	   FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));
 		               communityFeedController = new CommunityFeedController();
