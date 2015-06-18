@@ -78,6 +78,10 @@ public class CodingSessionController implements Initializable {
 			}
 		}.start();
 	}
+	@FXML
+	public void txtCodingSessionFeld(KeyEvent event){
+		
+	}
 
 	@FXML
 	public void txtChatEnterGeklickt(KeyEvent event) {
