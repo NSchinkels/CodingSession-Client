@@ -78,8 +78,9 @@ public class CodingSessionController implements Initializable {
 			}
 		}.start();
 	}
+	
 	@FXML
-	public void txtCodingSessionFeld(KeyEvent event){
+	public void txtCodingSessionFormatierung(KeyEvent event){
 		
 	}
 

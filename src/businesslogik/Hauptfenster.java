@@ -83,7 +83,7 @@ public class Hauptfenster implements Initializable{
 		try{
 			((Node) (event.getSource())).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
-			CodingSessionModell csmod =new CodingSessionModell(benId,1,"Testtitel",true,null,1,"sd");
+			CodingSessionModell csmod=new CodingSessionDialoge().getResult();
 			CodingSessionController cs=new CodingSessionController(csmod,comi,como);
 			loader.setController(cs);
 			Parent root = (Parent) loader.load();
