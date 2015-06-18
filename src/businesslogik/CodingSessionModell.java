@@ -11,11 +11,12 @@ public class CodingSessionModell implements Serializable{
 	
 		private static final long serialVersionUID = 1L;
 		// IDs
-		private int benutzerId;
+		private String benutzerMail;
+		@Id
+		@GeneratedValue
 		private int id;
 
 		// Daten der CS
-		@Id
 		private String titel;
 		private boolean speichern;
 		
@@ -31,10 +32,9 @@ public class CodingSessionModell implements Serializable{
 			teilnehmer = new String[10];
 		}
 		
-		public CodingSessionModell(int benutzerId, int id, String titel,
+		public CodingSessionModell(int benutzerId, String benutzerMail, String titel,
 				boolean speichern,String code) {
-			this.benutzerId = benutzerId;
-			this.id = id;
+			this.benutzerMail = benutzerMail;
 			this.titel = titel;
 			this.speichern = speichern;
 			this.teilnehmer = new String[10];
@@ -42,12 +42,12 @@ public class CodingSessionModell implements Serializable{
 			this.code = code;
 		}
 
-		public int getBenutzerId() {
-			return benutzerId;
+		public String getBenutzerMail() {
+			return benutzerMail;
 		}
 
-		public void setBenutzerId(int benutzerId) {
-			this.benutzerId = benutzerId;
+		public void setBenutzerId(String benutzerMail) {
+			this.benutzerMail = benutzerMail;
 		}
 
 		public int getId() {

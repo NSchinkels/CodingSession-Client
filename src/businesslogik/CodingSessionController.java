@@ -47,9 +47,9 @@ public class CodingSessionController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		chat = new Chat(como, comi, "" + csmod.getBenutzerId(), csmod.getId());
+		chat = new Chat(como, comi, "" + csmod.getBenutzerMail(), csmod.getId());
 		como.starteCs("CodingSession" + csmod.getId());
-		comi.bekommeCode("CodingSession" + csmod.getId(), csmod.getBenutzerId());
+		comi.bekommeCode("CodingSession" + csmod.getId(), csmod.getBenutzerMail());
 		new Thread() {
 			public void run() {
 				while (true) {
