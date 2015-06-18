@@ -27,14 +27,13 @@ public class CodingSessionModell implements Serializable{
 		}
 		
 		public CodingSessionModell(int benutzerId, int id, String titel,
-				boolean speichern, String[] teilnehmer, int anzahlTeilnehmer,
-				String code) {
+				boolean speichern,String code) {
 			this.benutzerId = benutzerId;
 			this.id = id;
 			this.titel = titel;
 			this.speichern = speichern;
-			this.teilnehmer = teilnehmer;
-			this.anzahlTeilnehmer = anzahlTeilnehmer;
+			this.teilnehmer = new String[10];
+			this.anzahlTeilnehmer = 1;
 			this.code = code;
 		}
 
