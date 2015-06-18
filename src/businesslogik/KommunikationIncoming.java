@@ -22,10 +22,10 @@ public class KommunikationIncoming {
 	CodingSessionModell csEinladung;
 	Session session;
 	Object lockEinladung;
-	int benutzerId;
+	String benutzerId;
 	boolean change;
 
-	public KommunikationIncoming(int benutzerId, KommunikationStart komser,
+	public KommunikationIncoming(String benutzerId, KommunikationStart komser,
 			Object lockEinladung) {
 
 		this.session = komser.getSession();
@@ -34,7 +34,7 @@ public class KommunikationIncoming {
 		this.komser = komser;
 	}
 
-	public void bekommeCode(String topic, int benutzer) {
+	public void bekommeCode(String topic, String benutzer) {
 		// hier wartet später das JMS aud Code von Csen
 		try {
 			topsubCode = session.createDurableSubscriber(komser.getTopicCode(),
@@ -44,7 +44,7 @@ public class KommunikationIncoming {
 					try {
 						if (!neuerCode
 								.equals(((TextMessage) message).getText())
-								&& message.getIntProperty("sender") != benutzer) {
+								&& message.getStringProperty("sender") != benutzer) {
 							neuerCode = ((TextMessage) message).getText();
 							change = true;
 						}

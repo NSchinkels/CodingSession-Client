@@ -29,7 +29,7 @@ public class Hauptfenster implements Initializable{
 	KommunikationOutgoing como;
 	CodingSessionModell csmod;
 	
-	int benId;
+	String benId;
 	int csId;
 	
 	@FXML
@@ -77,7 +77,7 @@ public class Hauptfenster implements Initializable{
 	@FXML
 	public void testMethode(ActionEvent event){
 		csmod = new CodingSessionDialog().showAndWait().get();
-		benId=(int)(Math.random()*123123)+1;
+		benId=String.valueOf((int)(Math.random()*123123)+1);
 		com=new KommunikationStart(benId);
 		lock=new Object();
 		comi=new KommunikationIncoming(benId, com, new Object());

@@ -116,7 +116,7 @@ public class CodingSessionController implements Initializable {
 		return false;
 	}
 
-	public void sendeEinladung(int benutzer) {
+	public void sendeEinladung(String benutzer) {
 		como.ladeEin(csmod, benutzer);
 	}
 

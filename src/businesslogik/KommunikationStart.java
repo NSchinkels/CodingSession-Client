@@ -23,10 +23,10 @@ public class KommunikationStart {
 	Topic topicChat;
 	MessageProducer producerEinladung;
 	TopicSubscriber topsubEinladung;
-	int benutzerId;
+	String benutzerId;
 
 	
-	public KommunikationStart(int benutzerId) {
+	public KommunikationStart(String benutzerId) {
 		this.benutzerId=benutzerId;
 		try {
 			connectionFactory = new ActiveMQConnectionFactory();

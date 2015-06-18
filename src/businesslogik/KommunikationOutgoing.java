@@ -16,9 +16,9 @@ public class KommunikationOutgoing {
 	MessageProducer producerChat;
 	TextMessage textMessage;
 	Session session;
-	int benutzerId;
+	String benutzerId;
 
-	public KommunikationOutgoing(int benutzerId,KommunikationStart komser) {
+	public KommunikationOutgoing(String benutzerId,KommunikationStart komser) {
 		this.session=komser.getSession();
 		this.benutzerId=benutzerId;
 		this.komser=komser;
@@ -51,7 +51,7 @@ public class KommunikationOutgoing {
 		// code an topic geschrieben
 		try {
 			textMessage = session.createTextMessage(nachricht);
-			textMessage.setIntProperty("sender",benutzerId);
+			textMessage.setStringProperty("sender",benutzerId);
 			producerCode.send(textMessage);
 			System.out.println("Code veröffentlicht von "+benutzerId);
 		} catch (JMSException e) {
@@ -73,10 +73,10 @@ public class KommunikationOutgoing {
 	}
 	
 
-	public void ladeEin(CodingSessionModell cs, int freundId) {
+	public void ladeEin(CodingSessionModell cs, String freundEmail) {
 		try {
 			ObjectMessage om = session.createObjectMessage(cs);
-			om.setIntProperty("id", freundId);
+			om.setStringProperty("id", freundEmail);
 			System.out.println("om erstellt");
 			komser.getProducerEinladung().send(om);
 			System.out.println("Veröffentlicht");
