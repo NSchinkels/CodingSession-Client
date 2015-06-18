@@ -24,8 +24,12 @@ public class Datenhaltung {
 			em.persist(konto);
 			em.getTransaction().commit();
 		} catch (Exception e) {
+			if(em.getTransaction() != null && em.getTransaction().isActive())
+				em.getTransaction().rollback();
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
+		}finally{
+			em.close();
 		}
 	}
 
@@ -42,8 +46,12 @@ public class Datenhaltung {
 			em.persist(cs);
 			em.getTransaction().commit();
 		} catch (Exception e) {
+			if(em.getTransaction() != null && em.getTransaction().isActive())
+				em.getTransaction().rollback();
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
+		}finally{
+			em.close();
 		}
 	}
 
@@ -69,7 +77,8 @@ public class Datenhaltung {
 
 	/**
 	 * Methode die anhand eines Titels eine CS aus der DB liest
-	 * 
+	 * Es wird hier ein JP Query verwendet um anhand der Mail eines
+	 * Nutzers alle seine CodingSessions zu ermitteln
 	 * @param titel
 	 * @return
 	 * @throws PersistenzException

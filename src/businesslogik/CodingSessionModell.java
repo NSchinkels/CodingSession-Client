@@ -13,7 +13,7 @@ public class CodingSessionModell implements Serializable{
 		// IDs
 		private String benutzerMail;
 		@Id
-		@GeneratedValue
+		@GeneratedValue(strategy = GenerationType.AUTO)
 		private int id;
 
 		// Daten der CS
