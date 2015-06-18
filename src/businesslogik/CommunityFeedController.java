@@ -3,12 +3,12 @@ package businesslogik;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-public class CommunityFeed extends CodingSessionDialog{
+public class CommunityFeedController{
 	
 	private Beitrag[] beitraege;
 	private static int anzahl;
 
-	public CommunityFeed() {
+	public CommunityFeedController() {
 		// hier werden noch die Sachen vom Server gezogen
 	}
 	
@@ -24,7 +24,7 @@ public class CommunityFeed extends CodingSessionDialog{
 	
 	@FXML
 	public void codingSessionStartenGeklickt(ActionEvent event){
-		erstelleStartDialog();
+		//erstelleStartDialog();
 	}
 
 	public void addBeitrag(Beitrag beitrag) {

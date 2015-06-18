@@ -18,7 +18,7 @@ public class Beitrag implements Serializable{
 		this.beschreibung = beschreibung;
 		this.schreibschutz = schreibschutz;
 		date=System.currentTimeMillis();
-		id=CommunityFeed.getAnzahl();
+		id=CommunityFeedController.getAnzahl();
 	}
 	public CodingSessionModell getSession() {
 		return session;

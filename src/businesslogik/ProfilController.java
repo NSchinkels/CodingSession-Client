@@ -9,7 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Profil extends CodingSessionDialog{
+public class ProfilController extends CodingSessionDialog{
 	
 	Profilbearbeitung bearbeitung;
 	

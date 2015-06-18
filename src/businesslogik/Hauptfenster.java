@@ -22,8 +22,8 @@ import javafx.stage.Stage;
 public class Hauptfenster implements Initializable{
 	
 	Object lock;
-	Profil profil;
-	CommunityFeed communityFeed;
+	ProfilController profilController;
+	CommunityFeedController communityFeedController;
 	KommunikationStart com;
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
@@ -39,14 +39,14 @@ public class Hauptfenster implements Initializable{
 	private Tab tabProfil;
 	
 	@FXML
-	private Tab tabCommunityFeed;
+	private Tab tabCommunityFeedController;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb){
 		 try{
          	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profil.fxml"));
-         	profil = new Profil();
- 			loader.setController(profil);
+         	profilController = new ProfilController();
+ 			loader.setController(profilController);
  			Parent root = (Parent) loader.load();
             tabProfil.setContent(root);
          } catch (IOException e){
@@ -56,11 +56,11 @@ public class Hauptfenster implements Initializable{
 		tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>(){
 			@Override
 			public void changed(ObservableValue<? extends Tab> ov, Tab alterTab, Tab neuerTab){
-				if(neuerTab == tabCommunityFeed && neuerTab.getContent() == null){
+				if(neuerTab == tabCommunityFeedController && neuerTab.getContent() == null){
 		           try{
 		        	   FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));
-		               communityFeed = new CommunityFeed();
-		               loader.setController(communityFeed);
+		               communityFeedController = new CommunityFeedController();
+		               loader.setController(communityFeedController);
 		               Parent root = (Parent) loader.load();
 		               neuerTab.setContent(root);
 		           } catch(IOException e){
