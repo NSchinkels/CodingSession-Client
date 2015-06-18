@@ -5,16 +5,16 @@ import javax.persistence.*;
 import businesslogik.BenutzerkontoOriginal;
 
 public class DatenhaltungKonto {
-	private final String PERSISTENCE_UNIT_NAME = "Benutzerkonten";
-	private EntityManagerFactory factory = Persistence
+	private static final String PERSISTENCE_UNIT_NAME = "Benutzerkonten";
+	private static EntityManagerFactory factory = Persistence
 			.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-	EntityManager em = factory.createEntityManager();
+	private static EntityManager em = factory.createEntityManager();
 	/**
 	 * Methode die ein Benzuterkonto in der Datenbank speichert
 	 * @param bk
 	 * @throws PersistenzException
 	 */
-	public void schreibeDB(BenutzerkontoOriginal konto) throws PersistenzException {
+	public static void schreibeDB(BenutzerkontoOriginal konto) throws PersistenzException {
 		try {
 			em.getTransaction().begin();
 			em.persist(konto);
@@ -30,7 +30,7 @@ public class DatenhaltungKonto {
 	 * @return BenutzerKontoOriginal
 	 * @throws PersistenzException
 	 */
-	public BenutzerkontoOriginal leseDB(String email) throws PersistenzException{
+	public static BenutzerkontoOriginal leseDB(String email) throws PersistenzException{
 		BenutzerkontoOriginal konto = null;
 		try {
 			konto = em.find(BenutzerkontoOriginal.class,email);
@@ -46,7 +46,7 @@ public class DatenhaltungKonto {
 	 * @throws PersistenzException
 	 * @throws EmailVorhandenException
 	 */
-	public void mailVorhanden(String email) throws PersistenzException,EmailVorhandenException{
+	public static void mailVorhanden(String email) throws PersistenzException,EmailVorhandenException{
 		try {
 			if(em.find(BenutzerkontoOriginal.class,email)!=null){
 				throw new EmailVorhandenException();
@@ -63,9 +63,9 @@ public class DatenhaltungKonto {
 	 * @throws PersistenzException
 	 * @throws FalschesPasswortException
 	 */
-	public void passwortRichtig(String email,String passwort) throws PersistenzException,FalschesPasswortException{
+	public static void passwortRichtig(String email,String passwort) throws PersistenzException,FalschesPasswortException{
 		try{
-			if(this.leseDB(email).getPasswort() != passwort)
+			if(leseDB(email).getPasswort() != passwort)
 				throw new FalschesPasswortException();
 		}catch(Exception e){
 			throw new PersistenzException();

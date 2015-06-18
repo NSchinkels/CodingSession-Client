@@ -2,6 +2,7 @@ package businesslogik;
 
 import javax.persistence.*;
 
+
 import java.io.*;
 
 @Entity

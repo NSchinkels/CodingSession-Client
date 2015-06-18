@@ -28,7 +28,6 @@ public class Registrierung implements Initializable {
 	int id = 5;
 
 	private BenutzerkontoGeschuetzt bg = new BenutzerkontoGeschuetzt();
-	private ArrayList<BenutzerkontoOriginal> benutzerliste = new ArrayList<BenutzerkontoOriginal>();
 
 	@FXML
 	private VBox vboxRoot;
@@ -136,13 +135,13 @@ public class Registrierung implements Initializable {
 	 * Erstellt ein Benutzerkonto (Nickname) mit den uebergebenen Parametern.
 	 */
 	private BenutzerkontoOriginal erstelleNick(String email, String pw, String name) {
-		return bg.erstelleNickKonto(email, pw, name, this.benutzerliste, id);
+		return bg.erstelleNickKonto(email, pw, name,  id);
 	}
 
 	/**
 	 * Erstellt ein Benutzerkonto (Realname) mit den uebergebenen Parametern.
 	 */
 	private BenutzerkontoOriginal erstelleReal(String email, String pw, String vor, String nach) {
-		return bg.erstelleRealKonto(email, pw, vor, nach, benutzerliste, id);
+		return bg.erstelleRealKonto(email, pw, vor, nach, id);
 	}
 }
