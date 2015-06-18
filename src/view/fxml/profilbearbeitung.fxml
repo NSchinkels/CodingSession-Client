@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="559.0" prefWidth="789.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Desktop/CodingSession.png" />
+               </image>
+            </ImageView>
+            <Region HBox.hgrow="ALWAYS" />
+            <Hyperlink onAction="#abmeldenGeklickt" text="Abmelden">
+               <HBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </HBox.margin>
+            </Hyperlink>
+            <TextField promptText="Suche nach Freunden..">
+               <HBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#codingSessionStartenGeklickt" text="CodingSession starten">
+               <HBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </HBox.margin>
+            </Button>
+            <Region HBox.hgrow="ALWAYS" />
+            <Hyperlink text="Impressum">
+               <HBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </HBox.margin>
+            </Hyperlink>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox>
+               <children>
+                  <Label text="Profilbearbeitung">
+                     <VBox.margin>
+                        <Insets bottom="30.0" left="20.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Allgemeine Informationen">
+                     <VBox.margin>
+                        <Insets bottom="18.0" left="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox>
+                     <VBox.margin>
+                        <Insets bottom="18.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Vorname:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txtVorname" promptText="Vorname">
+                           <HBox.margin>
+                              <Insets left="95.0" />
+                           </HBox.margin></TextField>
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <VBox.margin>
+                        <Insets bottom="18.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Nachname:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txtNachname" promptText="Nachname">
+                           <HBox.margin>
+                              <Insets left="86.0" />
+                           </HBox.margin></TextField>
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <VBox.margin>
+                        <Insets bottom="18.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Nickname:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txtNickname" promptText="Nickname">
+                           <HBox.margin>
+                              <Insets left="91.0" />
+                           </HBox.margin></TextField>
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <VBox.margin>
+                        <Insets bottom="18.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Programmierkenntnisse:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txtProgKenntnisse" promptText="Programmierkenntnisse">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin></TextField>
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label text="E-Mail:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="Um deine E-Mail-Adresse zu ändern, kontaktiere einen Administrator." HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="112.0" top="3.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <Label text="Passwort ändern">
+                     <VBox.margin>
+                        <Insets bottom="18.0" left="20.0" top="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox>
+                     <children>
+                        <Label text="Altes Passwort:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="3.0" />
+                           </HBox.margin></Label>
+                        <PasswordField fx:id="pwdAltesPasswort" promptText="Altes Passwort">
+                           <HBox.margin>
+                              <Insets left="70.0" />
+                           </HBox.margin>
+                        </PasswordField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="18.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label text="Neues Passwort:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="3.0" />
+                           </HBox.margin></Label>
+                        <PasswordField fx:id="pwdNeuesPasswort" promptText="Neues Passwort">
+                           <HBox.margin>
+                              <Insets left="62.0" />
+                           </HBox.margin>
+                        </PasswordField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="18.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label text="Passwort bestätigen:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="3.0" />
+                           </HBox.margin></Label>
+                        <PasswordField fx:id="pwdPasswortBestaetigung" promptText="Passwort bestätigen">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </PasswordField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children></VBox>
+         </content>
+      </ScrollPane>
+   </center>
+   <right>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="318.0" prefWidth="125.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox />
+         </content>
+      </ScrollPane>
+   </right>
+</BorderPane>

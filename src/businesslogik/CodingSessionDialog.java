@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 
-public abstract class CodingSessionDialoge {
+public abstract class CodingSessionDialog {
 	
 	protected TextField txtTitel;
 
@@ -37,6 +37,7 @@ public abstract class CodingSessionDialoge {
 		ButtonType neinButtonType = new ButtonType("Nein", ButtonData.NO);
 		ButtonType abbrechenButtonType = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
 		dialog.getDialogPane().getButtonTypes().addAll(jaButtonType, neinButtonType, abbrechenButtonType);
+		dialog.getDialogPane().getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		
 		dialog.setResultConverter(dialogButton -> {
 		    if (dialogButton == jaButtonType) {

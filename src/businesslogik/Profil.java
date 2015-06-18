@@ -1,24 +1,32 @@
 package businesslogik;
 
-import java.io.Serializable;
-import java.util.Optional;
+import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Profil extends CodingSessionDialoge implements Serializable{
+public class Profil extends CodingSessionDialog{
 	
-	private TextField txtTitel;
+	Profilbearbeitung bearbeitung;
 	
 	@FXML
 	public void profilBearbeitenGeklickt(ActionEvent event){
-		System.out.println("Test");
+		try{
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profilbearbeitung.fxml"));
+			bearbeitung = new Profilbearbeitung();
+			loader.setController(bearbeitung);
+			Parent root = (Parent) loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);		
+			stage.setScene(scene);
+			stage.show();
+		} catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML

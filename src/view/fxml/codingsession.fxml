@@ -64,7 +64,7 @@
                <content>
                   <ScrollPane fitToHeight="true" fitToWidth="true">
                      <content>
-                        <TextArea fx:id="txtCodingSession" #txtCodingSessionFeld/>
+                        <TextArea fx:id="txtCodingSession" onKeyPressed="#txtCodingSessionFormatierung" />
                      </content>
                   </ScrollPane>
                </content>

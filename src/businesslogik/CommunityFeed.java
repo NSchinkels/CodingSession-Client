@@ -1,22 +1,12 @@
 package businesslogik;
 
-import java.util.Optional;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.layout.GridPane;
 
-public class CommunityFeed extends CodingSessionDialoge{
+public class CommunityFeed extends CodingSessionDialog{
 	
 	private Beitrag[] beitraege;
 	private static int anzahl;
-	
-	private TextField txtTitel;
 
 	public CommunityFeed() {
 		// hier werden noch die Sachen vom Server gezogen

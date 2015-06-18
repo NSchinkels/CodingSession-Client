@@ -14,7 +14,7 @@
                   <Insets />
                </opaqueInsets>
                <HBox.margin>
-                  <Insets left="40.0" />
+                  <Insets left="40.0" top="2.0" />
                </HBox.margin>
             </Label>
             <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="181.0">
@@ -31,7 +31,7 @@
          <children>
             <Label text="Vorname:">
                <HBox.margin>
-                  <Insets left="40.0" />
+                  <Insets left="40.0" top="2.0" />
                </HBox.margin>
             </Label>
             <TextField fx:id="txtVorname" prefHeight="25.0" prefWidth="181.0" promptText="Vorname">
@@ -53,7 +53,7 @@
             </Label>
             <TextField fx:id="txtNachname" prefHeight="25.0" prefWidth="181.0" promptText="Nachname">
                <HBox.margin>
-                  <Insets bottom="2.0" left="32.0" />
+                  <Insets left="32.0" />
                </HBox.margin>
             </TextField>
          </children>
@@ -65,7 +65,7 @@
          <children>
             <Label text="Nickname:">
                <HBox.margin>
-                  <Insets left="40.0" />
+                  <Insets left="40.0" top="2.0" />
                </HBox.margin>
             </Label>
             <TextField fx:id="txtNickname" prefHeight="25.0" prefWidth="181.0" promptText="Nickname">
@@ -82,7 +82,7 @@
          <children>
             <Label text="E-Mail:">
                <HBox.margin>
-                  <Insets left="40.0" />
+                  <Insets left="40.0" top="2.0" />
                </HBox.margin>
             </Label>
             <TextField fx:id="txtEmail" prefHeight="25.0" prefWidth="181.0" promptText="E-Mail">
@@ -99,7 +99,7 @@
          <children>
             <Label text="Passwort:">
                <HBox.margin>
-                  <Insets left="40.0" />
+                  <Insets left="40.0" top="2.0" />
                </HBox.margin>
             </Label>
             <PasswordField fx:id="txtPasswort" prefHeight="25.0" prefWidth="181.0" promptText="Passwort">

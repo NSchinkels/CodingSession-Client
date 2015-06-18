@@ -37,9 +37,9 @@
       </HBox>
    </top>
    <right>
-      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="318.0" prefWidth="123.0" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="318.0" prefWidth="125.0" BorderPane.alignment="CENTER">
          <content>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox />
          </content>
       </ScrollPane>
    </right>
@@ -63,7 +63,7 @@
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <content>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox />
          </content>
       </ScrollPane>
    </center>
