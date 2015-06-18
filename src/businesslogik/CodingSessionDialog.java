@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 
-public abstract class CodingSessionDialog {
+public  class CodingSessionDialog extends Dialog<CodingSessionModell> {
 	
 	protected TextField txtTitel;
 
@@ -17,9 +17,8 @@ public abstract class CodingSessionDialog {
 	 * Erstellt ein Dialog
 	 */
 	protected void erstelleStartDialog(){
-		Dialog<String> dialog = new Dialog<String>();
-		dialog.setTitle("CodingSession starten");
-		dialog.setHeaderText(null);
+		this.setTitle("CodingSession starten");
+		this.setHeaderText(null);
 		
 		txtTitel = new TextField();
 		txtTitel.setPromptText("Titel der CodingSession");
@@ -31,27 +30,29 @@ public abstract class CodingSessionDialog {
 		grid.add(lblTitel, 1, 1);
 		grid.add(txtTitel, 2, 1);
 		grid.add(lblSpeichern, 1, 2);
-		dialog.getDialogPane().setContent(grid);
+		this.getDialogPane().setContent(grid);
 		
 		ButtonType jaButtonType = new ButtonType("Ja", ButtonData.YES);
 		ButtonType neinButtonType = new ButtonType("Nein", ButtonData.NO);
 		ButtonType abbrechenButtonType = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
-		dialog.getDialogPane().getButtonTypes().addAll(jaButtonType, neinButtonType, abbrechenButtonType);
-		dialog.getDialogPane().getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		this.getDialogPane().getButtonTypes().addAll(jaButtonType, neinButtonType, abbrechenButtonType);
+		this.getDialogPane().getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		
-		dialog.setResultConverter(dialogButton -> {
-		    if (dialogButton == jaButtonType) {
-		        return txtTitel.getText();
+		this.setResultConverter(thisButton -> {
+		    if (thisButton == jaButtonType) {
+		        return new CodingSessionModell();
 		    }
 		    return null;
 		});
 		
-		Optional<String> result = dialog.showAndWait();
-		if(result.isPresent()){
-			System.out.println(result.get());
-		}
+		
 	}
 	
+	public CodingSessionDialog() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Erstellt ein Dialog
 	 */

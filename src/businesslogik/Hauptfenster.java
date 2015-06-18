@@ -2,6 +2,7 @@ package businesslogik;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -26,6 +27,7 @@ public class Hauptfenster implements Initializable{
 	KommunikationStart com;
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
+	CodingSessionModell csmod;
 	
 	int benId;
 	int csId;
@@ -74,6 +76,7 @@ public class Hauptfenster implements Initializable{
 	
 	@FXML
 	public void testMethode(ActionEvent event){
+		csmod = new CodingSessionDialog().showAndWait().get();
 		benId=(int)(Math.random()*123123)+1;
 		com=new KommunikationStart(benId);
 		lock=new Object();
@@ -83,7 +86,6 @@ public class Hauptfenster implements Initializable{
 		try{
 			((Node) (event.getSource())).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
-			CodingSessionModell csmod=new CodingSessionDialoge().getResult();
 			CodingSessionController cs=new CodingSessionController(csmod,comi,como);
 			loader.setController(cs);
 			Parent root = (Parent) loader.load();
