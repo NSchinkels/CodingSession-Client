@@ -29,10 +29,10 @@ public class BenutzerkontoGeschuetzt {
 	public BenutzerkontoOriginal erstelleNickKonto(String email, String pw,
 			String name, int id) {
 		try {
-			DatenhaltungKonto.mailVorhanden(email);
+			Datenhaltung.mailVorhanden(email);
 			BenutzerkontoOriginal konto = new BenutzerkontoNickname(email, pw,
 					name, id);
-			DatenhaltungKonto.schreibeDB(konto);
+			Datenhaltung.schreibeDB(konto);
 			return konto;
 		} catch (EmailVorhandenException ev) {
 			// Was sinvolles machen
@@ -67,10 +67,10 @@ public class BenutzerkontoGeschuetzt {
 	public BenutzerkontoOriginal erstelleRealKonto(String email, String pw,
 			String vor, String nach, int id) {
 		try {
-			DatenhaltungKonto.mailVorhanden(email);
+			Datenhaltung.mailVorhanden(email);
 			BenutzerkontoOriginal konto = new BenutzerkontoRealname(email, pw,
 					vor,nach, id);
-			DatenhaltungKonto.schreibeDB(konto);
+			Datenhaltung.schreibeDB(konto);
 			return konto;
 		} catch (EmailVorhandenException eve) {
 			// Was sinvolles machen

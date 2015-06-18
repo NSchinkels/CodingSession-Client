@@ -2,9 +2,9 @@ package Persistence;
 
 import javax.persistence.*;
 
-import businesslogik.BenutzerkontoOriginal;
+import businesslogik.*;
 
-public class DatenhaltungKonto {
+public class Datenhaltung {
 	private static final String PERSISTENCE_UNIT_NAME = "Benutzerkonten";
 	private static EntityManagerFactory factory = Persistence
 			.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -18,6 +18,21 @@ public class DatenhaltungKonto {
 		try {
 			em.getTransaction().begin();
 			em.persist(konto);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			throw new PersistenzException(
+					"Fehler bei der Synchronisation mit der Datenbank");
+		}
+	}
+	/**
+	 * Methode die eine CodingSession in der Datenbank speichert
+	 * @param cs
+	 * @throws PersistenzException
+	 */
+	public static void schreibeCS(CodingSessionModell cs) throws PersistenzException{
+		try {
+			em.getTransaction().begin();
+			em.persist(cs);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			throw new PersistenzException(
@@ -39,6 +54,22 @@ public class DatenhaltungKonto {
 					"Fehler bei der Synchronisation mit der Datenbank");
 		}
 		return konto;
+	}
+	/**
+	 * Methode die anhand eines Titels eine CS aus der DB liest
+	 * @param titel
+	 * @return
+	 * @throws PersistenzException
+	 */
+	public static CodingSessionModell leseCS(String titel) throws PersistenzException{
+		CodingSessionModell modell = null;
+		try {
+			modell = em.find(CodingSessionModell.class,titel);
+		} catch (Exception e) {
+			throw new PersistenzException(
+					"Fehler bei der Synchronisation mit der Datenbank");
+		}
+		return modell;
 	}
 	/**
 	 * Methode die Prueft, ob eine E-Mail Addresse schon vergeben ist
