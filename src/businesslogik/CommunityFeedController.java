@@ -25,7 +25,7 @@ public class CommunityFeedController{
 	
 	@FXML
 	public void codingSessionStartenGeklickt(ActionEvent event){
-		//erstelleStartDialog();
+		ControllerMediator.getInstance().neueCodingSession();
 	}
 
 	public void addBeitrag(Beitrag beitrag) {

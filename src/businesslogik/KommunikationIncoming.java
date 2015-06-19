@@ -126,4 +126,7 @@ public class KommunikationIncoming {
 	public boolean hasChanged() {
 		return change;
 	}
+	public void beenden(){
+		komser.beenden();
+	}
 }

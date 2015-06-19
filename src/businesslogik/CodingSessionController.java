@@ -25,6 +25,8 @@ public class CodingSessionController implements Initializable {
 
 	// Chat von dieser CS
 	private Chat chat;
+	
+	Thread codingSessionThread;
 
 	@FXML
 	private Button btnTest;
@@ -50,9 +52,10 @@ public class CodingSessionController implements Initializable {
 		chat = new Chat(como, comi, "" + csmod.getBenutzerMail(), csmod.getId());
 		como.starteCs("CodingSession" + csmod.getId());
 		comi.bekommeCode("CodingSession" + csmod.getId(), csmod.getBenutzerMail());
-		new Thread() {
+		codingSessionThread=new Thread() {
 			public void run() {
-				while (true) {
+				boolean running=true;
+				while (running) {
 					try {
 						if (comi.hasChanged()) {
 							netCode = comi.getCode();
@@ -72,11 +75,12 @@ public class CodingSessionController implements Initializable {
 						}
 						Thread.sleep(200);
 					} catch (Exception e) {
-						e.printStackTrace();
+						running=false;
 					}
 				}
 			}
-		}.start();
+		};
+		codingSessionThread.start();
 	}
 	
 	@FXML
@@ -119,5 +123,8 @@ public class CodingSessionController implements Initializable {
 	public void sendeEinladung(String benutzer) {
 		como.ladeEin(csmod, benutzer);
 	}
-
+	public void beenden(){
+		codingSessionThread.interrupt();
+		comi.beenden();
+	}
 }

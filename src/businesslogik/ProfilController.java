@@ -32,12 +32,13 @@ public class ProfilController extends CodingSessionDialog{
 	
 	@FXML
 	public void abmeldenGeklickt(ActionEvent event){
+		ControllerMediator.getInstance().beenden();
 		Platform.exit();
 	}
 	
 	@FXML 
 	public void codingSessionStartenGeklickt(ActionEvent event){
-		erstelleStartDialog();
+		ControllerMediator.getInstance().neueCodingSession();
 	}
 }
 

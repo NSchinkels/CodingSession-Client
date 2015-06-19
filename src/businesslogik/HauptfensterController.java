@@ -19,7 +19,7 @@ import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
 
-public class Hauptfenster implements Initializable{
+public class HauptfensterController implements Initializable{
 	
 	Object lock;
 	ProfilController profilController;
@@ -43,9 +43,11 @@ public class Hauptfenster implements Initializable{
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb){
+		ControllerMediator.getInstance().setHauptfenster(this);
 		 try{
          	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profil.fxml"));
          	profilController = new ProfilController();
+         	ControllerMediator.getInstance().setProfil(profilController);
  			loader.setController(profilController);
  			Parent root = (Parent) loader.load();
             tabProfil.setContent(root);
@@ -60,6 +62,7 @@ public class Hauptfenster implements Initializable{
 		           try{
 		        	   FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));
 		               communityFeedController = new CommunityFeedController();
+		               ControllerMediator.getInstance().setCommunityfeed(communityFeedController);
 		               loader.setController(communityFeedController);
 		               Parent root = (Parent) loader.load();
 		               neuerTab.setContent(root);
@@ -75,18 +78,21 @@ public class Hauptfenster implements Initializable{
 	}
 	
 	@FXML
-	public void testMethode(ActionEvent event){
+	//keine Ahnung ob der noch @fxml braucht,lassich erstmal so
+	public void neueCodingSession(){
 		csmod = new CodingSessionDialog().showAndWait().get();
 		benId=String.valueOf((int)(Math.random()*123123)+1);
 		com=new KommunikationStart(benId);
 		lock=new Object();
 		comi=new KommunikationIncoming(benId, com, new Object());
 		como=new KommunikationOutgoing(benId, com);
-	
+		CodingSessionController cs = null;
+		//@Phillip hier dann bitte den neuen Tab erstellen
 		try{
-			((Node) (event.getSource())).getScene().getWindow().hide();
+			//((Node) (event.getSource())).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
-			CodingSessionController cs=new CodingSessionController(csmod,comi,como);
+			cs=new CodingSessionController(csmod,comi,como);
+			ControllerMediator.getInstance().setCodingsession(cs);
 			loader.setController(cs);
 			Parent root = (Parent) loader.load();
 			Stage stage = new Stage();
