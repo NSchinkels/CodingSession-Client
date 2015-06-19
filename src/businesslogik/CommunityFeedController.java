@@ -28,13 +28,10 @@ public class CommunityFeedController{
 		ControllerMediator.getInstance().neueCodingSession();
 	}
 
-	public void addBeitrag(Beitrag beitrag) {
+	public void addBeitrag(CodingSessionModell csmod) {
 		//aktuelle Anzahl vom Server ziehen
-		beitraege[anzahl++] = beitrag;
+		//beitraege[anzahl++] = beitrag;
 		//hier wird dann gespeichert
-	}
-	public void refresh(){
-		//Neue Beitraege vom Server bekommen
 	}
 	public static int getAnzahl(){
 		//zuerst aktualisieren vom server

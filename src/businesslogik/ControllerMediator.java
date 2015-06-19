@@ -35,14 +35,15 @@ public class ControllerMediator {
 		hauptfenster.neueCodingSession();
 	}
 	public void beenden(){
-		hauptfenster.beenden();
 		if(codingsession !=null)
 			codingsession.beenden();
 	}
 	public void changeCodingSession(){
 		codingsession.changeModell(KommunikationIncoming.getEinladung());
 	}
-	
+	public void addCommunityFeed(CodingSessionModell csmod){
+		communityfeed.addBeitrag(csmod);
+	}
 	
 	
 	public static ControllerMediator getInstance() {

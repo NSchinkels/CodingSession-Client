@@ -21,15 +21,12 @@ public class KommunikationIncoming {
 	TopicSubscriber tobsubChat;
 	static CodingSessionModell csEinladung;
 	Session session;
-	Object lockEinladung;
 	String benutzerId;
 	boolean change;
 
-	public KommunikationIncoming(String benutzerId, KommunikationStart komser,
-			Object lockEinladung) {
+	public KommunikationIncoming(String benutzerId, KommunikationStart komser) {
 
 		this.session = komser.getSession();
-		this.lockEinladung = lockEinladung;
 		this.benutzerId = benutzerId;
 		this.komser = komser;
 	}
@@ -63,17 +60,15 @@ public class KommunikationIncoming {
 			listnerFuerEinladung = new MessageListener() {
 				public void onMessage(Message message) {
 					if (message instanceof ObjectMessage) {
-						synchronized (lockEinladung) {
 							try {
 								csEinladung = ((CodingSessionModell) ((ObjectMessage) message)
 										.getObject());
-								lockEinladung.notifyAll();
+								new EinladungsDialog();
 								message.acknowledge();
 							} catch (Exception e) {
 								// throw new
 								// Exception("Konnte nicht eingeladen werden");
 							}
-						}
 					}
 				}
 			};

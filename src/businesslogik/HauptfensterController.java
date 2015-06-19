@@ -21,14 +21,12 @@ import javafx.stage.Stage;
 
 public class HauptfensterController implements Initializable{
 	
-	Object lock;
 	ProfilController profilController;
 	CommunityFeedController communityFeedController;
 	KommunikationStart com;
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
 	CodingSessionModell csmod;
-	EinladungsThread einladungsthread;
 	
 	String benId;
 	int csId;
@@ -48,11 +46,9 @@ public class HauptfensterController implements Initializable{
 		//wird durch richtige ersetzt
 		benId=String.valueOf((int)(Math.random()*123123)+1);
 		com=new KommunikationStart(benId);
-		lock=new Object();
-		comi=new KommunikationIncoming(benId, com, new Object());
+		comi=new KommunikationIncoming(benId, com);
 		como=new KommunikationOutgoing(benId, com);
 		ControllerMediator.getInstance().setHauptfenster(this);
-		einladungsthread=new EinladungsThread(lock);
 		 try{
          	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profil.fxml"));
          	profilController = new ProfilController();
@@ -111,8 +107,5 @@ public class HauptfensterController implements Initializable{
 		} catch(IOException e){
 			e.printStackTrace();
 		}
-	}
-	public void beenden(){
-		einladungsthread.interrupt();
 	}
 }
