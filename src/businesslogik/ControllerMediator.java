@@ -35,9 +35,16 @@ public class ControllerMediator {
 		hauptfenster.neueCodingSession();
 	}
 	public void beenden(){
+		hauptfenster.beenden();
 		if(codingsession !=null)
 			codingsession.beenden();
 	}
+	public void changeCodingSession(){
+		codingsession.changeModell(KommunikationIncoming.getEinladung());
+	}
+	
+	
+	
 	public static ControllerMediator getInstance() {
         return ControllerMediatorHolder.INSTANCE;
     }

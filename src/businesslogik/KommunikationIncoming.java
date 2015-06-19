@@ -19,7 +19,7 @@ public class KommunikationIncoming {
 	TopicSubscriber topsubCode;
 	TopicSubscriber topsubEinladung;
 	TopicSubscriber tobsubChat;
-	CodingSessionModell csEinladung;
+	static CodingSessionModell csEinladung;
 	Session session;
 	Object lockEinladung;
 	String benutzerId;
@@ -108,9 +108,9 @@ public class KommunikationIncoming {
 
 	}
 
-	public CodingSessionModell getEinladung() {
+	public static CodingSessionModell getEinladung() {
 		if (csEinladung != null){
-			return this.csEinladung;
+			return csEinladung;
 		}
 		else{
 			// throw new Exception("Konnte den Einlader nicht starten");

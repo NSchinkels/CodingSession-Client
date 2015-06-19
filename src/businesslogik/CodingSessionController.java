@@ -27,6 +27,8 @@ public class CodingSessionController implements Initializable {
 	private Chat chat;
 	
 	Thread codingSessionThread;
+	
+	int speicherCounter=0;
 
 	@FXML
 	private Button btnTest;
@@ -45,6 +47,7 @@ public class CodingSessionController implements Initializable {
 		this.csmod = csmod;
 		this.comi = comi;
 		this.como = como;
+		code=csmod.getCode();
 	}
 
 	@Override
@@ -73,6 +76,11 @@ public class CodingSessionController implements Initializable {
 								txtChatRead.appendText(text);
 							}
 						}
+						if(speicherCounter++>5&&csmod.isSpeichern()){
+							Persistence.Datenhaltung.schreibeCS(csmod);
+							speicherCounter=0;
+						}
+						csmod.setCode(code);
 						Thread.sleep(200);
 					} catch (Exception e) {
 						running=false;
@@ -126,5 +134,9 @@ public class CodingSessionController implements Initializable {
 	public void beenden(){
 		codingSessionThread.interrupt();
 		comi.beenden();
+	}
+	public void changeModell(CodingSessionModell csmod){
+		this.csmod=csmod;
+		this.initialize(null, null);
 	}
 }

@@ -28,6 +28,7 @@ public class HauptfensterController implements Initializable{
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
 	CodingSessionModell csmod;
+	EinladungsThread einladungsthread;
 	
 	String benId;
 	int csId;
@@ -43,7 +44,15 @@ public class HauptfensterController implements Initializable{
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb){
+		
+		//wird durch richtige ersetzt
+		benId=String.valueOf((int)(Math.random()*123123)+1);
+		com=new KommunikationStart(benId);
+		lock=new Object();
+		comi=new KommunikationIncoming(benId, com, new Object());
+		como=new KommunikationOutgoing(benId, com);
 		ControllerMediator.getInstance().setHauptfenster(this);
+		einladungsthread=new EinladungsThread(lock);
 		 try{
          	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profil.fxml"));
          	profilController = new ProfilController();
@@ -84,11 +93,6 @@ public class HauptfensterController implements Initializable{
 	//keine Ahnung ob der noch @fxml braucht,lassich erstmal so
 	public void neueCodingSession(){
 		csmod = new CodingSessionDialog().showAndWait().get();
-		benId=String.valueOf((int)(Math.random()*123123)+1);
-		com=new KommunikationStart(benId);
-		lock=new Object();
-		comi=new KommunikationIncoming(benId, com, new Object());
-		como=new KommunikationOutgoing(benId, com);
 		CodingSessionController cs = null;
 		//@Phillip hier dann bitte den neuen Tab erstellen
 		try{
@@ -107,5 +111,8 @@ public class HauptfensterController implements Initializable{
 		} catch(IOException e){
 			e.printStackTrace();
 		}
+	}
+	public void beenden(){
+		einladungsthread.interrupt();
 	}
 }
