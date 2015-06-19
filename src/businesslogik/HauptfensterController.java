@@ -76,6 +76,9 @@ public class HauptfensterController implements Initializable{
 			}
 		});
 	}
+	public void testMethode(ActionEvent a){
+		
+	}
 	
 	@FXML
 	//keine Ahnung ob der noch @fxml braucht,lassich erstmal so
