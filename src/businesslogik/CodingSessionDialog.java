@@ -9,16 +9,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 
-public  class CodingSessionDialog extends Dialog<CodingSessionModell> {
-	
+public  class CodingSessionDialog {
+	Dialog<CodingSessionModell> dialog;
 	protected TextField txtTitel;
+	CodingSessionModell csmod;
 
 	/**
 	 * Erstellt ein Dialog
 	 */
-	protected void erstelleStartDialog(){
-		this.setTitle("CodingSession starten");
-		this.setHeaderText(null);
+	protected CodingSessionModell erstelleStartDialog(){
+		Dialog<CodingSessionModell> dialog = new Dialog<>();
+		dialog.setTitle("CodingSession starten");
+		dialog.setHeaderText(null);
 		
 		txtTitel = new TextField();
 		txtTitel.setPromptText("Titel der CodingSession");
@@ -30,33 +32,31 @@ public  class CodingSessionDialog extends Dialog<CodingSessionModell> {
 		grid.add(lblTitel, 1, 1);
 		grid.add(txtTitel, 2, 1);
 		grid.add(lblSpeichern, 1, 2);
-		this.getDialogPane().setContent(grid);
+		dialog.getDialogPane().setContent(grid);
 		
 		ButtonType jaButtonType = new ButtonType("Ja", ButtonData.YES);
 		ButtonType neinButtonType = new ButtonType("Nein", ButtonData.NO);
 		ButtonType abbrechenButtonType = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
-		this.getDialogPane().getButtonTypes().addAll(jaButtonType, neinButtonType, abbrechenButtonType);
-		this.getDialogPane().getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialog.getDialogPane().getButtonTypes().addAll(jaButtonType, neinButtonType, abbrechenButtonType);
+		dialog.getDialogPane().getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		
-		this.setResultConverter(thisButton -> {
-		    if (thisButton == jaButtonType) {
-		        return new CodingSessionModell();
+		
+		
+		dialog.setResultConverter(dialogButton -> {
+		    if (dialogButton == jaButtonType) {
+		        return new CodingSessionModell(txtTitel.getText(), null, true, null);
 		    }
 		    return null;
 		});
-		
-		
+
+		return dialog.showAndWait().get();
 	}
-	
-	public CodingSessionDialog() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+		
 
 	/**
 	 * Erstellt ein Dialog
 	 */
-	protected void erstelleEndDialog(){
-		
+	protected CodingSessionModell getModell(){
+		return csmod;
 	}
 }

@@ -76,13 +76,14 @@ public class CodingSessionController implements Initializable {
 								txtChatRead.appendText(text);
 							}
 						}
-						if(speicherCounter++>5&&csmod.isSpeichern()){
+						if(speicherCounter++>10&&csmod.isSpeichern()){
 							Persistence.Datenhaltung.schreibeCS(csmod);
 							speicherCounter=0;
 						}
 						csmod.setCode(code);
 						Thread.sleep(200);
 					} catch (Exception e) {
+						System.out.println("kaputt");
 						running=false;
 					}
 				}

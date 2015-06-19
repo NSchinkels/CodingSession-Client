@@ -27,9 +27,7 @@ public class HauptfensterController implements Initializable{
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
 	CodingSessionModell csmod;
-	
-	String benId;
-	int csId;
+	String benId="Wär cool wenn hier mal ein wert stehen würde";
 	
 	@FXML
 	private TabPane tabPane;
@@ -88,7 +86,7 @@ public class HauptfensterController implements Initializable{
 	@FXML
 	//keine Ahnung ob der noch @fxml braucht,lassich erstmal so
 	public void neueCodingSession(){
-		csmod = new CodingSessionDialog().showAndWait().get();
+		csmod=new CodingSessionDialog().erstelleStartDialog();
 		CodingSessionController cs = null;
 		//@Phillip hier dann bitte den neuen Tab erstellen
 		try{

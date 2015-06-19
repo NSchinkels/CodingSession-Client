@@ -63,7 +63,7 @@ public class KommunikationIncoming {
 							try {
 								csEinladung = ((CodingSessionModell) ((ObjectMessage) message)
 										.getObject());
-								new EinladungsDialog();
+								new EinladungsDialog().erstelleStartDialog(csEinladung.getBenutzerMail());;
 								message.acknowledge();
 							} catch (Exception e) {
 								// throw new
