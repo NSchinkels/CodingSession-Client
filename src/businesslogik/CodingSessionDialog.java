@@ -10,14 +10,14 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 
 public  class CodingSessionDialog {
-	Dialog<CodingSessionModell> dialog;
-	protected TextField txtTitel;
-	CodingSessionModell csmod;
+	private Dialog<CodingSessionModell> dialog;
+	private TextField txtTitel;
+	private CodingSessionModell csmod;
 
 	/**
 	 * Erstellt ein Dialog
 	 */
-	protected CodingSessionModell erstelleStartDialog(){
+	public CodingSessionModell erstelleStartDialog(){
 		Dialog<CodingSessionModell> dialog = new Dialog<>();
 		dialog.setTitle("CodingSession starten");
 		dialog.setHeaderText(null);
@@ -56,7 +56,7 @@ public  class CodingSessionDialog {
 	/**
 	 * Erstellt ein Dialog
 	 */
-	protected CodingSessionModell getModell(){
+	public CodingSessionModell getModell(){
 		return csmod;
 	}
 }

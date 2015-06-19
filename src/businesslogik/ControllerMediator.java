@@ -1,46 +1,45 @@
 package businesslogik;
+
 public class ControllerMediator {
 	
 	private CodingSessionController codingsession;
 	private CommunityFeedController communityfeed;
 	private ProfilController profil;
-	private HauptfensterController hauptfenster;
-	
-	
+	private HauptfensterController hauptfenster;	
 	
 	private ControllerMediator() {
 		
 	}
-	
-	
+		
     public void setHauptfenster(HauptfensterController hauptfenster) {
 		this.hauptfenster = hauptfenster;
 	}
-
 
 	public void setCodingsession(CodingSessionController codingsession) {
 		this.codingsession = codingsession;
 	}
 
-
 	public void setCommunityfeed(CommunityFeedController communityfeed) {
 		this.communityfeed = communityfeed;
 	}
 
-
 	public void setProfil(ProfilController profil) {
 		this.profil = profil;
 	}
+	
 	public void neueCodingSession(){
 		hauptfenster.neueCodingSession();
 	}
+	
 	public void beenden(){
 		if(codingsession !=null)
 			codingsession.beenden();
 	}
+	
 	public void changeCodingSession(){
 		codingsession.changeModell(KommunikationIncoming.getEinladung());
 	}
+	
 	public void addCommunityFeed(CodingSessionModell csmod){
 		communityfeed.addBeitrag(csmod);
 	}

@@ -132,10 +132,12 @@ public class CodingSessionController implements Initializable {
 	public void sendeEinladung(String benutzer) {
 		como.ladeEin(csmod, benutzer);
 	}
+	
 	public void beenden(){
 		codingSessionThread.interrupt();
 		comi.beenden();
 	}
+	
 	public void changeModell(CodingSessionModell csmod){
 		this.csmod=csmod;
 		this.initialize(null, null);

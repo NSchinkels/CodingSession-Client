@@ -28,6 +28,8 @@ public class HauptfensterController implements Initializable{
 	KommunikationOutgoing como;
 	CodingSessionModell csmod;
 	String benId="Wär cool wenn hier mal ein wert stehen würde";
+
+	private Tab tabCodingSession;
 	
 	@FXML
 	private TabPane tabPane;
@@ -79,29 +81,19 @@ public class HauptfensterController implements Initializable{
 			}
 		});
 	}
-	public void testMethode(ActionEvent a){
-		
-	}
 	
-	@FXML
-	//keine Ahnung ob der noch @fxml braucht,lassich erstmal so
 	public void neueCodingSession(){
-		csmod=new CodingSessionDialog().erstelleStartDialog();
-		CodingSessionController cs = null;
-		//@Phillip hier dann bitte den neuen Tab erstellen
+		csmod = new CodingSessionDialog().erstelleStartDialog();
+		CodingSessionController codingSessionController = null;
 		try{
-			//((Node) (event.getSource())).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
-			cs=new CodingSessionController(csmod,comi,como);
-			ControllerMediator.getInstance().setCodingsession(cs);
-			loader.setController(cs);
+			codingSessionController = new CodingSessionController(csmod,comi,como);
+			ControllerMediator.getInstance().setCodingsession(codingSessionController);
+			loader.setController(codingSessionController);
 			Parent root = (Parent) loader.load();
-			Stage stage = new Stage();
-			Scene scene = new Scene(root);
-			stage.setTitle("CodingSession");
-			stage.setScene(scene);
-			stage.setResizable(false);
-			stage.show();
+			tabCodingSession = new Tab("CodingSession");
+			tabPane.getTabs().add(tabCodingSession);
+			tabCodingSession.setContent(root);
 		} catch(IOException e){
 			e.printStackTrace();
 		}
