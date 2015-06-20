@@ -12,7 +12,18 @@ public class Profilbearbeitung extends CodingSessionDialog{
 	}
 	
 	@FXML
+	public void aenderungenSpeichern(ActionEvent event){
+		
+	}
+	
+	@FXML
 	public void codingSessionStartenGeklickt(ActionEvent event){
 		erstelleStartDialog();
 	}
+	
+	@FXML
+	public void zurueckZumProfilGeklickt(ActionEvent event){
+		ControllerMediator.getInstance().zurueckZumProfil();
+	}
+	
 }
