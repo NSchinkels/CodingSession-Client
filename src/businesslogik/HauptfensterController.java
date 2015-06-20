@@ -52,13 +52,7 @@ public class HauptfensterController implements Initializable{
 		como=new KommunikationOutgoing(benId, com);
 		ControllerMediator.getInstance().setHauptfenster(this);
 		try{
-         	FXMLLoader loaderProfil = new FXMLLoader(getClass().getResource("/view/fxml/profil.fxml"));
-         	profilController = new ProfilController();
-         	ControllerMediator.getInstance().setProfil(profilController);
- 			loaderProfil.setController(profilController);
- 			Parent rootProfil = (Parent) loaderProfil.load();
-            tabProfil.setContent(rootProfil);
-            
+         	this.neuesProfil();
             FXMLLoader loaderCF = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));
             communityFeedController = new CommunityFeedController();
             ControllerMediator.getInstance().setCommunityfeed(communityFeedController);
@@ -119,7 +113,7 @@ public class HauptfensterController implements Initializable{
 		}
 	}
 	
-	public void zurueckZumProfil(){
+	public void neuesProfil(){
 		try{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profil.fxml"));
          	profilController = new ProfilController();

@@ -67,7 +67,7 @@ public class ControllerMediator {
 	}
 	
 	public void zurueckZumProfil(){
-		hauptfenster.zurueckZumProfil();
+		hauptfenster.neuesProfil();
 	}
 
     private static class ControllerMediatorHolder {

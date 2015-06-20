@@ -6,7 +6,7 @@ import java.util.List;
 public class Chat {
 	private int id;
 	private List<String> verlauf;
-	private int size=0;
+	private static int size=0;
 	private String sender;
 	private KommunikationOutgoing como;
 	private KommunikationIncoming comi;
