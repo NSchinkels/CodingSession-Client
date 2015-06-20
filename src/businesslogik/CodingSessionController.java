@@ -25,10 +25,10 @@ public class CodingSessionController implements Initializable {
 
 	// Chat von dieser CS
 	private Chat chat;
-	
+
 	Thread codingSessionThread;
-	
-	int speicherCounter=0;
+
+	int speicherCounter = 0;
 
 	@FXML
 	private Button btnTest;
@@ -47,17 +47,18 @@ public class CodingSessionController implements Initializable {
 		this.csmod = csmod;
 		this.comi = comi;
 		this.como = como;
-		code=csmod.getCode();
+		code = csmod.getCode();
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		chat = new Chat(como, comi, "" + csmod.getBenutzerMail(), csmod.getId());
 		como.starteCs("CodingSession" + csmod.getId());
-		comi.bekommeCode("CodingSession" + csmod.getId(), csmod.getBenutzerMail());
-		codingSessionThread=new Thread() {
+		comi.bekommeCode("CodingSession" + csmod.getId(),
+				csmod.getBenutzerMail());
+		codingSessionThread = new Thread() {
 			public void run() {
-				boolean running=true;
+				boolean running = true;
 				while (running) {
 					try {
 						if (comi.hasChanged()) {
@@ -76,62 +77,68 @@ public class CodingSessionController implements Initializable {
 								txtChatRead.appendText(text);
 							}
 						}
-						if(speicherCounter++>10&&csmod.isSpeichern()){
-							Persistence.Datenhaltung.schreibeCS(csmod);
-							speicherCounter=0;
+						if (speicherCounter++ > 10 && csmod.isSpeichern()) {
+							// Persistence.Datenhaltung.schreibeCS(csmod);
+							speicherCounter = 0;
 						}
 						csmod.setCode(code);
 						Thread.sleep(200);
 					} catch (Exception e) {
 						System.out.println("kaputt");
-						running=false;
+						running = false;
 					}
 				}
 			}
 		};
 		codingSessionThread.start();
 	}
-	
-	// Funktion zum Einrücken des Codes
+
+	// Funktion zum Einrï¿½cken des Codes
 	public static String einruecken(String eingabe) {
-		
+
 		String tabulator = "";
-		
-		// for-Schleife durchläuft gesamten eingabe-String
-		for(int i=0; i < eingabe.length(); i++) {
-			
-			// Tabulator wird hinzugefügt bei offener Klammer
-			if(eingabe.charAt(i) == '{') {
+
+		// for-Schleife durchlï¿½uft gesamten eingabe-String
+		for (int i = 0; i < eingabe.length(); i++) {
+
+			// Tabulator wird hinzugefï¿½gt bei offener Klammer
+			if (eingabe.charAt(i) == '{') {
 				tabulator = tabulator + "\t";
 			}
-			
-			
-			// Bei Zeilenumbruch wird der Tabulator-String eingefügt, sozusagen String wird "eingerückt"
-			if(eingabe.charAt(i) == '\n') {
-				
-				// Überprüfung, ob eine geschlossene Klammer in voriger Zeile oder neuer Zeile
-				// am Ende vorhanden war, um diese richtig "auszurücken"
-				if(eingabe.charAt(i+1) == '}' || eingabe.charAt(i-1) == '}') {
-					if(!tabulator.equals("")) {
-						tabulator = tabulator.substring(0, tabulator.length()-1);
+
+			// Bei Zeilenumbruch wird der Tabulator-String eingefï¿½gt, sozusagen
+			// String wird "eingerï¿½ckt"
+			if (eingabe.charAt(i) == '\n') {
+
+				// ï¿½berprï¿½fung, ob eine geschlossene Klammer in voriger Zeile
+				// oder neuer Zeile
+				// am Ende vorhanden war, um diese richtig "auszurï¿½cken"
+				if (eingabe.charAt(i + 1) == '}'
+						|| eingabe.charAt(i - 1) == '}') {
+					if (!tabulator.equals("")) {
+						tabulator = tabulator.substring(0,
+								tabulator.length() - 1);
 					}
-					// Durch Substring wird Tabulator-String bis auf seine letzten 2 Zeichen reduziert
+					// Durch Substring wird Tabulator-String bis auf seine
+					// letzten 2 Zeichen reduziert
 				}
-				
-				eingabe = eingabe.substring(0,i+1) + tabulator + eingabe.substring(i+1, eingabe.length());
-				// Substring zur \n-Stelle + Tabulator + Substring nach \n-Stelle
+
+				eingabe = eingabe.substring(0, i + 1) + tabulator
+						+ eingabe.substring(i + 1, eingabe.length());
+				// Substring zur \n-Stelle + Tabulator + Substring nach
+				// \n-Stelle
 			}
-		
+
 		}
-		
+
 		return eingabe;
 	}
-	
+
 	@FXML
-	public void txtCodingSessionFormatierung(KeyEvent event, String eingabe){
-		// Dirty String rein, Sauberer String raus, so richtig?
-		// Ich hab keeeeine Ahnung von FXML KeyEvents blablausw
-		eingabe = einruecken(eingabe);
+	public void txtCodingSessionFormatierung(KeyEvent event) {
+		if (event.getCode() == KeyCode.ENTER) {
+			txtCodingSession.setText(einruecken(txtCodingSession.getText()));
+		}
 	}
 
 	@FXML
@@ -169,14 +176,14 @@ public class CodingSessionController implements Initializable {
 	public void sendeEinladung(String benutzer) {
 		como.ladeEin(csmod, benutzer);
 	}
-	
-	public void beenden(){
+
+	public void beenden() {
 		codingSessionThread.interrupt();
 		comi.beenden();
 	}
-	
-	public void changeModell(CodingSessionModell csmod){
-		this.csmod=csmod;
+
+	public void changeModell(CodingSessionModell csmod) {
+		this.csmod = csmod;
 		this.initialize(null, null);
 	}
 }
