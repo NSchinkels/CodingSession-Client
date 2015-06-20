@@ -93,6 +93,7 @@ public class HauptfensterController implements Initializable{
 			Parent root = (Parent) loader.load();
 			tabCodingSession = new Tab("CodingSession");
 			tabPane.getTabs().add(tabCodingSession);
+			tabPane.getSelectionModel().selectLast();
 			tabCodingSession.setContent(root);
 		} catch(IOException e){
 			e.printStackTrace();

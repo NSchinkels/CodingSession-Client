@@ -1,6 +1,8 @@
 package businesslogik;
 
 import java.util.LinkedList;
+import java.util.List;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -63,7 +65,7 @@ public class KommunikationIncoming {
 							try {
 								csEinladung = ((CodingSessionModell) ((ObjectMessage) message)
 										.getObject());
-								new EinladungsDialog().erstelleStartDialog(csEinladung.getBenutzerMail());;
+								new EinladungsDialog().erstelleStartDialog(csEinladung.getBenutzerMail());
 								message.acknowledge();
 							} catch (Exception e) {
 								// throw new
@@ -79,7 +81,7 @@ public class KommunikationIncoming {
 		}
 	}
 
-	public void bekommeChat(int chatId, LinkedList<String> chatLog) {
+	public void bekommeChat(int chatId, List<String> chatLog) {
 		try {
 			tobsubChat = session.createDurableSubscriber(komser.getTopicChat(),
 					"Chatter" + benutzerId);
@@ -87,7 +89,7 @@ public class KommunikationIncoming {
 				public void onMessage(Message message) {
 					if (message instanceof TextMessage) {
 						try {
-							chatLog.addLast(message.getStringProperty("sender")
+							((LinkedList<String>)chatLog).addLast(message.getStringProperty("sender")
 									+ ": " + ((TextMessage) message).getText());
 						} catch (JMSException e) {
 							e.printStackTrace();

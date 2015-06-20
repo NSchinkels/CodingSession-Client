@@ -16,7 +16,7 @@ public class EinladungsDialog {
 		alert.setContentText("Sie haben eine Einladung vom Benutzer "+benutzer+" erhalten");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			ControllerMediator.getInstance().changeCodingSession();;
+			ControllerMediator.getInstance().changeCodingSession();
 		} else {
 			return;
 		}
