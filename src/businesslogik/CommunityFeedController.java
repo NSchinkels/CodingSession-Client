@@ -3,6 +3,7 @@ package businesslogik;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.input.KeyEvent;
 
 public class CommunityFeedController{
 	
@@ -14,11 +15,6 @@ public class CommunityFeedController{
 	}
 	
 	@FXML
-	public void communityFeedAktualisierenGeklickt(ActionEvent event){
-		System.out.println("Test");
-	}
-	
-	@FXML
 	public void abmeldenGeklickt(ActionEvent event){
 		Platform.exit();
 	}
@@ -26,6 +22,16 @@ public class CommunityFeedController{
 	@FXML
 	public void codingSessionStartenGeklickt(ActionEvent event){
 		ControllerMediator.getInstance().neueCodingSession();
+	}
+	
+	@FXML
+	public void communityFeedAktualisierenGeklickt(ActionEvent event){
+		System.out.println("Test");
+	}
+	
+	@FXML
+	public void sucheFreunde(KeyEvent event){
+		
 	}
 
 	public void addBeitrag(CodingSessionModell csmod) {
