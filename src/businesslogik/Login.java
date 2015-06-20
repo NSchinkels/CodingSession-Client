@@ -2,6 +2,8 @@ package businesslogik;
 
 import java.io.IOException;
 
+import Persistence.Datenhaltung;
+import Persistence.PersistenzException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,7 +32,9 @@ public class Login{
 	@FXML
 	private void anmeldenGeklickt(ActionEvent event){
 		if(txtEmail.getText().equals("test") && pwdPasswort.getText().equals("test")){
-			try{
+		try{
+//			Wird ausgeklammert, sobald wir mit Accounts arbeiten
+//			if(Datenhaltung.passwortRichtig(txtEmail.getText(), pwdPasswort.getText())){
 				((Node) (event.getSource())).getScene().getWindow().hide();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
 				Parent root = (Parent) loader.load();
@@ -39,10 +43,14 @@ public class Login{
 				stage.setScene(scene);
 			    stage.setMaximized(true); 
 				stage.show();
-			} catch(IOException e){
-				e.printStackTrace();
-			}
+//			}
+		} catch(IOException e){
+			e.printStackTrace();
 		}
+		}
+//		} catch(PersistenzException e){
+//			e.printStackTrace();
+//		}
 	}
 		
 	/**
@@ -66,9 +74,5 @@ public class Login{
 		} catch(IOException e){
 			e.printStackTrace();
 		}
-	}
-	
-	private boolean ueberpruefeDaten(String email, String pw){
-		return true;
 	}
 }

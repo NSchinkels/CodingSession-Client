@@ -125,11 +125,14 @@ public class Datenhaltung {
 	 * @throws PersistenzException
 	 * @throws FalschesPasswortException
 	 */
-	public static void passwortRichtig(String email, String passwort)
-			throws PersistenzException, FalschesPasswortException {
+	public static boolean passwortRichtig(String email, String passwort) throws PersistenzException {
 		try {
-			if (leseDB(email).getPasswort() != passwort)
-				throw new FalschesPasswortException();
+			if (leseDB(email).getPasswort() == passwort) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		} catch (Exception e) {
 			throw new PersistenzException();
 		}

@@ -27,7 +27,7 @@ public class Registrierung implements Initializable {
 	// Zwischenzeitlich, bis bessere Loesung gefunden ist.
 	int id = 5;
 
-	private BenutzerkontoGeschuetzt bg = new BenutzerkontoGeschuetzt();
+	private BenutzerkontoGeschuetzt bg;
 
 	@FXML
 	private VBox vboxRoot;
@@ -115,33 +115,35 @@ public class Registrierung implements Initializable {
 
 	/**
 	 * Wenn der Button 'Registrieren' geklickt wird, wird ein Benutzerkonto mit den in den
-	 * Textfeldern eingegebenen Daten (je nach Auswahl in der Choice-Box) erstellt.
+	 * Textfeldern eingegebenen Daten (je nach Auswahl in der Choice-Box) erstellt. 
+	 * Anschliessend wird der Benutzer zu seinem Profil weitergeleitet.
 	 */
+	//Pruefung der Namen auf Korrektheit erforderlich?
 	@FXML
 	private void registrierenGeklickt(ActionEvent event) {
 		choiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue observable, String oldValue, String newValue) {
 				if (choiceBox.getValue().equals("Realname")) {
-					erstelleReal(txtEmail.getText(), txtPasswort.getText(), txtVorname.getText(), txtNachname.getText());
+					bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), 
+							txtVorname.getText(), txtNachname.getText(), id);
 				} else{
-					erstelleNick(txtEmail.getText(), txtPasswort.getText(), txtNickname.getText());
+					bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(),
+							txtNickname.getText(), id);
 				}
 			}
 		});
-	}
-
-	/**
-	 * Erstellt ein Benutzerkonto (Nickname) mit den uebergebenen Parametern.
-	 */
-	private BenutzerkontoOriginal erstelleNick(String email, String pw, String name) {
-		return bg.erstelleNickKonto(email, pw, name,  id);
-	}
-
-	/**
-	 * Erstellt ein Benutzerkonto (Realname) mit den uebergebenen Parametern.
-	 */
-	private BenutzerkontoOriginal erstelleReal(String email, String pw, String vor, String nach) {
-		return bg.erstelleRealKonto(email, pw, vor, nach, id);
+		try{
+			((Node) (event.getSource())).getScene().getWindow().hide();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
+			Parent root = (Parent) loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);		
+			stage.setScene(scene);
+		    stage.setMaximized(true); 
+			stage.show();
+		} catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 }
