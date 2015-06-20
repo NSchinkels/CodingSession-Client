@@ -9,7 +9,7 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	private String email;
 	private String pw;
 	private String name;
-	//ID hier noch notwedig? Evntl. entfernen
+	//ID hier noch notwedig? Evntl. entfernen?
 	private int id;
 	private String vor;
 	private String nach;

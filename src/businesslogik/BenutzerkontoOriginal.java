@@ -39,7 +39,7 @@ public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Ser
 	//default Konstruktor hinzugefügt,da für JPA notwendig
 	public BenutzerkontoOriginal(){}
 	
-	// Einige getter/setter rausgelassen, da jeglicher Sinn nicht vorhanden ist
+	// Einige getter/setter rausgelassen, da jeglicher Sinn fehlt
 	
 	public String getEmail() {
 		return emailAdresse;

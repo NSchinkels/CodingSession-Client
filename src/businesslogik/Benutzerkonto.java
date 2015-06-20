@@ -2,8 +2,7 @@ package businesslogik;
 
 import java.util.LinkedList;
 /**
- * Klasse die als Proxy für das Proxy-Muster dienen soll 
- * @author Break Free
+ * Klasse die als Proxy für das Proxy-Muster dienen soll, bitte immer die zum erstellen nutzen
  *
  */
 public abstract class Benutzerkonto {
