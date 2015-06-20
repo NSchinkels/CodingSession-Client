@@ -10,7 +10,7 @@ import javax.persistence.*;
 //Legt die Vererbungsstrategie als einzige Tabelle fest
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="DISCRIMINATOR",discriminatorType=DiscriminatorType.STRING)
-public abstract class BenutzerkontoOriginal implements Serializable {
+public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Serializable {
 
 	//Wir haben im UML hier das PW als String, sollten wir schnellstmoeglich durch DB mit Verschluesselung etc
 	//ersetzen, ich implementier es trotzdem mal stumpf mit dem Passwort
@@ -72,6 +72,7 @@ public abstract class BenutzerkontoOriginal implements Serializable {
 	public LinkedList<BenutzerkontoOriginal> getFreunde() {
 		return freunde;
 	}
+	
 	
 	
 }
