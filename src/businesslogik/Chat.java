@@ -1,10 +1,11 @@
 package businesslogik;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Chat {
 	private int id;
-	private LinkedList<String> verlauf;
+	private List<String> verlauf;
 	private int size=0;
 	private String sender;
 	private KommunikationOutgoing como;
@@ -22,7 +23,7 @@ public class Chat {
 	public void senden(String nachricht){
 		como.veroeffentlicheChat(nachricht, sender);
 	}
-	public LinkedList<String> empfangen(){
+	public List<String> empfangen(){
 		return this.verlauf;
 	}
 	public int getSize(){
