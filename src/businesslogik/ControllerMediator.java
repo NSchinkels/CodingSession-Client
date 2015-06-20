@@ -4,9 +4,9 @@ public class ControllerMediator {
 	
 	private CodingSessionController codingsession;
 	private CommunityFeedController communityfeed;
-	private FreundeSucheController suche;
+	private FreundeSucheController freundesuche;
 	private HauptfensterController hauptfenster;
-	private Profilbearbeitung bearbeitung;
+	private ProfilbearbeitungController profilbearbeitung;
 	private ProfilController profil;
 	
 	private ControllerMediator() {
@@ -29,16 +29,16 @@ public class ControllerMediator {
 		this.communityfeed = communityfeed;
 	}
 	
-	public void setFreundeSuche(FreundeSucheController suche){
-		this.suche = suche;
+	public void setFreundeSuche(FreundeSucheController freundesuche){
+		this.freundesuche = freundesuche;
 	}
 
 	public void setProfil(ProfilController profil) {
 		this.profil = profil;
 	}
 	
-	public void setProfilbearbeitung(Profilbearbeitung bearbeitung) {
-		this.bearbeitung = bearbeitung;
+	public void setProfilbearbeitung(ProfilbearbeitungController profilbearbeitung) {
+		this.profilbearbeitung = profilbearbeitung;
 	}
 	
 	public void addCommunityFeed(CodingSessionModell csmod){

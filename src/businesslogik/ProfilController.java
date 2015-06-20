@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 public class ProfilController extends CodingSessionDialog{
 	
-	Profilbearbeitung bearbeitung;
+	ProfilbearbeitungController bearbeitung;
 	FreundeSucheController suche;
 	
 	@FXML

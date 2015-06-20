@@ -24,7 +24,7 @@ public class HauptfensterController implements Initializable{
 	
 	ProfilController profilController;
 	CommunityFeedController communityFeedController;
-	Profilbearbeitung profilbearbeitungController;
+	ProfilbearbeitungController profilbearbeitungController;
 	FreundeSucheController freundeSucheController;
 	KommunikationStart com;
 	KommunikationIncoming comi;
@@ -108,7 +108,7 @@ public class HauptfensterController implements Initializable{
 	public void neueProfilBearbeitung(){
 		try{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profilbearbeitung.fxml"));
-			profilbearbeitungController = new Profilbearbeitung();
+			profilbearbeitungController = new ProfilbearbeitungController();
 			ControllerMediator.getInstance().setProfilbearbeitung(profilbearbeitungController);
 			loader.setController(profilbearbeitungController);
 			Parent root = (Parent) loader.load();

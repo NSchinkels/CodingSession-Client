@@ -22,7 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Registrierung implements Initializable {
+public class RegistrierungController implements Initializable {
 
 	// Zwischenzeitlich, bis bessere Loesung gefunden ist.
 	int id = 5;
