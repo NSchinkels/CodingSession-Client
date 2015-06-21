@@ -38,8 +38,8 @@
     -fx-text-fill: #F8F8F8;  
 }  
 
-.text-input{
-	-fx-text-fill: #F8F8F;
+.text-area-text{
+	-fx-text-fill: #F8F8F8;
 }
     
 .tree-view .tree-cell{
@@ -47,5 +47,6 @@
 	-fx-border-color: #282828;
 	-fx-text-fill: #F8F8F8;
 }
+
 
  

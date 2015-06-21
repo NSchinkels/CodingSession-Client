@@ -64,7 +64,7 @@
                <content>
                   <ScrollPane fitToHeight="true" fitToWidth="true">
                      <content>
-                        <TextArea fx:id="txtCodingSession" onKeyPressed="#txtCodingSessionFormatierung" />
+                        <TextArea fx:id="txtCodingSession" onKeyPressed="#txtCodingSessionFormatierung" styleClass="text-area-text" />
                      </content>
                   </ScrollPane>
                </content>
@@ -77,13 +77,13 @@
          <children>
             <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="495.0" prefWidth="292.0">
                <content>
-                  <TextArea fx:id="txtChatRead" editable="false" wrapText="true" />
+                  <TextArea fx:id="txtChatRead" editable="false" styleClass="text-area-text" wrapText="true" />
                </content>
             </ScrollPane>
             <Separator prefWidth="200.0" />
             <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                <content>
-                  <TextArea fx:id="txtChatWrite" onKeyPressed="#txtChatEnterGeklickt" promptText="Tippe hier deine Nachricht ein.." wrapText="true" />
+                  <TextArea fx:id="txtChatWrite" onKeyPressed="#txtChatEnterGeklickt" promptText="Tippe hier deine Nachricht ein.." styleClass="text-area-text" wrapText="true" />
                </content>
             </ScrollPane>
          </children>
