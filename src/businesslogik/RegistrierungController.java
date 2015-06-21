@@ -27,7 +27,7 @@ public class RegistrierungController implements Initializable {
 	// Zwischenzeitlich, bis bessere Loesung gefunden ist.
 	int id = 5;
 
-	private BenutzerkontoGeschuetzt bg;
+	private Benutzerkonto bg;
 
 	@FXML
 	private VBox vboxRoot;
