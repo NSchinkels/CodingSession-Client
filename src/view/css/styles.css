@@ -32,4 +32,20 @@
     -fx-background-color: #282828;
 }
 
+.text-area .content {  
+    -fx-background-color: #282828 ;
+    -fx-border-color: #282828;
+    -fx-text-fill: #F8F8F8;  
+}  
+
+.text-input{
+	-fx-text-fill: #F8F8F;
+}
+    
+.tree-view .tree-cell{
+	-fx-background-color: #282828;
+	-fx-border-color: #282828;
+	-fx-text-fill: #F8F8F8;
+}
+
  

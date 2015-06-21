@@ -23,7 +23,7 @@ public class ProfilbearbeitungController extends CodingSessionDialog{
 	
 	@FXML
 	public void zurueckZumProfilGeklickt(ActionEvent event){
-		ControllerMediator.getInstance().zurueckZumProfil();
+		ControllerMediator.getInstance().neuesProfil();
 	}
 	
 }
