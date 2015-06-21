@@ -47,7 +47,6 @@ public class CodingSessionController implements Initializable {
 		this.csmod = csmod;
 		this.comi = comi;
 		this.como = como;
-		code =""+csmod.getCode();
 	}
 
 	@Override
@@ -56,7 +55,10 @@ public class CodingSessionController implements Initializable {
 		como.starteCs("CodingSession" + csmod.getId());
 		comi.bekommeCode("CodingSession" + csmod.getId(),
 				csmod.getBenutzerMail());
+		netCode=code=csmod.getCode();
+		txtCodingSession.setText(code);
 		codingSessionThread = new Thread() {
+			
 			public void run() {
 				boolean running = true;
 				while (running) {
