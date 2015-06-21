@@ -47,7 +47,7 @@ public class CodingSessionController implements Initializable {
 		this.csmod = csmod;
 		this.comi = comi;
 		this.como = como;
-		code = csmod.getCode();
+		code =""+csmod.getCode();
 	}
 
 	@Override

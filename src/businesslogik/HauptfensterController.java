@@ -64,8 +64,10 @@ public class HauptfensterController implements Initializable{
          }
 	}
 	
-	public void neueCodingSession(){
-		csmod = new CodingSessionDialog().erstelleStartDialog();
+	public void neueCodingSession(boolean dialog,CodingSessionModell csmod){
+		if(dialog){
+			csmod =new CodingSessionDialog().erstelleStartDialog();
+		}
 		CodingSessionController codingSessionController = null;
 		try{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
