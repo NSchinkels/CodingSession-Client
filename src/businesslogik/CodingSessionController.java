@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import Persistence.PersistenzException;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-public class CodingSessionController implements Initializable {
+public class CodingSessionController extends CodingSessionDialog implements Initializable {
 
 	private CodingSessionModell csmod;
 
@@ -189,6 +190,11 @@ public class CodingSessionController implements Initializable {
 		}
 	}
 
+	@FXML
+	public void codingSessionSchlieﬂen(ActionEvent event){
+		erstelleEndDialog();
+	}
+	
 	// Methode die zeitlich aufgrufen wird, um den alten Code mit dem neuen zu
 	// ersetzen
 	public void aktualisiereCode(String text, boolean selbst) {
@@ -221,6 +227,7 @@ public class CodingSessionController implements Initializable {
 		codingSessionThread.interrupt();
 		comi.beenden();
 	}
+	
 	public void killThread(){
 		codingSessionThread.interrupt();
 	}

@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -68,7 +69,7 @@ public class HauptfensterController implements Initializable{
 	public void neueCodingSession(boolean dialog,CodingSessionModell csmod){
 		if(codingSessionController!=null){
 			codingSessionController.killThread();
-			delCS();
+			schliesseCodingSession();
 		}
 		if(dialog){
 			csmod =new CodingSessionDialog().erstelleStartDialog();
@@ -81,6 +82,8 @@ public class HauptfensterController implements Initializable{
 			loader.setController(codingSessionController);
 			Parent root = (Parent) loader.load();
 			tabCodingSession = new Tab("CodingSession");
+			tabCodingSession.setClosable(true);
+			tabPane.setTabClosingPolicy(TabClosingPolicy.SELECTED_TAB);
 			tabPane.getTabs().add(tabCodingSession);
 			tabPane.getSelectionModel().selectLast();
 			tabCodingSession.setContent(root);
@@ -133,7 +136,10 @@ public class HauptfensterController implements Initializable{
 			e.printStackTrace();
 		}
 	}
-	public void delCS(){
-		tabPane.getTabs().remove(tabPane.getTabs().size()-1);
+	
+	
+	public void schliesseCodingSession(){
+		tabPane.getTabs().remove(tabPane.getTabs().remove(tabCodingSession));
+		tabPane.getSelectionModel().selectFirst();
 	}
 }

@@ -74,6 +74,10 @@ public class ControllerMediator {
 	public void neuesProfil() {
 		hauptfenster.neuesProfil();
 	}
+	
+	public void schliesseCodingSession() {
+		hauptfenster.schliesseCodingSession();
+	}
 
 	private static class ControllerMediatorHolder {
 		private static final ControllerMediator INSTANCE = new ControllerMediator();

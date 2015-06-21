@@ -2,10 +2,13 @@
 	-fx-text-fill: #383838;
 }
 
+.dialog{
+	-fx-background-color: #282828;	
+}
+
 .label{
 	-fx-text-fill: #F8F8F8;
 }
-
 
 .list-cell:filled:selected {
     -fx-text-fill: #489CDF;
