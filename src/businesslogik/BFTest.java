@@ -17,7 +17,7 @@ public class BFTest {
 		// BenutzerkontoNickname konto1 = new
 		// BenutzerkontoNickname("unknown@me.org","passwortsicherheit","Mandant900");
 		
-		  BenutzerkontoNickname konto2 = new
+		  /**Benutzerkonto konto2 = new
 		  BenutzerkontoNickname("unknown1@me.org"
 		  ,"passwortsicherheit","CoolerTyp",2); BenutzerkontoNickname konto3 =
 		  new BenutzerkontoNickname("unknown2@me.org","passwortsicherheit",
@@ -29,14 +29,14 @@ public class BFTest {
 		  CodingSessionModell cs1 = new CodingSessionModell(
 		  "unknown1@me.org", "cs1", true,""); CodingSessionModell cs2 = new
 		  CodingSessionModell("unknown1@me.org", "cs2", true,"");
-		  em.persist(cs1); em.persist(cs2); em.getTransaction().commit();
+		  em.persist(cs1); em.persist(cs2); em.getTransaction().commit();**/
 		 
 
-		/**
-		 * BenutzerkontoOriginal konto =
-		 * em.find(BenutzerkontoNickname.class,"unknown1@me.org" );
-		 * System.out.println(konto.getName());
-		 **/
+		
+		  BenutzerkontoOriginal konto =
+		  em.find(BenutzerkontoNickname.class,"unknown1@me.org" );
+		  System.out.println(konto.getName());
+		 
 		/**try {
 			list = Datenhaltung.leseCS("unknown1@me.org");
 			for(CodingSessionModell cs:list){
