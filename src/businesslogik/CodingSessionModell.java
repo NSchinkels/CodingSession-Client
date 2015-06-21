@@ -105,6 +105,8 @@ public class CodingSessionModell implements Serializable{
 			this.code = code;
 		}
 		
-		
+		public String toString(){
+			return "Titel : "+this.titel;
+		}
 		
 }

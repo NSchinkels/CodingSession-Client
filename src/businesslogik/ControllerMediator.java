@@ -52,13 +52,10 @@ public class ControllerMediator {
 	}
 
 	public void changeCodingSession() {
-		codingsession.changeModell(KommunikationIncoming.getEinladung());
+		hauptfenster.neueCodingSession(false,KommunikationIncoming.getEinladung());
 	}
 
 	public void changeCodingSession(CodingSessionModell cmod) {
-		if (codingsession != null) {
-			codingsession.changeModell(cmod);
-		}
 		hauptfenster.neueCodingSession(false,cmod);
 	}
 

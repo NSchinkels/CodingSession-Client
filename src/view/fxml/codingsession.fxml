@@ -53,7 +53,7 @@
    <left>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefViewportHeight="416.0" prefViewportWidth="179.0">
          <content>
-            <TreeView editable="true" BorderPane.alignment="CENTER" />
+            <ListView fx:id="listCodingSession" editable="true" BorderPane.alignment="CENTER" />
          </content>
       </ScrollPane>
    </left>

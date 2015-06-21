@@ -31,10 +31,10 @@ public class LoginController{
 	 */
 	@FXML
 	private void anmeldenGeklickt(ActionEvent event){
-//		if(txtEmail.getText().equals("test") && pwdPasswort.getText().equals("test")){
+		if(txtEmail.getText().equals("test") && pwdPasswort.getText().equals("test")){
 		try{
 //			Wird ausgeklammert, sobald wir mit Accounts arbeiten
-			if(Datenhaltung.passwortRichtig(txtEmail.getText(), pwdPasswort.getText())){
+			//if(Datenhaltung.passwortRichtig(txtEmail.getText(), pwdPasswort.getText())){
 				((Node) (event.getSource())).getScene().getWindow().hide();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
 				Parent root = (Parent) loader.load();
@@ -43,15 +43,11 @@ public class LoginController{
 				stage.setScene(scene);
 			    stage.setMaximized(true); 
 				stage.show();
-			}
-		} catch(IOException e){
-			e.printStackTrace();
-//		}
-//		}
-		} catch(PersistenzException e){
-			e.printStackTrace();
+			}catch(Exception e){
+				
 		}
 	}
+}
 		
 	/**
 	 * Wenn der Hyperlink geklickt wird, schliesst die Loginmaske 

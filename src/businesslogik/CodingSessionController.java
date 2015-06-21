@@ -2,12 +2,19 @@ package businesslogik;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import Persistence.PersistenzException;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 
 public class CodingSessionController implements Initializable {
 
@@ -25,7 +32,7 @@ public class CodingSessionController implements Initializable {
 
 	// Chat von dieser CS
 	private Chat chat;
-
+	private PackageExplorerController pe;
 	Thread codingSessionThread;
 
 	int speicherCounter = 0;
@@ -41,6 +48,8 @@ public class CodingSessionController implements Initializable {
 
 	@FXML
 	private TextArea txtChatWrite;
+	@FXML
+	private ListView<CodingSessionModell> listCodingSession;
 
 	public CodingSessionController(CodingSessionModell csmod,
 			KommunikationIncoming comi, KommunikationOutgoing como) {
@@ -51,27 +60,54 @@ public class CodingSessionController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		try {
+			pe = new PackageExplorerController("12");
+		} catch (PersistenzException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ObservableList<CodingSessionModell> items = listCodingSession
+				.getItems();
+		for (CodingSessionModell cs : pe.get()) {
+			items.add(cs);
+		}
+		listCodingSession.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+					if (mouseEvent.getClickCount() == 2) {
+						ControllerMediator.getInstance().changeCodingSession(
+								listCodingSession.getSelectionModel()
+										.getSelectedItem());
+					}
+				}
+			}
+		});
 		chat = new Chat(como, comi, "" + csmod.getBenutzerMail(), csmod.getId());
 		como.starteCs("CodingSession" + csmod.getId());
 		comi.bekommeCode("CodingSession" + csmod.getId(),
 				csmod.getBenutzerMail());
-		netCode=code=csmod.getCode();
+		netCode = code = csmod.getCode();
 		txtCodingSession.setText(code);
 		codingSessionThread = new Thread() {
-			
+
 			public void run() {
 				boolean running = true;
 				while (running) {
 					try {
-						if (comi.hasChanged()) {
-							netCode = comi.getCode();
-							if (!netCode.equals(code)) {
-								code = netCode;
-								txtCodingSession.setText(code);
+						synchronized (txtCodingSession) {
+							if (comi.hasChanged()) {
+								netCode = comi.getCode();
+								if (!netCode.equals(code)) {
+									code = netCode;
+									txtCodingSession.setText(code);
+
+								}
+							} else {
+								CodingSessionController.this
+										.neuerCodeGUI(txtCodingSession
+												.getText());
 							}
-						} else {
-							CodingSessionController.this
-									.neuerCodeGUI(txtCodingSession.getText());
 						}
 						if (chat.empfangen().size() > chat.getSize()) {
 							txtChatRead.setText("");
@@ -139,7 +175,9 @@ public class CodingSessionController implements Initializable {
 	@FXML
 	public void txtCodingSessionFormatierung(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
+			synchronized(txtCodingSession){
 			txtCodingSession.setText(einruecken(txtCodingSession.getText()));
+			}
 		}
 	}
 
@@ -182,10 +220,5 @@ public class CodingSessionController implements Initializable {
 	public void beenden() {
 		codingSessionThread.interrupt();
 		comi.beenden();
-	}
-
-	public void changeModell(CodingSessionModell csmod) {
-		this.csmod = csmod;
-		this.initialize(null, null);
 	}
 }

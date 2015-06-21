@@ -65,6 +65,9 @@ public class HauptfensterController implements Initializable{
 	}
 	
 	public void neueCodingSession(boolean dialog,CodingSessionModell csmod){
+		if(tabCodingSession!=null){
+			delCS();
+		}
 		if(dialog){
 			csmod =new CodingSessionDialog().erstelleStartDialog();
 		}
@@ -127,5 +130,8 @@ public class HauptfensterController implements Initializable{
 		} catch(IOException e){
 			e.printStackTrace();
 		}
+	}
+	public void delCS(){
+		tabPane.getTabs().remove(tabCodingSession);
 	}
 }
