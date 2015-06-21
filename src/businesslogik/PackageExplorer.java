@@ -1,6 +1,5 @@
 package businesslogik;
 
-import java.util.HashMap;
 import java.util.List;
 
 import Persistence.Datenhaltung;

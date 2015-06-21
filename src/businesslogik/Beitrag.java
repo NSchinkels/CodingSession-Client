@@ -44,4 +44,7 @@ public class Beitrag implements Serializable{
 	public void setSchreibschutz(boolean schreibschutz) {
 		this.schreibschutz = schreibschutz;
 	}
+	public String toString(){
+		return betreff+"\n"+beschreibung;
+	}
 }
