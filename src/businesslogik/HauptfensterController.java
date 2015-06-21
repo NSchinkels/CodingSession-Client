@@ -23,7 +23,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-public class HauptfensterController extends CodingSessionDialog implements Initializable{
+public class HauptfensterController implements Initializable{
 	
 	ProfilController profilController;
 	CommunityFeedController communityFeedController;
@@ -94,7 +94,7 @@ public class HauptfensterController extends CodingSessionDialog implements Initi
 				   @Override
 				   public void handle(Event event) {
 					   event.consume();
-					   erstelleEndDialog();
+					   new CodingSessionDialog().erstelleEndDialog();
 				   }
 			});
 			

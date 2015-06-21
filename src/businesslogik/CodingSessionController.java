@@ -17,7 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-public class CodingSessionController extends CodingSessionDialog implements Initializable {
+public class CodingSessionController implements Initializable {
 
 	private CodingSessionModell csmod;
 
@@ -191,8 +191,8 @@ public class CodingSessionController extends CodingSessionDialog implements Init
 	}
 
 	@FXML
-	public void codingSessionSchlieﬂen(ActionEvent event){
-		erstelleEndDialog();
+	public void codingSessionSchliessen(ActionEvent event){
+		new CodingSessionDialog().erstelleEndDialog();
 	}
 	
 	// Methode die zeitlich aufgrufen wird, um den alten Code mit dem neuen zu
