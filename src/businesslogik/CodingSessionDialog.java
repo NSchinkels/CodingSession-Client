@@ -44,9 +44,9 @@ public  class CodingSessionDialog {
 		
 		dialog.setResultConverter(dialogButton -> {
 		    if (dialogButton == jaButtonType) {
-		        return new CodingSessionModell("huhu@web.de", txtTitel.getText(), true, "");
+		        return new CodingSessionModell(1,"huhu@web.de", txtTitel.getText(), true, "");
 		    }else if(dialogButton==neinButtonType){
-		    	return new CodingSessionModell("huhu@web.de", txtTitel.getText(), false, "");
+		    	return new CodingSessionModell(2,"huhu@web.de", txtTitel.getText(), false, "");
 		    }
 		    return null;
 		});

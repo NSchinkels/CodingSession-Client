@@ -33,8 +33,8 @@ public class CommunityFeedController implements Initializable{
 	public CommunityFeedController() {
 		// hier werden noch die Sachen vom Server gezogen
 		beitraege=new Beitrag[10];
-		beitraege[0]=new Beitrag(new CodingSessionModell("huhu@web.de","titel1",true,"public test"), "Fehler", "Hab hier krassen Fehler", false);
-		beitraege[1]=new Beitrag(new CodingSessionModell("huhuer@web.de","titel2",true,"public test"), "Fehler schon wieder", "Hab hier wieder krassen Fehler", false);
+		beitraege[0]=new Beitrag(new CodingSessionModell(5,"huhu@web.de","titel1",true,"public test"), "Fehler", "Hab hier krassen Fehler", false);
+		beitraege[1]=new Beitrag(new CodingSessionModell(6,"huhuer@web.de","titel2",true,"public test"), "Fehler schon wieder", "Hab hier wieder krassen Fehler", false);
 		
 	}
 	@Override

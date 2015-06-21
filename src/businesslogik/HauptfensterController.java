@@ -26,6 +26,7 @@ public class HauptfensterController implements Initializable{
 	CommunityFeedController communityFeedController;
 	ProfilbearbeitungController profilbearbeitungController;
 	FreundeSucheController freundeSucheController;
+	CodingSessionController codingSessionController;
 	KommunikationStart com;
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
@@ -65,13 +66,14 @@ public class HauptfensterController implements Initializable{
 	}
 	
 	public void neueCodingSession(boolean dialog,CodingSessionModell csmod){
-		if(tabCodingSession!=null){
+		if(codingSessionController!=null){
+			codingSessionController.killThread();
 			delCS();
 		}
 		if(dialog){
 			csmod =new CodingSessionDialog().erstelleStartDialog();
 		}
-		CodingSessionController codingSessionController = null;
+		codingSessionController = null;
 		try{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
 			codingSessionController = new CodingSessionController(csmod,comi,como);
@@ -132,6 +134,6 @@ public class HauptfensterController implements Initializable{
 		}
 	}
 	public void delCS(){
-		tabPane.getTabs().remove(tabCodingSession);
+		tabPane.getTabs().remove(tabPane.getTabs().size()-1);
 	}
 }

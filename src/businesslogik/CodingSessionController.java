@@ -221,4 +221,7 @@ public class CodingSessionController implements Initializable {
 		codingSessionThread.interrupt();
 		comi.beenden();
 	}
+	public void killThread(){
+		codingSessionThread.interrupt();
+	}
 }

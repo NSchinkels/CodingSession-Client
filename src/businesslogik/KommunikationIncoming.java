@@ -35,6 +35,14 @@ public class KommunikationIncoming {
 
 	public void bekommeCode(String topic, String benutzer) {
 		// hier wartet später das JMS aud Code von Csen
+		if(topsubCode!=null){
+			try {
+				topsubCode.close();
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try {
 			topsubCode = session.createDurableSubscriber(komser.getTopicCode(),
 					"Benutzer" + benutzer);
@@ -82,6 +90,14 @@ public class KommunikationIncoming {
 	}
 
 	public void bekommeChat(int chatId, List<String> chatLog) {
+		if(tobsubChat!=null){
+			try {
+				tobsubChat.close();
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try {
 			tobsubChat = session.createDurableSubscriber(komser.getTopicChat(),
 					"Chatter" + benutzerId);

@@ -13,8 +13,8 @@ public class PackageExplorerController{
 	public PackageExplorerController(String id) throws PersistenzException{
 		//inhalt=Datenhaltung.leseCS(id);
 		inhalt=new LinkedList<CodingSessionModell>();
-		inhalt.add(new CodingSessionModell("Test titel","TestBenutzer",false,"Public void "));
-		inhalt.add(new CodingSessionModell("Test titel nummer 2","TestBenutzer 34",false,"Public void whatever"));
+		inhalt.add(new CodingSessionModell(8,"Test titel","TestBenutzer",false,"Public void "));
+		inhalt.add(new CodingSessionModell(9,"Test titel nummer 2","TestBenutzer 34",false,"Public void whatever"));
 		
 	}
 	public void add(CodingSessionModell cs) {
