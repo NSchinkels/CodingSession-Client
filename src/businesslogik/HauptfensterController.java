@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,7 +23,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-public class HauptfensterController implements Initializable{
+public class HauptfensterController extends CodingSessionDialog implements Initializable{
 	
 	ProfilController profilController;
 	CommunityFeedController communityFeedController;
@@ -86,6 +88,16 @@ public class HauptfensterController implements Initializable{
 			tabPane.setTabClosingPolicy(TabClosingPolicy.SELECTED_TAB);
 			tabPane.getTabs().add(tabCodingSession);
 			tabPane.getSelectionModel().selectLast();
+			
+			//Das kann man bestimmt schoener machen..
+			tabCodingSession.setOnCloseRequest(new EventHandler<Event>() {
+				   @Override
+				   public void handle(Event event) {
+					   event.consume();
+					   erstelleEndDialog();
+				   }
+			});
+			
 			tabCodingSession.setContent(root);
 		} catch(IOException e){
 			e.printStackTrace();
