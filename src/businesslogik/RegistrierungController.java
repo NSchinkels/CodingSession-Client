@@ -121,18 +121,13 @@ public class RegistrierungController implements Initializable {
 	//Pruefung der Namen auf Korrektheit erforderlich?
 	@FXML
 	private void registrierenGeklickt(ActionEvent event) {
-		choiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue observable, String oldValue, String newValue) {
-				if (choiceBox.getValue().equals("Realname")) {
-					bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), 
-							txtVorname.getText(), txtNachname.getText(), id);
-				} else{
-					bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(),
-							txtNickname.getText(), id);
-				}
-			}
-		});
+		if (choiceBox.getValue().equals("Realname")) {
+			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), 
+					txtVorname.getText(), txtNachname.getText(), id);
+		} else{
+			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(),
+					txtNickname.getText(), id);
+		}
 		try{
 			((Node) (event.getSource())).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
