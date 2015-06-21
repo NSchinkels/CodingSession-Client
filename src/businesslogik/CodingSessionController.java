@@ -132,47 +132,24 @@ public class CodingSessionController implements Initializable {
 		codingSessionThread.start();
 	}
 
-	// Funktion zum Einr�cken des Codes
-	public static String einruecken(String eingabe) {
-
-		String tabulator = "";
-
-		// for-Schleife durchl�uft gesamten eingabe-String
-		for (int i = 0; i < eingabe.length(); i++) {
-
-			// Tabulator wird hinzugef�gt bei offener Klammer
-			if (eingabe.charAt(i) == '{') {
-				tabulator = tabulator + "\t";
-			}
-
-			// Bei Zeilenumbruch wird der Tabulator-String eingef�gt, sozusagen
-			// String wird "einger�ckt"
-			if (eingabe.charAt(i) == '\n') {
-
-				// �berpr�fung, ob eine geschlossene Klammer in voriger Zeile
-				// oder neuer Zeile
-				// am Ende vorhanden war, um diese richtig "auszur�cken"
-				if (eingabe.charAt(i + 1) == '}'
-						|| eingabe.charAt(i - 1) == '}') {
-					if (!tabulator.equals("")) {
-						tabulator = tabulator.substring(0,
-								tabulator.length() - 1);
-					}
-					// Durch Substring wird Tabulator-String bis auf seine
-					// letzten 2 Zeichen reduziert
-				}
-
-				eingabe = eingabe.substring(0, i + 1) + tabulator
-						+ eingabe.substring(i + 1, eingabe.length());
-				// Substring zur \n-Stelle + Tabulator + Substring nach
-				// \n-Stelle
-			}
-
-		}
-
-		return eingabe;
+	@FXML
+	public void abmeldenGeklickt(ActionEvent event){
+		new CodingSessionDialog().erstelleAbmeldeDialog();
 	}
-
+	
+	@FXML
+	public void codingSessionSchliessenGeklickt(ActionEvent event){
+		new CodingSessionDialog().erstelleEndDialog();
+	}
+	
+	@FXML
+	public void txtChatEnterGeklickt(KeyEvent event) {
+		if (event.getCode() == KeyCode.ENTER) {
+			chat.senden(txtChatWrite.getText() + "\n");
+			txtChatWrite.setText("");
+		}
+	}
+	
 	@FXML
 	public void txtCodingSessionFormatierung(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
@@ -182,17 +159,12 @@ public class CodingSessionController implements Initializable {
 		}
 	}
 
-	@FXML
-	public void txtChatEnterGeklickt(KeyEvent event) {
-		if (event.getCode() == KeyCode.ENTER) {
-			chat.senden(txtChatWrite.getText() + "\n");
-			txtChatWrite.setText("");
+	public boolean addTeilnehmer(String b) {
+		if (csmod.getAnzahlTeilnehmer() < 10) {
+			csmod.addTeilnehmer(b);
+			return true;
 		}
-	}
-
-	@FXML
-	public void codingSessionSchliessen(ActionEvent event){
-		new CodingSessionDialog().erstelleEndDialog();
+		return false;
 	}
 	
 	// Methode die zeitlich aufgrufen wird, um den alten Code mit dem neuen zu
@@ -204,6 +176,54 @@ public class CodingSessionController implements Initializable {
 			netCode = text;
 		}
 	}
+	
+	public void beenden() {
+		codingSessionThread.interrupt();
+		comi.beenden();
+	}
+	
+	// Funktion zum Einr�cken des Codes
+		public static String einruecken(String eingabe) {
+
+			String tabulator = "";
+
+			// for-Schleife durchl�uft gesamten eingabe-String
+			for (int i = 0; i < eingabe.length(); i++) {
+
+				// Tabulator wird hinzugef�gt bei offener Klammer
+				if (eingabe.charAt(i) == '{') {
+					tabulator = tabulator + "\t";
+				}
+
+				// Bei Zeilenumbruch wird der Tabulator-String eingef�gt, sozusagen
+				// String wird "einger�ckt"
+				if (eingabe.charAt(i) == '\n') {
+
+					// �berpr�fung, ob eine geschlossene Klammer in voriger Zeile
+					// oder neuer Zeile
+					// am Ende vorhanden war, um diese richtig "auszur�cken"
+					if (eingabe.charAt(i + 1) == '}'
+							|| eingabe.charAt(i - 1) == '}') {
+						if (!tabulator.equals("")) {
+							tabulator = tabulator.substring(0,
+									tabulator.length() - 1);
+						}
+						// Durch Substring wird Tabulator-String bis auf seine
+						// letzten 2 Zeichen reduziert
+					}
+
+					eingabe = eingabe.substring(0, i + 1) + tabulator
+							+ eingabe.substring(i + 1, eingabe.length());
+					// Substring zur \n-Stelle + Tabulator + Substring nach
+					// \n-Stelle
+				}
+			}
+		return eingabe;
+	}
+		
+	public void killThread(){
+		codingSessionThread.interrupt();
+	}
 
 	public void neuerCodeGUI(String text) {
 		if (!text.equals(netCode)) {
@@ -211,24 +231,7 @@ public class CodingSessionController implements Initializable {
 		}
 	}
 
-	public boolean addTeilnehmer(String b) {
-		if (csmod.getAnzahlTeilnehmer() < 10) {
-			csmod.addTeilnehmer(b);
-			return true;
-		}
-		return false;
-	}
-
 	public void sendeEinladung(String benutzer) {
 		como.ladeEin(csmod, benutzer);
-	}
-
-	public void beenden() {
-		codingSessionThread.interrupt();
-		comi.beenden();
-	}
-	
-	public void killThread(){
-		codingSessionThread.interrupt();
 	}
 }

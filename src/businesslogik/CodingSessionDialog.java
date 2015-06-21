@@ -2,6 +2,7 @@ package businesslogik;
 
 import java.util.Optional;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -79,6 +80,25 @@ public  class CodingSessionDialog{
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
 			ControllerMediator.getInstance().schliesseCodingSession();
+		} else {
+		   //Falls der Benutzer den Button Abbrechen klickt, schliesst der Dialog
+		}
+	}
+	
+	public void erstelleAbmeldeDialog(){
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("CodingSession schliessen");
+		alert.setHeaderText(null);
+		alert.setContentText("Willst du dich wirklich abmelden?");
+		
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			ControllerMediator.getInstance().beenden();
+			Platform.exit();
 		} else {
 		   //Falls der Benutzer den Button Abbrechen klickt, schliesst der Dialog
 		}

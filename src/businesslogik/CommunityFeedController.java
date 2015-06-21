@@ -56,7 +56,7 @@ public class CommunityFeedController implements Initializable{
 	
 	@FXML
 	public void abmeldenGeklickt(ActionEvent event){
-		Platform.exit();
+		new CodingSessionDialog().erstelleAbmeldeDialog();
 	}
 	
 	@FXML
@@ -70,7 +70,7 @@ public class CommunityFeedController implements Initializable{
 	}
 	
 	@FXML
-	public void sucheFreunde(KeyEvent event){
+	public void txtSucheFreundeGeklickt(KeyEvent event){
 		if(event.getCode() == KeyCode.ENTER){
 			ControllerMediator.getInstance().neueFreundeSuche();	
 		}	
