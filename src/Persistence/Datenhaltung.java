@@ -170,7 +170,7 @@ public class Datenhaltung {
 	 */
 	public static boolean passwortRichtig(String email, String passwort) throws PersistenzException {
 		try {
-			if (leseDB(email).getPasswort() == passwort) {
+			if (leseDB(email).getPasswort().equals(passwort)) {
 				return true;
 			}
 			else {
