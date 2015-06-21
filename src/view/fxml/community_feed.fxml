@@ -43,7 +43,11 @@
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <content>
-            <VBox prefHeight="316.0" prefWidth="427.0" />
+            <VBox prefHeight="316.0" prefWidth="427.0" >
+            	<children>
+        			<ListView fx:id="listView"/>
+    			</children>
+    			</VBox>
          </content>
       </ScrollPane>
    </center>

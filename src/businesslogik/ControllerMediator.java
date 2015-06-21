@@ -1,23 +1,23 @@
 package businesslogik;
 
 public class ControllerMediator {
-	
+
 	private CodingSessionController codingsession;
 	private CommunityFeedController communityfeed;
 	private FreundeSucheController freundesuche;
 	private HauptfensterController hauptfenster;
 	private ProfilbearbeitungController profilbearbeitung;
 	private ProfilController profil;
-	
+
 	private ControllerMediator() {
-		
+
 	}
-	
+
 	public static ControllerMediator getInstance() {
-        return ControllerMediatorHolder.INSTANCE;
-    }
-		
-    public void setHauptfenster(HauptfensterController hauptfenster) {
+		return ControllerMediatorHolder.INSTANCE;
+	}
+
+	public void setHauptfenster(HauptfensterController hauptfenster) {
 		this.hauptfenster = hauptfenster;
 	}
 
@@ -28,50 +28,58 @@ public class ControllerMediator {
 	public void setCommunityfeed(CommunityFeedController communityfeed) {
 		this.communityfeed = communityfeed;
 	}
-	
-	public void setFreundeSuche(FreundeSucheController freundesuche){
+
+	public void setFreundeSuche(FreundeSucheController freundesuche) {
 		this.freundesuche = freundesuche;
 	}
 
 	public void setProfil(ProfilController profil) {
 		this.profil = profil;
 	}
-	
-	public void setProfilbearbeitung(ProfilbearbeitungController profilbearbeitung) {
+
+	public void setProfilbearbeitung(
+			ProfilbearbeitungController profilbearbeitung) {
 		this.profilbearbeitung = profilbearbeitung;
 	}
-	
-	public void addCommunityFeed(CodingSessionModell csmod){
+
+	public void addCommunityFeed(CodingSessionModell csmod) {
 		communityfeed.addBeitrag(csmod);
 	}
-	
-	public void beenden(){
-		if(codingsession !=null)
+
+	public void beenden() {
+		if (codingsession != null)
 			codingsession.beenden();
 	}
-	
-	public void changeCodingSession(){
+
+	public void changeCodingSession() {
 		codingsession.changeModell(KommunikationIncoming.getEinladung());
 	}
-	
-	public void neueCodingSession(){
-		hauptfenster.neueCodingSession();
+
+	public void changeCodingSession(CodingSessionModell cmod) {
+		if (codingsession != null) {
+			codingsession.changeModell(cmod);
+		}
+		hauptfenster.neueCodingSession(false,cmod);
 	}
-	
-	public void neueFreundeSuche(){
+
+	public void neueCodingSession() {
+		hauptfenster.neueCodingSession(true,null);
+	}
+
+	public void neueFreundeSuche() {
 		hauptfenster.neueFreundeSuche();
 	}
-	
-	public void neueProfilbearbeitung(){
+
+	public void neueProfilbearbeitung() {
 		hauptfenster.neueProfilBearbeitung();
 	}
-	
-	public void neuesProfil(){
+
+	public void neuesProfil() {
 		hauptfenster.neuesProfil();
 	}
 
-    private static class ControllerMediatorHolder {
-        private static final ControllerMediator INSTANCE = new ControllerMediator();
-    }
+	private static class ControllerMediatorHolder {
+		private static final ControllerMediator INSTANCE = new ControllerMediator();
+	}
 
 }
