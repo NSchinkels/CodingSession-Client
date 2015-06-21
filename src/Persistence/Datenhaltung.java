@@ -97,6 +97,49 @@ public class Datenhaltung {
 		}
 		return list;
 	}
+	/**
+	 * Methode die eine Chat-Instanz in der Datenbank speichert
+	 * @param ch
+	 * @throws PersistenzException
+	 */
+	public static void schreibeChat(Chat ch) throws PersistenzException{
+		try {
+			em.getTransaction().begin();
+			em.persist(ch);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			if(em.getTransaction() != null && em.getTransaction().isActive())
+				em.getTransaction().rollback();
+			throw new PersistenzException(
+					"Fehler bei der Synchronisation mit der Datenbank");
+		}finally{
+			em.close();
+		}
+	}
+	/**
+	 * Methode die anhand eines Titels eine Chat-Instanz aus der DB liest
+	 * Es wird hier ein JP Query verwendet um anhand der Mail eines
+	 * Nutzers alle seine Chats zu ermitteln
+	 * @param sender
+	 * @return
+	 * @throws PersistenzException
+	 */
+	//Hab hier nicht richtig verstanden, nach welchen Parameter du suchen musst, evntl. noch bescheid geben gez. Break Free
+	public static List<Chat> leseChat(String sender) throws PersistenzException{
+		List<Chat> list = null;
+		try {
+			Query q = em
+					.createQuery(
+							"Select ch from Chat ch where ch.sender = :cmail",
+							CodingSessionModell.class);
+			q.setParameter("cmail", sender);
+			list = q.getResultList();
+		} catch (Exception e) {
+			throw new PersistenzException();
+		}
+		return list;
+		
+	}
 
 	/**
 	 * Methode die Prueft, ob eine E-Mail Addresse schon vergeben ist
