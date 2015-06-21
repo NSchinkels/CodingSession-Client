@@ -6,6 +6,19 @@
 	-fx-text-fill: #F8F8F8;
 }
 
+
+.list-cell:filled:selected {
+    -fx-text-fill: #489CDF;
+}
+
+.list-cell{
+	-fx-text-fill: #B8B8B8;
+}
+
+.list-view .list-cell{
+	-fx-background-color: #282828;
+}
+
 .root{
 	-fx-background: #282828;
 }
@@ -34,7 +47,6 @@
 
 .text-area .content {  
     -fx-background-color: #282828 ;
-    -fx-border-color: #282828;
     -fx-text-fill: #F8F8F8;  
 }  
 
@@ -44,7 +56,6 @@
     
 .tree-view .tree-cell{
 	-fx-background-color: #282828;
-	-fx-border-color: #282828;
 	-fx-text-fill: #F8F8F8;
 }
 
