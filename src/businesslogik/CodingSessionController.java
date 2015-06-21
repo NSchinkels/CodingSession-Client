@@ -176,7 +176,7 @@ public class CodingSessionController implements Initializable {
 	public void txtCodingSessionFormatierung(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
 			synchronized(txtCodingSession){
-			txtCodingSession.setText(einruecken(txtCodingSession.getText()));
+			//txtCodingSession.setText(einruecken(txtCodingSession.getText()));
 			}
 		}
 	}
