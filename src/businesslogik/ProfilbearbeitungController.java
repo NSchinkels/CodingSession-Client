@@ -4,7 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-public class ProfilbearbeitungController extends CodingSessionDialog{
+public class ProfilbearbeitungController{
 
 	@FXML
 	public void abmeldenGeklickt(ActionEvent event){
@@ -18,7 +18,7 @@ public class ProfilbearbeitungController extends CodingSessionDialog{
 	
 	@FXML
 	public void codingSessionStartenGeklickt(ActionEvent event){
-		erstelleStartDialog();
+		ControllerMediator.getInstance().neueCodingSession();
 	}
 	
 	@FXML

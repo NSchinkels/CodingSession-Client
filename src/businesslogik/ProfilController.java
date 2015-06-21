@@ -13,7 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ProfilController extends CodingSessionDialog{
+public class ProfilController{
 	
 	ProfilbearbeitungController bearbeitung;
 	FreundeSucheController suche;
