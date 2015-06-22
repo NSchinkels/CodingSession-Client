@@ -103,4 +103,69 @@ public  class CodingSessionDialog{
 		   //Falls der Benutzer den Button Abbrechen klickt, schliesst der Dialog
 		}
 	}
+	
+	public void erstelleEmailHinweisDialog(){
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültige E-Mail-Adresse");
+		alert.setHeaderText(null);
+		alert.setContentText("Bitte gebe eine gültige E-Mail-Adresse ein!");
+		
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+		
+		alert.showAndWait();
+	}
+	
+	public void erstellePasswortHinweisDialog(){
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültige E-Mail-Adresse");
+		alert.setHeaderText(null);
+		alert.setContentText("Bitte gebe ein gültiges Passwort ein!");
+		
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
+	
+	public void erstelleVornameHinweisDialog(){
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültige E-Mail-Adresse");
+		alert.setHeaderText(null);
+		alert.setContentText("Bitte gebe einen gültigen Vornamen ein!");
+		
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
+	
+	public void erstelleNachnameHinweisDialog(){
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültige E-Mail-Adresse");
+		alert.setHeaderText(null);
+		alert.setContentText("Bitte gebe einen gültigen Nachnamen ein!");
+		
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
+	
+	public void erstelleNicknameHinweisDialog(){
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültige E-Mail-Adresse");
+		alert.setHeaderText(null);
+		alert.setContentText("Bitte gebe einen gültigen Nicknamen ein!");
+		
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
 }
