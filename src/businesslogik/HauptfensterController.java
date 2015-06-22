@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -35,6 +36,7 @@ public class HauptfensterController implements Initializable{
 	KommunikationOutgoing como;
 	CodingSessionModell csmod;
 	Benutzerkonto bkn;
+	Object lock;
 	
 	private Tab tabCodingSession;
 	
@@ -50,12 +52,33 @@ public class HauptfensterController implements Initializable{
 	@Override
 	public void initialize(URL url, ResourceBundle rb){
 		//wird durch richtige ersetzt
+		lock=new Object();
 		bkn=ControllerMediator.getInstance().getBkn();
 		com=new KommunikationStart(bkn.getEmail());
-		comi=new KommunikationIncoming(bkn.getEmail(), com);
+		comi=new KommunikationIncoming(bkn.getEmail(), com,lock);
 		como=new KommunikationOutgoing(bkn.getEmail(), com);
 		ControllerMediator.getInstance().setHauptfenster(this);
 		comi.bekommeEinladung();
+		new Thread(){
+			public void run(){
+				while(true){
+					synchronized(lock){
+						try {
+							lock.wait();
+							Platform.runLater(new Runnable() {
+					            @Override
+					            public void run() {
+					            	new CodingSessionDialog().einladung(KommunikationIncoming.getEinladung().getBenutzerMail());
+					            }
+					        });
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}.start();
 		try{
          	this.neuesProfil();
             FXMLLoader loaderCF = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));

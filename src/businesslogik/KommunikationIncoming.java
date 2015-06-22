@@ -31,12 +31,14 @@ public class KommunikationIncoming {
 	Session session;
 	String benutzerId;
 	boolean change;
+	Object lock;
 
-	public KommunikationIncoming(String benutzerId, KommunikationStart komser) {
+	public KommunikationIncoming(String benutzerId, KommunikationStart komser,Object lock) {
 
 		this.session = komser.getSession();
 		this.benutzerId = benutzerId;
 		this.komser = komser;
+		this.lock=lock;
 	}
 
 	public void bekommeCode(String topic, String benutzer) {
@@ -77,10 +79,13 @@ public class KommunikationIncoming {
 				public void onMessage(Message message) {
 					System.out.println("NACHRICHT");
 					try {
+						synchronized(lock){
 						if (message.getStringProperty("id").equals(ControllerMediator.getInstance().getBkn().getEmail())) {
 							System.out.println("neue om erhalten");
 							csEinladung = ((CodingSessionModell) ((ObjectMessage) message).getObject());
-							new CodingSessionDialog().einladung("df");
+							ControllerMediator.getInstance().einladen("huhu");
+							lock.notifyAll();
+						}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
