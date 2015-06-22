@@ -45,9 +45,9 @@ public class LoginController{
 				stage.show();
 			}catch(Exception e){
 				
+			}
 		}
 	}
-}
 		
 	/**
 	 * Wenn der Hyperlink geklickt wird, schliesst die Loginmaske 

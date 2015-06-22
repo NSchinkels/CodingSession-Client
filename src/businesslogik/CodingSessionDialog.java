@@ -181,4 +181,18 @@ public  class CodingSessionDialog{
 
 		alert.showAndWait();
 	}
+	
+	public void erstelleLoginFehlgeschlagenDialog(){
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Login fehlgeschlagen");
+		alert.setHeaderText(null);
+		alert.setContentText("Die von dir eingegebene E-Mail-Adresse oder das Passwort ist ungültig.\n"
+							+"Versuche es bitte erneut.");
+		
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
 }
