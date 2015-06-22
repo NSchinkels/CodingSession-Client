@@ -104,7 +104,7 @@ public  class CodingSessionDialog{
 		}
 	}
 	
-	public void erstelleEmailHinweisDialog(){
+	public void erstelleEmailValidierungDialog(){
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Ungültige E-Mail-Adresse");
 		alert.setHeaderText(null);
@@ -117,9 +117,9 @@ public  class CodingSessionDialog{
 		alert.showAndWait();
 	}
 	
-	public void erstellePasswortHinweisDialog(){
+	public void erstellePasswortValidierungDialog(){
 		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültige E-Mail-Adresse");
+		alert.setTitle("Ungültiges Passwort");
 		alert.setHeaderText(null);
 		alert.setContentText("Bitte gebe ein gültiges Passwort ein!");
 		
@@ -130,9 +130,9 @@ public  class CodingSessionDialog{
 		alert.showAndWait();
 	}
 	
-	public void erstelleVornameHinweisDialog(){
+	public void erstelleVornameValidierungDialog(){
 		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültige E-Mail-Adresse");
+		alert.setTitle("Ungültiger Vorname");
 		alert.setHeaderText(null);
 		alert.setContentText("Bitte gebe einen gültigen Vornamen ein!");
 		
@@ -143,9 +143,9 @@ public  class CodingSessionDialog{
 		alert.showAndWait();
 	}
 	
-	public void erstelleNachnameHinweisDialog(){
+	public void erstelleNachnameValidierungDialog(){
 		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültige E-Mail-Adresse");
+		alert.setTitle("Ungültiger Nachname");
 		alert.setHeaderText(null);
 		alert.setContentText("Bitte gebe einen gültigen Nachnamen ein!");
 		
@@ -156,11 +156,24 @@ public  class CodingSessionDialog{
 		alert.showAndWait();
 	}
 	
-	public void erstelleNicknameHinweisDialog(){
+	public void erstelleNicknameValidierungDialog(){
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültiger Nickname");
+		alert.setHeaderText(null);
+		alert.setContentText("Bitte gebe einen gültigen Nicknamen ein!");
+		
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
+	
+	public void erstelleEmailVorhandenDialog(){
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Ungültige E-Mail-Adresse");
 		alert.setHeaderText(null);
-		alert.setContentText("Bitte gebe einen gültigen Nicknamen ein!");
+		alert.setContentText("Die von dir eingegebene E-Mail-Adresse ist bereits vergeben!");
 		
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());

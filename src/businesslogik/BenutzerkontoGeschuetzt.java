@@ -60,7 +60,7 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 			echtesKonto = new BenutzerkontoNickname(email, pw, name, id);
 			Datenhaltung.schreibeDB(echtesKonto);
 		} catch (EmailVorhandenException ev) {
-			// Was sinvolles machen
+			new CodingSessionDialog().erstelleEmailVorhandenDialog();
 		} catch (PersistenzException pe) {
 			// Was sinvolles machen
 		}
@@ -113,16 +113,16 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	
 	public boolean ueberpruefeReal(String vorname, String nachname, String email, String passwort) {
 		if(!vorname.matches(vornameRegex)) {
-			new CodingSessionDialog().erstelleVornameHinweisDialog();
+			new CodingSessionDialog().erstelleVornameValidierungDialog();
 			return false;
 		} else if(!nachname.matches(nachnameRegex)) {
-			new CodingSessionDialog().erstelleNachnameHinweisDialog();
+			new CodingSessionDialog().erstelleNachnameValidierungDialog();
 			return false;
 		} else if(!email.matches(emailRegex)) {
-			new CodingSessionDialog().erstelleEmailHinweisDialog();
+			new CodingSessionDialog().erstelleEmailValidierungDialog();
 			return false;
 		} else if(!passwort.matches(passwortRegex)) {
-			new CodingSessionDialog().erstellePasswortHinweisDialog();
+			new CodingSessionDialog().erstellePasswortValidierungDialog();
 			return false;
 		} else {
 			return true;
@@ -131,13 +131,13 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 
 	public boolean ueberpruefeNick(String nickname, String email, String passwort) {
 		if(!nickname.matches(nicknameRegex)) {
-			new CodingSessionDialog().erstelleNicknameHinweisDialog();
+			new CodingSessionDialog().erstelleNicknameValidierungDialog();
 			return false;
 		} else if(!email.matches(emailRegex)) {
-			new CodingSessionDialog().erstelleEmailHinweisDialog();
+			new CodingSessionDialog().erstelleEmailValidierungDialog();
 			return false;
 		} else if(!passwort.matches(passwortRegex)) {
-			new CodingSessionDialog().erstellePasswortHinweisDialog();
+			new CodingSessionDialog().erstellePasswortValidierungDialog();
 			return false;
 		} else {
 			return true;
