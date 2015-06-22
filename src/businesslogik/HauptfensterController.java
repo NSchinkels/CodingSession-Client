@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -26,6 +29,7 @@ public class HauptfensterController implements Initializable{
 	CommunityFeedController communityFeedController;
 	ProfilbearbeitungController profilbearbeitungController;
 	FreundeSucheController freundeSucheController;
+	CodingSessionController codingSessionController;
 	KommunikationStart com;
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
@@ -65,10 +69,14 @@ public class HauptfensterController implements Initializable{
 	}
 	
 	public void neueCodingSession(boolean dialog,CodingSessionModell csmod){
+		if(codingSessionController!=null){
+			codingSessionController.killThread();
+			schliesseCodingSession();
+		}
 		if(dialog){
 			csmod =new CodingSessionDialog().erstelleStartDialog();
 		}
-		CodingSessionController codingSessionController = null;
+		codingSessionController = null;
 		try{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
 			codingSessionController = new CodingSessionController(csmod,comi,como);
@@ -76,8 +84,20 @@ public class HauptfensterController implements Initializable{
 			loader.setController(codingSessionController);
 			Parent root = (Parent) loader.load();
 			tabCodingSession = new Tab("CodingSession");
+			tabCodingSession.setClosable(true);
+			tabPane.setTabClosingPolicy(TabClosingPolicy.SELECTED_TAB);
 			tabPane.getTabs().add(tabCodingSession);
 			tabPane.getSelectionModel().selectLast();
+			
+			//Das kann man bestimmt schoener machen..
+			tabCodingSession.setOnCloseRequest(new EventHandler<Event>() {
+				   @Override
+				   public void handle(Event event) {
+					   event.consume();
+					   new CodingSessionDialog().erstelleEndDialog();
+				   }
+			});
+			
 			tabCodingSession.setContent(root);
 		} catch(IOException e){
 			e.printStackTrace();
@@ -127,5 +147,11 @@ public class HauptfensterController implements Initializable{
 		} catch(IOException e){
 			e.printStackTrace();
 		}
+	}
+	
+	
+	public void schliesseCodingSession(){
+		tabPane.getTabs().remove(tabPane.getTabs().remove(tabCodingSession));
+		tabPane.getSelectionModel().selectFirst();
 	}
 }

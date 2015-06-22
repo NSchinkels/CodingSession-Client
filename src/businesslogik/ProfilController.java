@@ -1,27 +1,18 @@
 package businesslogik;
 
-import java.io.IOException;
-
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
-public class ProfilController extends CodingSessionDialog{
+public class ProfilController{
 	
 	ProfilbearbeitungController bearbeitung;
 	FreundeSucheController suche;
 	
 	@FXML
 	public void abmeldenGeklickt(ActionEvent event){
-		ControllerMediator.getInstance().beenden();
-		Platform.exit();
+		new CodingSessionDialog().erstelleAbmeldeDialog();
 	}
 	
 	@FXML 
@@ -35,7 +26,7 @@ public class ProfilController extends CodingSessionDialog{
 	}
 	
 	@FXML
-	public void sucheFreunde(KeyEvent event){
+	public void txtSucheFreundeGeklickt(KeyEvent event){
 		if(event.getCode() == KeyCode.ENTER){
 			ControllerMediator.getInstance().neueFreundeSuche();	
 		}

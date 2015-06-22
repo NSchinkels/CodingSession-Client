@@ -5,26 +5,35 @@ import java.util.LinkedList;
 import Persistence.*;
 
 public class BenutzerkontoGeschuetzt extends Benutzerkonto {
+	
+	//Regulaere Ausdruecke für die Valdierung
+	private final String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+"
+									+ "(\\.[A-Za-z0-9]+)*(\\-[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	private final String passwortRegex = "^[a-zA-Z0-9!§$%&/()=?@#^+-_*~'\"]{8,25}$";
+	private final String vornameRegex = "^[a-zA-Z]{3,20}";
+	private final String nachnameRegex = "^[a-zA-Z]{3,20}";
+	private final String nicknameRegex = "^[a-zA-Z][\\w_-]{3,25}$";
+			
 	private BenutzerkontoOriginal echtesKonto;
-	private String email;
-	private String pw;
-	private String name;
 	//ID hier noch notwedig? Evntl. entfernen?
+	private String vorname;
+	private String nachname;
+	private String nickname;
+	private String email;
+	private String passwort;
 	private int id;
-	private String vor;
-	private String nach;
 
 	/**
 	 * Erstellt einen neuen Benutzer mit Nicknamen. Prueft, ob E-Mail oder
 	 * Benutzername bereits vergeben sind, und ob die Daten valide sind.
 	 * 
-	 * Eingebene Daten mÃ¼ssen weiterhin noch ueberprueft werden, werde bei
+	 * Eingebene Daten muessen weiterhin noch ueberprueft werden, werde bei
 	 * gelegenheit das Passwort hashen(gez. BreakFree)
 	 * 
 	 * @param email
 	 *            - E-Mail des Benutzers
 	 * @param pw
-	 *            - Password des Benutzers
+	 *            - Passwort des Benutzers
 	 * @param name
 	 *            - Name des Benutzers
 	 * @param benutzerliste
@@ -35,40 +44,37 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	 * @throws Exception
 	 *             Falls die Daten nicht valide sind
 	 */
-	/**
-	 * Konstruktor fÃ¼r Konto mit Nickname
-	 * @param email
-	 * @param pw
-	 * @param name
-	 * @param id
-	 */
-	public BenutzerkontoGeschuetzt(String email,String pw,String name,int id){
+	
+	//Nur vorruebergehend
+	public BenutzerkontoGeschuetzt(){
+		
+	}
+	
+	public BenutzerkontoGeschuetzt(String email, String pw, String name, int id){
 		this.email = email;
-		this.pw=pw;
-		this.name = name;
+		this.passwort = pw;
+		this.nickname = name;
 		this.id = id;
 		try {
 			Datenhaltung.mailVorhanden(email);
-			echtesKonto = new BenutzerkontoNickname(email, pw,
-					name, id);
+			echtesKonto = new BenutzerkontoNickname(email, pw, name, id);
 			Datenhaltung.schreibeDB(echtesKonto);
 		} catch (EmailVorhandenException ev) {
-			// Was sinvolles machen
+			new CodingSessionDialog().erstelleEmailVorhandenDialog();
 		} catch (PersistenzException pe) {
 			// Was sinvolles machen
 		}
 	}
 	
-	public BenutzerkontoGeschuetzt(String email,String pw,String vor,String nach,int id){
+	public BenutzerkontoGeschuetzt(String email, String pw, String vor, String nach, int id){
 		this.email = email;
-		this.pw=pw;
-		this.vor = vor;
-		this.nach = nach;
+		this.passwort = pw;
+		this.vorname = vor;
+		this.nachname = nach;
 		this.id = id;
 		try {
 			Datenhaltung.mailVorhanden(email);
-			BenutzerkontoOriginal konto = new BenutzerkontoRealname(email, pw,
-					vor,nach, id);
+			BenutzerkontoOriginal konto = new BenutzerkontoRealname(email, pw, vor, nach, id);
 			Datenhaltung.schreibeDB(echtesKonto);
 		} catch (EmailVorhandenException eve) {
 			// Was sinvolles machen
@@ -104,19 +110,37 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	public LinkedList<BenutzerkontoOriginal> getFreunde(){
 		return echtesKonto.getFreunde();
 	}
-
-	// Genaue angaben, welche Eingaben erlaubt sind muessen noch diskutiert
-	// werden
-	private boolean ueberpruefeNick(String email, String pw, String nick) {
-		return true;
+	
+	public boolean ueberpruefeReal(String vorname, String nachname, String email, String passwort) {
+		if(!vorname.matches(vornameRegex)) {
+			new CodingSessionDialog().erstelleVornameValidierungDialog();
+			return false;
+		} else if(!nachname.matches(nachnameRegex)) {
+			new CodingSessionDialog().erstelleNachnameValidierungDialog();
+			return false;
+		} else if(!email.matches(emailRegex)) {
+			new CodingSessionDialog().erstelleEmailValidierungDialog();
+			return false;
+		} else if(!passwort.matches(passwortRegex)) {
+			new CodingSessionDialog().erstellePasswortValidierungDialog();
+			return false;
+		} else {
+			return true;
+		}
 	}
 
-	// Genau angaben, welche Eingaben erlaubt sind muessen noch diskutiert
-	// werden
-	private boolean ueberpruefeReal(String email, String pw, String vor,
-			String nach) {
-		return true;
+	public boolean ueberpruefeNick(String nickname, String email, String passwort) {
+		if(!nickname.matches(nicknameRegex)) {
+			new CodingSessionDialog().erstelleNicknameValidierungDialog();
+			return false;
+		} else if(!email.matches(emailRegex)) {
+			new CodingSessionDialog().erstelleEmailValidierungDialog();
+			return false;
+		} else if(!passwort.matches(passwortRegex)) {
+			new CodingSessionDialog().erstellePasswortValidierungDialog();
+			return false;
+		} else {
+			return true;
+		}
 	}
-
-
 }

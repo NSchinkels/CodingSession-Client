@@ -20,7 +20,7 @@
                </HBox.margin>
             </ImageView>
             <Region HBox.hgrow="ALWAYS" />
-            <Hyperlink text="Abmelden">
+            <Hyperlink onAction="#abmeldenGeklickt" text="Abmelden">
                <HBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </HBox.margin>
@@ -36,7 +36,7 @@
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="CodingSession schließen">
+            <Button mnemonicParsing="false" onAction="#codingSessionSchliessenGeklickt" text="CodingSession schließen">
                <HBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </HBox.margin>
@@ -53,7 +53,7 @@
    <left>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefViewportHeight="416.0" prefViewportWidth="179.0">
          <content>
-            <TreeView editable="true" BorderPane.alignment="CENTER" />
+            <ListView fx:id="listCodingSession" editable="true" BorderPane.alignment="CENTER" />
          </content>
       </ScrollPane>
    </left>

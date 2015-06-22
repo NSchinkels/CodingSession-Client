@@ -1,24 +1,18 @@
 package businesslogik;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-public class ProfilbearbeitungController extends CodingSessionDialog{
+public class ProfilbearbeitungController{
 
 	@FXML
 	public void abmeldenGeklickt(ActionEvent event){
-		Platform.exit();
+		new CodingSessionDialog().erstelleAbmeldeDialog();
 	}
 	
 	@FXML
-	public void aenderungenSpeichern(ActionEvent event){
+	public void aenderungenSpeichernGeklickt(ActionEvent event){
 		
-	}
-	
-	@FXML
-	public void codingSessionStartenGeklickt(ActionEvent event){
-		erstelleStartDialog();
 	}
 	
 	@FXML

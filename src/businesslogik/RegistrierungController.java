@@ -27,7 +27,10 @@ public class RegistrierungController implements Initializable {
 	// Zwischenzeitlich, bis bessere Loesung gefunden ist.
 	int id = 5;
 
-	private Benutzerkonto bg;
+	//Nur vorruebergehend
+	private BenutzerkontoGeschuetzt bg = new BenutzerkontoGeschuetzt();
+
+//	private Benutzerkonto bg;
 
 	@FXML
 	private VBox vboxRoot;
@@ -114,22 +117,38 @@ public class RegistrierungController implements Initializable {
 	}
 
 	/**
-	 * Wenn der Button 'Registrieren' geklickt wird, wird ein Benutzerkonto mit den in den
-	 * Textfeldern eingegebenen Daten (je nach Auswahl in der Choice-Box) erstellt. 
-	 * Anschliessend wird der Benutzer zu seinem Profil weitergeleitet.
+	 * Wenn der Button 'Registrieren' geklickt wird, werden die in den
+	 * Textfeldern eingegebenen Daten (je nach Auswahl in der Choice-Box) 
+	 * validiert und bei Erfolg ein Benutzerkonto mit diesen Daten erstellt.
+	 * Anschliessend wird der Benutzer zum Hauptfenster weitergeleitet.
 	 */
-	//Pruefung der Namen auf Korrektheit erforderlich?
 	@FXML
 	private void registrierenGeklickt(ActionEvent event) {
-		if (choiceBox.getValue().equals("Realname")) {
+		if (choiceBox.getValue().equals("Realname") && bg.ueberpruefeReal(txtVorname.getText(), 
+				txtNachname.getText(), txtEmail.getText(), txtPasswort.getText())) {
+			
 			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), 
 					txtVorname.getText(), txtNachname.getText(), id);
-		} else{
+			
+			((Node) (event.getSource())).getScene().getWindow().hide();
+			ladeNeuesHauptfenster();
+			
+		} else if(choiceBox.getValue().equals("Nickname") && bg.ueberpruefeNick(txtNickname.getText(),
+				txtEmail.getText(), txtPasswort.getText())) {
+			
 			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(),
 					txtNickname.getText(), id);
-		}
-		try{
+			
 			((Node) (event.getSource())).getScene().getWindow().hide();
+			ladeNeuesHauptfenster();
+		}
+	}
+	
+	/**
+	 * Laedt das Hauptfenster der Anwendung.
+	 */
+	private void ladeNeuesHauptfenster(){
+		try{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
 			Parent root = (Parent) loader.load();
 			Stage stage = new Stage();
