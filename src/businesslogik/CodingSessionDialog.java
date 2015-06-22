@@ -13,186 +13,228 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 
-public  class CodingSessionDialog{
+public class CodingSessionDialog {
 	private Dialog<CodingSessionModell> dialog;
 	private TextField txtTitel;
 	private CodingSessionModell csmod;
-	
-	public CodingSessionModell getModell(){
+
+	public CodingSessionModell getModell() {
 		return csmod;
 	}
 
 	/**
 	 * Erstellt ein Dialog
 	 */
-	public CodingSessionModell erstelleStartDialog(){
+	public CodingSessionModell erstelleStartDialog() {
 		Dialog<CodingSessionModell> dialog = new Dialog<>();
 		dialog.setTitle("CodingSession starten");
 		dialog.setHeaderText(null);
-		
+
 		txtTitel = new TextField();
 		txtTitel.setPromptText("Titel der CodingSession");
-		
+
 		Label lblTitel = new Label("Titel: ");
-		Label lblSpeichern = new Label("Soll die nachfolgende CodingSession in Zukunft gespeichert werden?");
-		
+		Label lblSpeichern = new Label(
+				"Soll die nachfolgende CodingSession in Zukunft gespeichert werden?");
+
 		GridPane grid = new GridPane();
 		grid.add(lblTitel, 1, 1);
 		grid.add(txtTitel, 2, 1);
 		grid.add(lblSpeichern, 1, 2);
 		dialog.getDialogPane().setContent(grid);
-		
+
 		ButtonType jaButtonType = new ButtonType("Ja", ButtonData.YES);
 		ButtonType neinButtonType = new ButtonType("Nein", ButtonData.NO);
-		ButtonType abbrechenButtonType = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
-		dialog.getDialogPane().getButtonTypes().addAll(jaButtonType, neinButtonType, abbrechenButtonType);
-		dialog.getDialogPane().getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		
-		
-		
+		ButtonType abbrechenButtonType = new ButtonType("Abbrechen",
+				ButtonData.CANCEL_CLOSE);
+		dialog.getDialogPane().getButtonTypes()
+				.addAll(jaButtonType, neinButtonType, abbrechenButtonType);
+		dialog.getDialogPane()
+				.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
+
 		dialog.setResultConverter(dialogButton -> {
-		    if (dialogButton == jaButtonType) {
-		        return new CodingSessionModell(1,"huhu@web.de", txtTitel.getText(), true, "");
-		    }else if(dialogButton==neinButtonType){
-		    	return new CodingSessionModell(2,"huhu@web.de", txtTitel.getText(), false, "");
-		    }
-		    return null;
+			if (dialogButton == jaButtonType) {
+				return new CodingSessionModell(1, "huhu@web.de", txtTitel
+						.getText(), true, "");
+			} else if (dialogButton == neinButtonType) {
+				return new CodingSessionModell(2, "huhu@web.de", txtTitel
+						.getText(), false, "");
+			}
+			return null;
 		});
 
 		return dialog.showAndWait().get();
 	}
-		
-	
+
 	/**
 	 * Erstellt ein Dialog
 	 */
-	public void erstelleEndDialog(){
+	public void erstelleEndDialog() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("CodingSession schliessen");
 		alert.setHeaderText(null);
 		alert.setContentText("Willst du die CodingSession wirklich schließen?\n"
-				            +"Alle nicht gespeicherten Änderungen gehen verloren.");
-		
+				+ "Alle nicht gespeicherten Änderungen gehen verloren.");
+
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK){
+		if (result.get() == ButtonType.OK) {
 			ControllerMediator.getInstance().schliesseCodingSession();
 		} else {
-		   //Falls der Benutzer den Button Abbrechen klickt, schliesst der Dialog
+			// Falls der Benutzer den Button Abbrechen klickt, schliesst der
+			// Dialog
 		}
 	}
-	
-	public void erstelleAbmeldeDialog(){
+
+	public void erstelleAbmeldeDialog() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("CodingSession schliessen");
 		alert.setHeaderText(null);
 		alert.setContentText("Willst du dich wirklich abmelden?");
-		
+
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK){
+		if (result.get() == ButtonType.OK) {
 			ControllerMediator.getInstance().beenden();
 			Platform.exit();
 		} else {
-		   //Falls der Benutzer den Button Abbrechen klickt, schliesst der Dialog
+			// Falls der Benutzer den Button Abbrechen klickt, schliesst der
+			// Dialog
 		}
 	}
-	
-	public void erstelleEmailValidierungDialog(){
+
+	public void erstelleEmailValidierungDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Ungültige E-Mail-Adresse");
 		alert.setHeaderText(null);
 		alert.setContentText("Bitte gebe eine gültige E-Mail-Adresse ein!");
-		
+
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
-		
+
 		alert.showAndWait();
 	}
-	
-	public void erstellePasswortValidierungDialog(){
+
+	public void erstellePasswortValidierungDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Ungültiges Passwort");
 		alert.setHeaderText(null);
 		alert.setContentText("Bitte gebe ein gültiges Passwort ein!");
-		
+
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
 	}
-	
-	public void erstelleVornameValidierungDialog(){
+
+	public void erstelleVornameValidierungDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Ungültiger Vorname");
 		alert.setHeaderText(null);
 		alert.setContentText("Bitte gebe einen gültigen Vornamen ein!");
-		
+
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
 	}
-	
-	public void erstelleNachnameValidierungDialog(){
+
+	public void erstelleNachnameValidierungDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Ungültiger Nachname");
 		alert.setHeaderText(null);
 		alert.setContentText("Bitte gebe einen gültigen Nachnamen ein!");
-		
+
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
 	}
-	
-	public void erstelleNicknameValidierungDialog(){
+
+	public void erstelleNicknameValidierungDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Ungültiger Nickname");
 		alert.setHeaderText(null);
 		alert.setContentText("Bitte gebe einen gültigen Nicknamen ein!");
-		
+
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
 	}
-	
-	public void erstelleEmailVorhandenDialog(){
+
+	public void erstelleEmailVorhandenDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Ungültige E-Mail-Adresse");
 		alert.setHeaderText(null);
 		alert.setContentText("Die von dir eingegebene E-Mail-Adresse ist bereits vergeben!");
-		
+
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
 	}
-	
-	public void erstelleLoginFehlgeschlagenDialog(){
+
+	public void erstelleLoginFehlgeschlagenDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Login fehlgeschlagen");
 		alert.setHeaderText(null);
 		alert.setContentText("Die von dir eingegebene E-Mail-Adresse oder das Passwort ist ungültig.\n"
-							+"Versuche es bitte erneut.");
-		
+				+ "Versuche es bitte erneut.");
+
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
+	}
+
+	public void einladung(String email) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Einladung");
+		alert.setHeaderText("Einladung erhalten");
+		alert.setContentText("Sie haben eine Einladung vom Benutzer " + email
+				+ " erhalten");
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			ControllerMediator.getInstance().changeCodingSession();
+		}
 	}
 }

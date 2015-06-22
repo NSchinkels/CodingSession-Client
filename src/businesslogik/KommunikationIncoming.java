@@ -2,6 +2,12 @@ package businesslogik;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Alert.AlertType;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -35,7 +41,7 @@ public class KommunikationIncoming {
 
 	public void bekommeCode(String topic, String benutzer) {
 		// hier wartet später das JMS aud Code von Csen
-		if(topsubCode!=null){
+		if (topsubCode != null) {
 			try {
 				topsubCode.close();
 			} catch (JMSException e) {
@@ -69,28 +75,28 @@ public class KommunikationIncoming {
 		try {
 			listnerFuerEinladung = new MessageListener() {
 				public void onMessage(Message message) {
-					if (message instanceof ObjectMessage) {
-							try {
-								csEinladung = ((CodingSessionModell) ((ObjectMessage) message)
-										.getObject());
-								new EinladungsDialog().erstelleStartDialog(csEinladung.getBenutzerMail());
-								message.acknowledge();
-							} catch (Exception e) {
-								// throw new
-								// Exception("Konnte nicht eingeladen werden");
-							}
+					System.out.println("NACHRICHT");
+					try {
+						if (message.getStringProperty("id").equals(ControllerMediator.getInstance().getBkn().getEmail())) {
+							System.out.println("neue om erhalten");
+							csEinladung = ((CodingSessionModell) ((ObjectMessage) message).getObject());
+							new CodingSessionDialog().einladung("df");
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
 			};
 			komser.getTopsubEinladung()
 					.setMessageListener(listnerFuerEinladung);
 		} catch (Exception e1) {
-			// throw new Exception("Konnte den Einlader nicht starten");
+			e1.printStackTrace();
+			;
 		}
 	}
 
 	public void bekommeChat(int chatId, List<String> chatLog) {
-		if(tobsubChat!=null){
+		if (tobsubChat != null) {
 			try {
 				tobsubChat.close();
 			} catch (JMSException e) {
@@ -105,8 +111,10 @@ public class KommunikationIncoming {
 				public void onMessage(Message message) {
 					if (message instanceof TextMessage) {
 						try {
-							((LinkedList<String>)chatLog).addLast(message.getStringProperty("sender")
-									+ ": " + ((TextMessage) message).getText());
+							((LinkedList<String>) chatLog).addLast(message
+									.getStringProperty("sender")
+									+ ": "
+									+ ((TextMessage) message).getText());
 						} catch (JMSException e) {
 							e.printStackTrace();
 						}
@@ -122,10 +130,9 @@ public class KommunikationIncoming {
 	}
 
 	public static CodingSessionModell getEinladung() {
-		if (csEinladung != null){
+		if (csEinladung != null) {
 			return csEinladung;
-		}
-		else{
+		} else {
 			// throw new Exception("Konnte den Einlader nicht starten");
 			return null;
 		}
@@ -139,7 +146,8 @@ public class KommunikationIncoming {
 	public boolean hasChanged() {
 		return change;
 	}
-	public void beenden(){
+
+	public void beenden() {
 		komser.beenden();
 	}
 }

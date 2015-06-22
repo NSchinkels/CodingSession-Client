@@ -8,6 +8,15 @@ public class ControllerMediator {
 	private HauptfensterController hauptfenster;
 	private ProfilbearbeitungController profilbearbeitung;
 	private ProfilController profil;
+	private Benutzerkonto bkn;
+
+	public Benutzerkonto getBkn() {
+		return bkn;
+	}
+
+	public void setBkn(Benutzerkonto bkn) {
+		this.bkn = bkn;
+	}
 
 	private ControllerMediator() {
 
@@ -58,7 +67,9 @@ public class ControllerMediator {
 	public void changeCodingSession(CodingSessionModell cmod) {
 		hauptfenster.neueCodingSession(false,cmod);
 	}
-
+	public void einladen(String email){
+		codingsession.sendeEinladung(email);
+	}
 	public void neueCodingSession() {
 		hauptfenster.neueCodingSession(true,null);
 	}

@@ -34,8 +34,8 @@ public class HauptfensterController implements Initializable{
 	KommunikationIncoming comi;
 	KommunikationOutgoing como;
 	CodingSessionModell csmod;
-	String benId="Wär cool wenn hier mal ein wert stehen würde";
-
+	Benutzerkonto bkn;
+	
 	private Tab tabCodingSession;
 	
 	@FXML
@@ -50,11 +50,12 @@ public class HauptfensterController implements Initializable{
 	@Override
 	public void initialize(URL url, ResourceBundle rb){
 		//wird durch richtige ersetzt
-		benId=String.valueOf((int)(Math.random()*123123)+1);
-		com=new KommunikationStart(benId);
-		comi=new KommunikationIncoming(benId, com);
-		como=new KommunikationOutgoing(benId, com);
+		bkn=ControllerMediator.getInstance().getBkn();
+		com=new KommunikationStart(bkn.getEmail());
+		comi=new KommunikationIncoming(bkn.getEmail(), com);
+		como=new KommunikationOutgoing(bkn.getEmail(), com);
 		ControllerMediator.getInstance().setHauptfenster(this);
+		comi.bekommeEinladung();
 		try{
          	this.neuesProfil();
             FXMLLoader loaderCF = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));

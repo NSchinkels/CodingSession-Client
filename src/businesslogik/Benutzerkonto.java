@@ -19,6 +19,10 @@ public abstract class Benutzerkonto {
 	public abstract void delFreund(BenutzerkontoOriginal fr);
 
 	public abstract LinkedList<BenutzerkontoOriginal> getFreunde();
+	//zum testen
+	public String toString(){
+		return this.getName();
+	}
 
 	
 

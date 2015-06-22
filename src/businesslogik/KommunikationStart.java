@@ -39,7 +39,7 @@ public class KommunikationStart {
 			topicEinladung = session.createTopic("Einladung");
 			producerEinladung = session.createProducer(topicEinladung);
 			producerEinladung.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
-			topsubEinladung = session.createDurableSubscriber(topicEinladung,"einlader: "+benutzerId, "id = " + benutzerId, false);
+			topsubEinladung = session.createDurableSubscriber(topicEinladung,benutzerId);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

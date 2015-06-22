@@ -232,6 +232,7 @@ public class CodingSessionController implements Initializable {
 	}
 
 	public void sendeEinladung(String benutzer) {
+		System.out.println("Sende Einladung zu "+benutzer);
 		como.ladeEin(csmod, benutzer);
 	}
 }

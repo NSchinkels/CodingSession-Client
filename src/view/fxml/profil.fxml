@@ -44,7 +44,7 @@
    <right>
       <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="318.0" prefWidth="125.0" BorderPane.alignment="CENTER">
          <content>
-            <VBox />
+            <ListView fx:id="listFreunde" />
          </content>
       </ScrollPane>
    </right>
