@@ -28,7 +28,7 @@ public class CommunityFeedController implements Initializable{
 	private static int anzahl;
 	
 	@FXML
-	private ListView<Beitrag> listView;
+	private ListView<Beitrag> listCommunityFeed;
 
 	public CommunityFeedController() {
 		// hier werden noch die Sachen vom Server gezogen
@@ -39,15 +39,15 @@ public class CommunityFeedController implements Initializable{
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		ObservableList<Beitrag> items = listView.getItems();
-        items.add(beitraege[0]);
-        items.add(beitraege[1]);
-        listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		ObservableList<Beitrag> communityFeedItems = listCommunityFeed.getItems();
+        communityFeedItems.add(beitraege[0]);
+        communityFeedItems.add(beitraege[1]);
+        listCommunityFeed.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
                     if(mouseEvent.getClickCount() == 2){
-                        ControllerMediator.getInstance().changeCodingSession(listView.getSelectionModel().getSelectedItem().getSession());
+                        ControllerMediator.getInstance().changeCodingSession(listCommunityFeed.getSelectionModel().getSelectedItem().getSession());
                     }
                 }
             }
@@ -76,7 +76,7 @@ public class CommunityFeedController implements Initializable{
 		}	
 	}
 
-	public void addBeitrag(CodingSessionModell csmod) {
+	public void addBeitrag(Beitrag beitrag) {
 		//aktuelle Anzahl vom Server ziehen
 		//beitraege[anzahl++] = beitrag;
 		//hier wird dann gespeichert

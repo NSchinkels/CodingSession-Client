@@ -19,7 +19,7 @@ import javafx.scene.input.MouseEvent;
 
 public class CodingSessionController implements Initializable {
 
-	private CodingSessionModell csmod;
+	private CodingSessionModell codingSessionModell;
 
 	// Aktueller Code
 	private String code = "";
@@ -28,12 +28,12 @@ public class CodingSessionController implements Initializable {
 	private String netCode = "";
 
 	// Kommunikation
-	private KommunikationIncoming comi;
-	private KommunikationOutgoing como;
+	private KommunikationIncoming kommunikationIn;
+	private KommunikationOutgoing kommunikationOut;
 
 	// Chat von dieser CS
 	private Chat chat;
-	private PackageExplorerController pe;
+	private PackageExplorerController packageExplorer;
 	Thread codingSessionThread;
 
 	int speicherCounter = 0;
@@ -52,25 +52,25 @@ public class CodingSessionController implements Initializable {
 	@FXML
 	private ListView<CodingSessionModell> listCodingSession;
 
-	public CodingSessionController(CodingSessionModell csmod,
-			KommunikationIncoming comi, KommunikationOutgoing como) {
-		this.csmod = csmod;
-		this.comi = comi;
-		this.como = como;
+	public CodingSessionController(CodingSessionModell codingSessionModell,
+			KommunikationIncoming kommunikationIn, KommunikationOutgoing kommunikationOut) {
+		this.codingSessionModell = codingSessionModell;
+		this.kommunikationIn = kommunikationIn;
+		this.kommunikationOut = kommunikationOut;
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		try {
-			pe = new PackageExplorerController("12");
+			packageExplorer = new PackageExplorerController("12");
 		} catch (PersistenzException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		ObservableList<CodingSessionModell> items = listCodingSession
+		ObservableList<CodingSessionModell> codingSessionItems = listCodingSession
 				.getItems();
-		for (CodingSessionModell cs : pe.get()) {
-			items.add(cs);
+		for (CodingSessionModell cs : packageExplorer.get()) {
+			codingSessionItems.add(cs);
 		}
 		listCodingSession.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -84,11 +84,11 @@ public class CodingSessionController implements Initializable {
 				}
 			}
 		});
-		chat = new Chat(como, comi, "" + csmod.getBenutzerMail(), csmod.getId());
-		como.starteCs("CodingSession" + csmod.getId());
-		comi.bekommeCode("CodingSession" + csmod.getId(),
-				csmod.getBenutzerMail());
-		netCode = code = csmod.getCode();
+		chat = new Chat(kommunikationOut, kommunikationIn, "" + ControllerMediator.getInstance().getBenutzerkonto().getName(), codingSessionModell.getId());
+		kommunikationOut.starteCs("CodingSession" + codingSessionModell.getId());
+		kommunikationIn.bekommeCode("CodingSession" + codingSessionModell.getId(),
+				codingSessionModell.getBenutzerMail());
+		netCode = code = codingSessionModell.getCode();
 		txtCodingSession.setText(code);
 		codingSessionThread = new Thread() {
 
@@ -97,8 +97,8 @@ public class CodingSessionController implements Initializable {
 				while (running) {
 					try {
 						synchronized (txtCodingSession) {
-							if (comi.hasChanged()) {
-								netCode = comi.getCode();
+							if (kommunikationIn.hasChanged()) {
+								netCode = kommunikationIn.getCode();
 								if (!netCode.equals(code)) {
 									code = netCode;
 									txtCodingSession.setText(code);
@@ -116,11 +116,11 @@ public class CodingSessionController implements Initializable {
 								txtChatRead.appendText(text);
 							}
 						}
-						if (speicherCounter++ > 10 && csmod.isSpeichern()) {
-							// Persistence.Datenhaltung.schreibeCS(csmod);
+						if (speicherCounter++ > 10 && codingSessionModell.isSpeichern()) {
+							// Persistence.Datenhaltung.schreibeCS(codingSesssionModell);
 							speicherCounter = 0;
 						}
-						csmod.setCode(code);
+						codingSessionModell.setCode(code);
 						Thread.sleep(200);
 					} catch (Exception e) {
 						System.out.println("kaputt");
@@ -158,10 +158,14 @@ public class CodingSessionController implements Initializable {
 			}
 		}
 	}
-
+	
+	@FXML
+	public void commFeedTeilen(ActionEvent event){
+		new CodingSessionDialog().cfBeitragHinzufuegen(this.codingSessionModell);
+	}
 	public boolean addTeilnehmer(String b) {
-		if (csmod.getAnzahlTeilnehmer() < 10) {
-			csmod.addTeilnehmer(b);
+		if (codingSessionModell.getAnzahlTeilnehmer() < 10) {
+			codingSessionModell.addTeilnehmer(b);
 			return true;
 		}
 		return false;
@@ -172,14 +176,14 @@ public class CodingSessionController implements Initializable {
 	public void aktualisiereCode(String text, boolean selbst) {
 		code = text;
 		if (selbst) {
-			como.veroeffentlicheCode(code);
+			kommunikationOut.veroeffentlicheCode(code);
 			netCode = text;
 		}
 	}
 	
 	public void beenden() {
 		codingSessionThread.interrupt();
-		comi.beenden();
+		kommunikationIn.beenden();
 	}
 	
 	// Funktion zum Einr�cken des Codes
@@ -225,14 +229,14 @@ public class CodingSessionController implements Initializable {
 		codingSessionThread.interrupt();
 	}
 
-	public void neuerCodeGUI(String text) {
-		if (!text.equals(netCode)) {
-			aktualisiereCode(text, true);
+	public void neuerCodeGUI(String neuerCode) {
+		if (!neuerCode.equals(netCode)) {
+			aktualisiereCode(neuerCode, true);
 		}
 	}
 
 	public void sendeEinladung(String benutzer) {
 		System.out.println("Sende Einladung zu "+benutzer);
-		como.ladeEin(csmod, benutzer);
+		kommunikationOut.ladeEin(codingSessionModell, benutzer);
 	}
 }

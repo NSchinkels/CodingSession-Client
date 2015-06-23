@@ -43,7 +43,7 @@
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <content>
-            <ListView fx:id="listView" />
+            <ListView fx:id="listCommunityFeed" />
          </content>
       </ScrollPane>
    </center>

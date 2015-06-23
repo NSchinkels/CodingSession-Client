@@ -31,11 +31,11 @@ public class HauptfensterController implements Initializable{
 	ProfilbearbeitungController profilbearbeitungController;
 	FreundeSucheController freundeSucheController;
 	CodingSessionController codingSessionController;
-	KommunikationStart com;
-	KommunikationIncoming comi;
-	KommunikationOutgoing como;
-	CodingSessionModell csmod;
-	Benutzerkonto bkn;
+	KommunikationStart kommunikationStart;
+	KommunikationIncoming kommunikationIn;
+	KommunikationOutgoing kommunikationOut;
+	CodingSessionModell codingSessionModell;
+	Benutzerkonto benutzerkonto;
 	Object lock;
 	
 	private Tab tabCodingSession;
@@ -53,12 +53,12 @@ public class HauptfensterController implements Initializable{
 	public void initialize(URL url, ResourceBundle rb){
 		//wird durch richtige ersetzt
 		lock=new Object();
-		bkn=ControllerMediator.getInstance().getBkn();
-		com=new KommunikationStart(bkn.getEmail());
-		comi=new KommunikationIncoming(bkn.getEmail(), com,lock);
-		como=new KommunikationOutgoing(bkn.getEmail(), com);
+		benutzerkonto=ControllerMediator.getInstance().getBenutzerkonto();
+		kommunikationStart=new KommunikationStart(benutzerkonto.getEmail());
+		kommunikationIn=new KommunikationIncoming(benutzerkonto.getEmail(), kommunikationStart,lock);
+		kommunikationOut=new KommunikationOutgoing(benutzerkonto.getEmail(), kommunikationStart);
 		ControllerMediator.getInstance().setHauptfenster(this);
-		comi.bekommeEinladung();
+		kommunikationIn.bekommeEinladung();
 		new Thread(){
 			public void run(){
 				while(true){
@@ -92,18 +92,18 @@ public class HauptfensterController implements Initializable{
          }
 	}
 	
-	public void neueCodingSession(boolean dialog,CodingSessionModell csmod){
+	public void neueCodingSession(boolean dialog,CodingSessionModell codingSessionModell){
 		if(codingSessionController!=null){
 			codingSessionController.killThread();
 			schliesseCodingSession();
 		}
 		if(dialog){
-			csmod =new CodingSessionDialog().erstelleStartDialog();
+			codingSessionModell =new CodingSessionDialog().erstelleStartDialog();
 		}
 		codingSessionController = null;
 		try{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
-			codingSessionController = new CodingSessionController(csmod,comi,como);
+			codingSessionController = new CodingSessionController(codingSessionModell,kommunikationIn,kommunikationOut);
 			ControllerMediator.getInstance().setCodingSession(codingSessionController);
 			loader.setController(codingSessionController);
 			Parent root = (Parent) loader.load();

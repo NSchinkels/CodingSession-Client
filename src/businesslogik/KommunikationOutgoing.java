@@ -11,24 +11,24 @@ import javax.jms.Topic;
 
 public class KommunikationOutgoing {
 
-	KommunikationStart komser;
+	KommunikationStart kommunikationStart;
 	MessageProducer producerCode;
 	MessageProducer producerChat;
 	TextMessage textMessage;
 	Session session;
 	String benutzerId;
 
-	public KommunikationOutgoing(String benutzerId,KommunikationStart komser) {
-		this.session=komser.getSession();
+	public KommunikationOutgoing(String benutzerId,KommunikationStart kommunikationStart) {
+		this.session=kommunikationStart.getSession();
 		this.benutzerId=benutzerId;
-		this.komser=komser;
+		this.kommunikationStart=kommunikationStart;
 
 	}
 	public void starteCs(String topic){
 		System.out.println(session.toString());
 		try {
-			komser.setTopicCode(session.createTopic(topic));
-			producerCode = session.createProducer(komser.getTopicCode());
+			kommunikationStart.setTopicCode(session.createTopic(topic));
+			producerCode = session.createProducer(kommunikationStart.getTopicCode());
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,8 +37,8 @@ public class KommunikationOutgoing {
 	}
 	public void starteChat(String topic){
 		try {
-			komser.setTopicChat(session.createTopic(topic));
-			producerChat = session.createProducer(komser.getTopicChat());
+			kommunikationStart.setTopicChat(session.createTopic(topic));
+			producerChat = session.createProducer(kommunikationStart.getTopicChat());
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,7 +78,7 @@ public class KommunikationOutgoing {
 			ObjectMessage om = session.createObjectMessage(cs);
 			om.setStringProperty("id", freundEmail);
 			System.out.println("om erstellt");
-			komser.getProducerEinladung().send(om);
+			kommunikationStart.getProducerEinladung().send(om);
 			System.out.println("Veröffentlicht");
 		} catch (Exception e2) {
 			e2.printStackTrace();

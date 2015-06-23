@@ -9,18 +9,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 
 public class CodingSessionDialog {
-	private Dialog<CodingSessionModell> dialog;
 	private TextField txtTitel;
-	private CodingSessionModell csmod;
-
-	public CodingSessionModell getModell() {
-		return csmod;
-	}
 
 	/**
 	 * Erstellt ein Dialog
@@ -56,11 +51,15 @@ public class CodingSessionDialog {
 
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == jaButtonType) {
-				return new CodingSessionModell(1, "huhu@web.de", txtTitel
-						.getText(), true, "");
+				return new CodingSessionModell(
+						(int) (Math.random() * Integer.MAX_VALUE),
+						ControllerMediator.getInstance().getBenutzerkonto()
+								.getEmail(), txtTitel.getText(), true, "");
 			} else if (dialogButton == neinButtonType) {
-				return new CodingSessionModell(2, "huhu@web.de", txtTitel
-						.getText(), false, "");
+				return new CodingSessionModell(
+						(int) (Math.random() * Integer.MAX_VALUE),
+						ControllerMediator.getInstance().getBenutzerkonto()
+								.getEmail(), txtTitel.getText(), false, "");
 			}
 			return null;
 		});
@@ -237,4 +236,56 @@ public class CodingSessionDialog {
 			ControllerMediator.getInstance().changeCodingSession();
 		}
 	}
+
+	public void cfBeitragHinzufuegen(CodingSessionModell codingSessionModell) {
+		Dialog<Beitrag> dialog = new Dialog<>();
+		dialog.setTitle("CodingSession teilen");
+		dialog.setHeaderText(null);
+
+		TextField txtBetreff = new TextField();
+		txtBetreff.setPromptText("Betreff der CodingSession");
+
+		Label lblBetreff = new Label("Betreff: ");
+
+		TextArea txtBeschreibung = new TextArea();
+		txtBeschreibung.setPromptText("Beschreibung der CodingSession");
+
+		Label lblBeschreibung = new Label("Betreff: ");
+
+		Label lblSpeichern = new Label(
+				"Sollen andere Benutzer den Code verändert dürfen?");
+
+		GridPane grid = new GridPane();
+		grid.add(lblBetreff, 1, 1);
+		grid.add(txtBetreff, 2, 1);
+		grid.add(txtBeschreibung, 2, 1);
+		grid.add(lblBeschreibung, 2, 2);
+		grid.add(lblSpeichern, 1, 3);
+		dialog.getDialogPane().setContent(grid);
+
+		ButtonType jaButtonType = new ButtonType("Ja", ButtonData.YES);
+		ButtonType neinButtonType = new ButtonType("Nein", ButtonData.NO);
+		ButtonType abbrechenButtonType = new ButtonType("Abbrechen",
+				ButtonData.CANCEL_CLOSE);
+		dialog.getDialogPane().getButtonTypes()
+				.addAll(jaButtonType, neinButtonType, abbrechenButtonType);
+		dialog.getDialogPane()
+				.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
+
+		dialog.setResultConverter(dialogButton -> {
+			if (dialogButton == jaButtonType) {
+				return new Beitrag(codingSessionModell, txtBetreff.getText(),
+						txtBeschreibung.getText(), false);
+			} else if (dialogButton == neinButtonType) {
+				return new Beitrag(codingSessionModell, txtBetreff.getText(),
+						txtBeschreibung.getText(), true);
+			}
+			return null;
+		});
+
+		ControllerMediator.getInstance().addCommunityFeed(dialog.showAndWait().get());
+	}
+
 }

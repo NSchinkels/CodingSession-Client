@@ -20,7 +20,7 @@ import javax.jms.TopicSubscriber;
 public class KommunikationIncoming {
 
 	public String neuerCode = "";
-	KommunikationStart komser;
+	KommunikationStart kommunikationStart;
 	MessageListener listnerFuerCode;
 	MessageListener listnerFuerEinladung;
 	MessageListener listnerFuerChat;
@@ -33,11 +33,11 @@ public class KommunikationIncoming {
 	boolean change;
 	Object lock;
 
-	public KommunikationIncoming(String benutzerId, KommunikationStart komser,Object lock) {
+	public KommunikationIncoming(String benutzerId, KommunikationStart kommunikationStart,Object lock) {
 
-		this.session = komser.getSession();
+		this.session = kommunikationStart.getSession();
 		this.benutzerId = benutzerId;
-		this.komser = komser;
+		this.kommunikationStart = kommunikationStart;
 		this.lock=lock;
 	}
 
@@ -52,7 +52,7 @@ public class KommunikationIncoming {
 			}
 		}
 		try {
-			topsubCode = session.createDurableSubscriber(komser.getTopicCode(),
+			topsubCode = session.createDurableSubscriber(kommunikationStart.getTopicCode(),
 					"Benutzer" + benutzer);
 			listnerFuerCode = new MessageListener() {
 				public void onMessage(Message message) {
@@ -80,7 +80,7 @@ public class KommunikationIncoming {
 					System.out.println("NACHRICHT");
 					try {
 						synchronized(lock){
-						if (message.getStringProperty("id").equals(ControllerMediator.getInstance().getBkn().getEmail())) {
+						if (message.getStringProperty("id").equals(ControllerMediator.getInstance().getBenutzerkonto().getEmail())) {
 							System.out.println("neue om erhalten");
 							csEinladung = ((CodingSessionModell) ((ObjectMessage) message).getObject());
 							ControllerMediator.getInstance().einladen("huhu");
@@ -92,7 +92,7 @@ public class KommunikationIncoming {
 					}
 				}
 			};
-			komser.getTopsubEinladung()
+			kommunikationStart.getTopsubEinladung()
 					.setMessageListener(listnerFuerEinladung);
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -110,7 +110,7 @@ public class KommunikationIncoming {
 			}
 		}
 		try {
-			tobsubChat = session.createDurableSubscriber(komser.getTopicChat(),
+			tobsubChat = session.createDurableSubscriber(kommunikationStart.getTopicChat(),
 					"Chatter" + benutzerId);
 			listnerFuerChat = new MessageListener() {
 				public void onMessage(Message message) {
@@ -153,6 +153,6 @@ public class KommunikationIncoming {
 	}
 
 	public void beenden() {
-		komser.beenden();
+		kommunikationStart.beenden();
 	}
 }

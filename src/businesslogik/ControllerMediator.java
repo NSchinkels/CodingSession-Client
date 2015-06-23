@@ -8,14 +8,14 @@ public class ControllerMediator {
 	private HauptfensterController hauptfenster;
 	private ProfilbearbeitungController profilbearbeitung;
 	private ProfilController profil;
-	private Benutzerkonto bkn;
+	private Benutzerkonto benutzerkonto;
 
-	public Benutzerkonto getBkn() {
-		return bkn;
+	public Benutzerkonto getBenutzerkonto() {
+		return benutzerkonto;
 	}
 
-	public void setBkn(Benutzerkonto bkn) {
-		this.bkn = bkn;
+	public void setBenutzerkonto(Benutzerkonto benutzerkonto) {
+		this.benutzerkonto = benutzerkonto;
 	}
 
 	private ControllerMediator() {
@@ -51,8 +51,8 @@ public class ControllerMediator {
 		this.profilbearbeitung = profilbearbeitung;
 	}
 
-	public void addCommunityFeed(CodingSessionModell csmod) {
-		communityfeed.addBeitrag(csmod);
+	public void addCommunityFeed(Beitrag beitrag) {
+		communityfeed.addBeitrag(beitrag);
 	}
 
 	public void beenden() {
