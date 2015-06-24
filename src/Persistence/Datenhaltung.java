@@ -140,6 +140,21 @@ public class Datenhaltung {
 		return list;
 		
 	}
+	
+	public static void schreibeCF(CommunityFeedController CF) throws PersistenzException{
+		try {
+			em.getTransaction().begin();
+			em.persist(CF);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			if(em.getTransaction() != null && em.getTransaction().isActive())
+				em.getTransaction().rollback();
+			throw new PersistenzException(
+					"Fehler bei der Synchronisation mit der Datenbank");
+		}finally{
+			em.close();
+		}
+	}
 
 	/**
 	 * Methode die Prueft, ob eine E-Mail Addresse schon vergeben ist

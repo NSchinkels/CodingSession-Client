@@ -1,9 +1,12 @@
 package businesslogik;
 
+
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.io.Serializable;
+import javax.persistence.*;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,12 +19,19 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-public class CommunityFeedController implements Initializable{
-	
+
+@Entity
+@Table(name="CommunityFeedController")
+public class CommunityFeedController implements Initializable,Serializable{
+	@OneToMany(targetEntity=Beitrag.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Beitrag> beitraege;
+	//Da es nur einen CFController geben soll PK ID auf 1 gesetzt
+	@Id
+	private int ID = 1;
 	private static int anzahl;
 	
 	@FXML
+	@Transient
 	private ListView<Beitrag> listCommunityFeed;
 
 	public CommunityFeedController() {
@@ -72,6 +82,6 @@ public class CommunityFeedController implements Initializable{
 	}
 
 	public void addBeitrag(Beitrag beitrag) {
-		//Datenhaltung.schreibeCF(beitrag);
+		beitraege.add(beitrag);
 	}
 }
