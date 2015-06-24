@@ -155,6 +155,17 @@ public class Datenhaltung {
 			em.close();
 		}
 	}
+	
+	public static CommunityFeedController leseCF() throws PersistenzException{
+		CommunityFeedController CF = null;
+		try {
+			CF = em.find(CommunityFeedController.class, 1);
+		} catch (Exception e) {
+			throw new PersistenzException(
+					"Fehler bei der Synchronisation mit der Datenbank");
+		}
+		return CF;
+	}
 
 	/**
 	 * Methode die Prueft, ob eine E-Mail Addresse schon vergeben ist
