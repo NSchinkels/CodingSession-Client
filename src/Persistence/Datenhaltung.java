@@ -140,6 +140,12 @@ public class Datenhaltung {
 		return list;
 		
 	}
+	/**
+	 * Methode die einen CommunityFeedController in die DB schreibt,
+	 * Beitraege sollten mit Persistiert werden
+	 * @param CF
+	 * @throws PersistenzException
+	 */
 	
 	public static void schreibeCF(CommunityFeedController CF) throws PersistenzException{
 		try {
@@ -155,7 +161,11 @@ public class Datenhaltung {
 			em.close();
 		}
 	}
-	
+	/**
+	 * Methode die CFContriller (inkl. Beitraege aus der DB liest)
+	 * @return
+	 * @throws PersistenzException
+	 */
 	public static CommunityFeedController leseCF() throws PersistenzException{
 		CommunityFeedController CF = null;
 		try {
