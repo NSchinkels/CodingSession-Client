@@ -24,12 +24,12 @@ public class Datenhaltung {
 			em.persist(konto);
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			if(em.getTransaction() != null && em.getTransaction().isActive())
+			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
-		}finally{
-			//em.close();
+		} finally {
+			// em.close();
 		}
 	}
 
@@ -46,17 +46,18 @@ public class Datenhaltung {
 			em.persist(cs);
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			if(em.getTransaction() != null && em.getTransaction().isActive())
+			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
-		}finally{
-			//em.close();
+		} finally {
+			// em.close();
 		}
 	}
 
 	/**
-	 * Methode die anhand einer E-Mail Addresse ein Konto aus der Datenbank  liest
+	 * Methode die anhand einer E-Mail Addresse ein Konto aus der Datenbank
+	 * liest
 	 * 
 	 * @param email
 	 * @return BenutzerKontoOriginal
@@ -75,9 +76,10 @@ public class Datenhaltung {
 	}
 
 	/**
-	 * Methode die anhand eines Titels eine CS aus der DB liest
-	 * Es wird hier ein JP Query verwendet um anhand der Mail eines
-	 * Nutzers alle seine CodingSessions zu ermitteln
+	 * Methode die anhand eines Titels eine CS aus der DB liest Es wird hier ein
+	 * JP Query verwendet um anhand der Mail eines Nutzers alle seine
+	 * CodingSessions zu ermitteln
+	 * 
 	 * @param titel
 	 * @return
 	 * @throws PersistenzException
@@ -97,76 +99,85 @@ public class Datenhaltung {
 		}
 		return list;
 	}
+
 	/**
 	 * Methode die eine Chat-Instanz in der Datenbank speichert
+	 * 
 	 * @param ch
 	 * @throws PersistenzException
 	 */
-	public static void schreibeChat(Chat ch) throws PersistenzException{
+	public static void schreibeChat(Chat ch) throws PersistenzException {
 		try {
 			em.getTransaction().begin();
 			em.persist(ch);
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			if(em.getTransaction() != null && em.getTransaction().isActive())
+			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
-		}finally{
+		} finally {
 			em.close();
 		}
 	}
+
 	/**
-	 * Methode die anhand eines Titels eine Chat-Instanz aus der DB liest
-	 * Es wird hier ein JP Query verwendet um anhand der Mail eines
-	 * Nutzers alle seine Chats zu ermitteln
+	 * Methode die anhand eines Titels eine Chat-Instanz aus der DB liest Es
+	 * wird hier ein JP Query verwendet um anhand der Mail eines Nutzers alle
+	 * seine Chats zu ermitteln
+	 * 
 	 * @param sender
 	 * @return
 	 * @throws PersistenzException
 	 */
-	//Hab hier nicht richtig verstanden, nach welchen Parameter du suchen musst, evntl. noch bescheid geben gez. Break Free
-	public static List<Chat> leseChat(String sender) throws PersistenzException{
+	// Hab hier nicht richtig verstanden, nach welchen Parameter du suchen
+	// musst, evntl. noch bescheid geben gez. Break Free
+	public static List<Chat> leseChat(String sender) throws PersistenzException {
 		List<Chat> list = null;
 		try {
-			Query q = em
-					.createQuery(
-							"Select ch from Chat ch where ch.sender = :cmail",
-							CodingSessionModell.class);
+			Query q = em.createQuery(
+					"Select ch from Chat ch where ch.sender = :cmail",
+					CodingSessionModell.class);
 			q.setParameter("cmail", sender);
 			list = q.getResultList();
 		} catch (Exception e) {
 			throw new PersistenzException();
 		}
 		return list;
-		
+
 	}
+
 	/**
-	 * Methode die einen CommunityFeedController in die DB schreibt,
-	 * Beitraege sollten mit Persistiert werden
+	 * Methode die einen CommunityFeedController in die DB schreibt, Beitraege
+	 * sollten mit Persistiert werden
+	 * 
 	 * @param CF
 	 * @throws PersistenzException
 	 */
-	
-	public static void schreibeCF(CommunityFeedController CF) throws PersistenzException{
+
+	public static void schreibeCF(CommunityFeedController CF)
+			throws PersistenzException {
 		try {
 			em.getTransaction().begin();
 			em.persist(CF);
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			if(em.getTransaction() != null && em.getTransaction().isActive())
+			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
-		}finally{
+		} finally {
 			em.close();
 		}
 	}
+
 	/**
 	 * Methode die CFContriller (inkl. Beitraege aus der DB liest)
+	 * 
 	 * @return
 	 * @throws PersistenzException
 	 */
-	public static CommunityFeedController leseCF() throws PersistenzException{
+	public static CommunityFeedController leseCF() throws PersistenzException {
 		CommunityFeedController CF = null;
 		try {
 			CF = em.find(CommunityFeedController.class, "1");
@@ -176,32 +187,38 @@ public class Datenhaltung {
 		}
 		return CF;
 	}
+
 	/**
 	 * Schreibt Profil in DB
+	 * 
 	 * @param PM
 	 * @throws PersistenzException
 	 */
-	public static void schreibeProfil(ProfilModell PM) throws PersistenzException{
+	public static void schreibeProfil(ProfilModell PM)
+			throws PersistenzException {
 		try {
 			em.getTransaction().begin();
 			em.persist(PM);
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			if(em.getTransaction() != null && em.getTransaction().isActive())
+			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
-		}finally{
+		} finally {
 			em.close();
 		}
 	}
+
 	/**
 	 * Liest Profil anhand der Mail aus DB
+	 * 
 	 * @param email
 	 * @return
 	 * @throws PersistenzException
 	 */
-	public static ProfilModell leseProfil(String email) throws PersistenzException{
+	public static ProfilModell leseProfil(String email)
+			throws PersistenzException {
 		ProfilModell PM = null;
 		try {
 			PM = em.find(ProfilModell.class, email);
@@ -219,16 +236,13 @@ public class Datenhaltung {
 	 * @throws PersistenzException
 	 * @throws EmailVorhandenException
 	 */
-	public static void mailVorhanden(String email) throws PersistenzException,
-			EmailVorhandenException {
-		try {
-			if (em.find(BenutzerkontoOriginal.class, email) != null) {
-				throw new EmailVorhandenException();
-			}
-		} catch (Exception e) {
-			throw new PersistenzException(
-					"Fehler bei der Synchronisation mit der Datenbank");
+	public static void mailVorhanden(String email)
+			throws EmailVorhandenException {
+
+		if (em.find(BenutzerkontoOriginal.class, email) != null) {
+			throw new EmailVorhandenException();
 		}
+
 	}
 
 	/**
@@ -239,12 +253,12 @@ public class Datenhaltung {
 	 * @throws PersistenzException
 	 * @throws FalschesPasswortException
 	 */
-	public static boolean passwortRichtig(String email, String passwort) throws PersistenzException {
+	public static boolean passwortRichtig(String email, String passwort)
+			throws PersistenzException {
 		try {
 			if (leseDB(email).getPasswort().equals(passwort)) {
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
 		} catch (Exception e) {
