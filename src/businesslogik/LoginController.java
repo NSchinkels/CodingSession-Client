@@ -33,13 +33,10 @@ public class LoginController {
 	private void anmeldenGeklickt(ActionEvent event) {
 		try {
 			// Wird ausgeklammert, sobald wir mit Accounts arbeiten
-			if (Datenhaltung.passwortRichtig(txtEmail.getText(),
-					pwdPasswort.getText())) {
-				ControllerMediator.getInstance().setBenutzerkonto(
-						Datenhaltung.leseDB(txtEmail.getText()));
+			if (Datenhaltung.passwortRichtig(txtEmail.getText(), pwdPasswort.getText())) {
+				ControllerMediator.getInstance().setBenutzerkonto(Datenhaltung.leseDB(txtEmail.getText()));
 				((Node) (event.getSource())).getScene().getWindow().hide();
-				FXMLLoader loader = new FXMLLoader(getClass().getResource(
-						"/view/fxml/hauptfenster.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
 				Parent root = (Parent) loader.load();
 				Stage stage = new Stage();
 				Scene scene = new Scene(root);
@@ -47,7 +44,9 @@ public class LoginController {
 				stage.setMaximized(true);
 				stage.show();
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch(PersistenzException e) {
 			e.printStackTrace();
 		}
 	}
@@ -63,8 +62,7 @@ public class LoginController {
 	private void oeffneRegistrierungGeklickt(ActionEvent event) {
 		try {
 			((Node) (event.getSource())).getScene().getWindow().hide();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(
-					"/view/fxml/registrierung.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/registrierung.fxml"));
 			Parent root = (Parent) loader.load();
 			Stage stage = new Stage();
 			Scene scene = new Scene(root);

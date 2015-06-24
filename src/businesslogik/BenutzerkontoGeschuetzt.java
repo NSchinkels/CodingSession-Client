@@ -74,7 +74,7 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		this.id = id;
 		try {
 			Datenhaltung.mailVorhanden(email);
-			BenutzerkontoOriginal konto = new BenutzerkontoRealname(email, pw, vor, nach, id);
+			echtesKonto = new BenutzerkontoRealname(email, pw, vor, nach, id);
 			Datenhaltung.schreibeDB(echtesKonto);
 		} catch (EmailVorhandenException eve) {
 			// Was sinvolles machen
