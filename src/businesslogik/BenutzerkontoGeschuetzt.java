@@ -100,6 +100,10 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		return echtesKonto.getName();
 	}
 	
+	public BenutzerkontoOriginal getBenutzerkontoOriginal(){
+		return echtesKonto;
+	}
+	
 	public void addFreund(BenutzerkontoOriginal fr){
 		echtesKonto.addFreund(fr);
 	}

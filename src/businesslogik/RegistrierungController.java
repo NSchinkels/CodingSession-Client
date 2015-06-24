@@ -23,6 +23,8 @@ public class RegistrierungController implements Initializable {
 
 	//Nur vorruebergehend
 	private BenutzerkontoGeschuetzt bg = new BenutzerkontoGeschuetzt();
+	
+	private ProfilModell profilModell;
 
 //	private Benutzerkonto bg;
 
@@ -113,9 +115,7 @@ public class RegistrierungController implements Initializable {
 			
 			//Hauptfenster das bk geben
 			ControllerMediator.getInstance().setBenutzerkonto(bg);
-			
-			((Node) (event.getSource())).getScene().getWindow().hide();
-			ControllerMediator.getInstance().neuesHauptfenster();
+			profilModell = new ProfilModell(txtEmail.getText());
 			
 		} else if(choiceBox.getValue().equals("Nickname") && bg.ueberpruefeNick(txtNickname.getText(),
 				txtEmail.getText(), txtPasswort.getText())) {
@@ -125,7 +125,10 @@ public class RegistrierungController implements Initializable {
 			
 			//Hauptfenster das bk geben
 			ControllerMediator.getInstance().setBenutzerkonto(bg);
-			
+			profilModell = new ProfilModell(txtEmail.getText());
+		}
+		
+		if(bg.getBenutzerkontoOriginal() != null){
 			((Node) (event.getSource())).getScene().getWindow().hide();
 			ControllerMediator.getInstance().neuesHauptfenster();
 		}

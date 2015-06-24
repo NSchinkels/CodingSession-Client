@@ -14,6 +14,8 @@ public abstract class Benutzerkonto {
 	public abstract String getPasswort();
 
 	public abstract String getName();
+	
+	public abstract BenutzerkontoOriginal getBenutzerkontoOriginal();
 
 	public abstract void addFreund(BenutzerkontoOriginal fr);
 
