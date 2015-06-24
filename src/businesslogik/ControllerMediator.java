@@ -1,5 +1,13 @@
 package businesslogik;
 
+import java.io.IOException;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 public class ControllerMediator {
 
 	private CodingSessionController codingsession;
@@ -67,9 +75,61 @@ public class ControllerMediator {
 	public void changeCodingSession(CodingSessionModell cmod) {
 		hauptfenster.neueCodingSession(false,cmod);
 	}
+	
 	public void einladen(String email){
 		codingsession.sendeEinladung(email);
 	}
+	
+	public void neuesHauptfenster(){
+		try{
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
+			Parent root = (Parent) loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);		
+			stage.setScene(scene);
+		    stage.setMaximized(true); 
+		    
+		    stage.setOnCloseRequest(e -> {
+		    	e.consume();
+		    	new CodingSessionDialog().erstelleAbmeldeDialog();
+		    });
+		    
+			stage.show();
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void neueLoginMaske(){
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/login.fxml"));
+			Parent root = (Parent) loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+			stage.setTitle("Login");
+			stage.setScene(scene);
+			stage.setResizable(false);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void neueRegistrierungsMaske(){
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/registrierung.fxml"));
+			Parent root = (Parent) loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+			stage.setTitle("Registrierung");
+			stage.setScene(scene);
+			stage.setResizable(false);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void neueCodingSession() {
 		hauptfenster.neueCodingSession(true,null);
 	}

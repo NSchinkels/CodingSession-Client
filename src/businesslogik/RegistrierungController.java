@@ -1,8 +1,6 @@
 package businesslogik;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -10,17 +8,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class RegistrierungController implements Initializable {
 
@@ -96,24 +90,11 @@ public class RegistrierungController implements Initializable {
 	/**
 	 * Wenn der Button 'Abbrechen' geklickt wird, schliesst die 
 	 * Registrierungsmaske und die Loginmaske wird geoeffnet. 
-	 * 
-	 * @throws IOException Falls login.fxml nicht geladen werden kann.
 	 */
 	@FXML
 	private void abbrechenGeklickt(ActionEvent event) {
-		try {
-			((Node) (event.getSource())).getScene().getWindow().hide();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/login.fxml"));
-			Parent root = (Parent) loader.load();
-			Stage stage = new Stage();
-			Scene scene = new Scene(root);
-			stage.setTitle("Login");
-			stage.setScene(scene);
-			stage.setResizable(false);
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		((Node) (event.getSource())).getScene().getWindow().hide();
+		ControllerMediator.getInstance().neueLoginMaske();
 	}
 
 	/**
@@ -130,8 +111,11 @@ public class RegistrierungController implements Initializable {
 			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), 
 					txtVorname.getText(), txtNachname.getText(), id);
 			
+			//Hauptfenster das bk geben
+			ControllerMediator.getInstance().setBenutzerkonto(bg);
+			
 			((Node) (event.getSource())).getScene().getWindow().hide();
-			ladeNeuesHauptfenster();
+			ControllerMediator.getInstance().neuesHauptfenster();
 			
 		} else if(choiceBox.getValue().equals("Nickname") && bg.ueberpruefeNick(txtNickname.getText(),
 				txtEmail.getText(), txtPasswort.getText())) {
@@ -139,27 +123,11 @@ public class RegistrierungController implements Initializable {
 			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(),
 					txtNickname.getText(), id);
 			
-			((Node) (event.getSource())).getScene().getWindow().hide();
-			ladeNeuesHauptfenster();
-		}
-	}
-	
-	/**
-	 * Laedt das Hauptfenster der Anwendung.
-	 */
-	private void ladeNeuesHauptfenster(){
-		try{
-			//Hauotfenster das bk geben
+			//Hauptfenster das bk geben
 			ControllerMediator.getInstance().setBenutzerkonto(bg);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
-			Parent root = (Parent) loader.load();
-			Stage stage = new Stage();
-			Scene scene = new Scene(root);		
-			stage.setScene(scene);
-		    stage.setMaximized(true); 
-			stage.show();
-		} catch(IOException e){
-			e.printStackTrace();
+			
+			((Node) (event.getSource())).getScene().getWindow().hide();
+			ControllerMediator.getInstance().neuesHauptfenster();
 		}
 	}
 }
