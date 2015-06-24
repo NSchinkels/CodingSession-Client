@@ -124,8 +124,8 @@ public class CodingSessionController implements Initializable {
 						}
 						if (speicherCounter++ > 10
 								&& codingSessionModell.isSpeichern()) {
-							Persistence.Datenhaltung
-									.updateCS(codingSessionModell);
+//							Persistence.Datenhaltung
+//									.updateCS(codingSessionModell);
 							chat.speichern();
 							speicherCounter = 0;
 						}
@@ -170,7 +170,7 @@ public class CodingSessionController implements Initializable {
 	@FXML
 	public void commFeedTeilen(ActionEvent event) {
 		new CodingSessionDialog()
-				.cfBeitragHinzufuegen(this.codingSessionModell);
+				.erstelleCfBeitragHinzufuegenDialog(this.codingSessionModell);
 	}
 
 	public boolean addTeilnehmer(String b) {

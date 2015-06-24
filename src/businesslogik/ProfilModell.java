@@ -9,11 +9,12 @@ import javax.persistence.*;
 public class ProfilModell implements Serializable{
 	@Id
 	private String benutzerMail;
-	private String Programmierkenntnisse;
-	//Wird bei Zeiten besser gemacht
-	private int DOB;
-	private String Wohnort;
+	private String geschlecht;
+	private String geburtsdatum;
+	private String geburtsort;
+	private String wohnort;
 	private String aktuellerJob;
+	private String programmierkenntnisse;
 	
 	public ProfilModell(){}
 	
@@ -21,35 +22,51 @@ public class ProfilModell implements Serializable{
 		this.benutzerMail = benutzerMail;
 	}
 	
-	public void setProgrammierkenntnise(String PK){
-		this.Programmierkenntnisse = PK;
+	public String getGeschlecht() {
+		return geschlecht;
+	}
+
+	public void setGeschlecht(String geschlecht) {
+		this.geschlecht = geschlecht;
 	}
 	
-	public String getProgrammierkenntnise(){
-		return this.Programmierkenntnisse;
+	public String getGeburtsdatum(){
+		return this.geburtsdatum;
 	}
 	
-	public void setDOB(int DOB ){
-		this.DOB = DOB;
+	public void setGeburtsdatum(String geburtsdatum){
+		this.geburtsdatum = geburtsdatum;
 	}
 	
-	public int getDOB(){
-		return this.DOB;
+	public String getGeburtsort() {
+		return geburtsort;
 	}
-	
-	public void setWohnort(String Wohnort){
-		this.Wohnort = Wohnort;
+
+	public void setGeburtsort(String geburtsort) {
+		this.geburtsort = geburtsort;
 	}
 	
 	public String getWohnort(){
-		return this.Wohnort;
+		return this.wohnort;
+	}
+
+	public void setWohnort(String Wohnort){
+		this.wohnort = Wohnort;
+	}
+	
+	public String getAktuellerJob(){
+		return this.aktuellerJob;
 	}
 	
 	public void setAktuellerJob(String aktuellerJob){
 		this.aktuellerJob = aktuellerJob;
 	}
 	
-	public String getAktuellerJob(){
-		return this.aktuellerJob;
+	public String getProgrammierkenntnise(){
+		return this.programmierkenntnisse;
+	}
+	
+	public void setProgrammierkenntnise(String programmierkenntnisse){
+		this.programmierkenntnisse = programmierkenntnisse;
 	}
 }

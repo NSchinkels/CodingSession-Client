@@ -220,7 +220,7 @@ public class CodingSessionDialog {
 		alert.showAndWait();
 	}
 
-	public void einladung(String email) {
+	public void erstelleEinladungDialog(String email) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Einladung");
 		alert.setHeaderText("Einladung erhalten");
@@ -237,7 +237,7 @@ public class CodingSessionDialog {
 		}
 	}
 
-	public void cfBeitragHinzufuegen(CodingSessionModell codingSessionModell) {
+	public void erstelleCfBeitragHinzufuegenDialog(CodingSessionModell codingSessionModell) {
 		Dialog<Beitrag> dialog = new Dialog<>();
 		dialog.setTitle("CodingSession teilen");
 		dialog.setHeaderText(null);

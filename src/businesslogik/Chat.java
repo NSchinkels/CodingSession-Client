@@ -57,7 +57,7 @@ public class Chat {
 	}
 	
 	public void speichern(){
-			Datenhaltung.upateChat(this);
+//			Datenhaltung.upateChat(this);
 	}
 
 	public String getSender() {

@@ -72,7 +72,7 @@ public class HauptfensterController implements Initializable {
 								@Override
 								public void run() {
 									new CodingSessionDialog()
-											.einladung(KommunikationIncoming
+											.erstelleEinladungDialog(KommunikationIncoming
 													.getEinladung()
 													.getBenutzerMail());
 								}

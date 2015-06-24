@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane prefHeight="601.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="673.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox BorderPane.alignment="CENTER">
          <children>
@@ -51,7 +51,7 @@
                         <Insets bottom="18.0" left="20.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox>
+                  <HBox fx:id="hboxVorname">
                      <VBox.margin>
                         <Insets bottom="18.0" />
                      </VBox.margin>
@@ -67,7 +67,7 @@
                            </HBox.margin></TextField>
                      </children>
                   </HBox>
-                  <HBox>
+                  <HBox fx:id="hboxNachname">
                      <VBox.margin>
                         <Insets bottom="18.0" />
                      </VBox.margin>
@@ -83,7 +83,7 @@
                            </HBox.margin></TextField>
                      </children>
                   </HBox>
-                  <HBox>
+                  <HBox fx:id="hboxNickname">
                      <VBox.margin>
                         <Insets bottom="18.0" />
                      </VBox.margin>
@@ -98,6 +98,91 @@
                               <Insets left="91.0" />
                            </HBox.margin></TextField>
                      </children>
+                  </HBox>
+                  <HBox>
+                     <VBox.margin>
+                        <Insets bottom="18.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Geschlecht:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ChoiceBox fx:id="choiceBox" prefWidth="150.0">
+                           <HBox.margin>
+                              <Insets left="86.0" />
+                           </HBox.margin>
+                        </ChoiceBox>
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <VBox.margin>
+                        <Insets bottom="18.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Geburtsdatum:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField promptText="TT.MM.JJJJ">
+                           <HBox.margin>
+                              <Insets left="68.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Geburtsort:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField promptText="Geburtsort">
+                           <HBox.margin>
+                              <Insets left="87.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="18.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets bottom="18.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Wohnort:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField promptText="Wohnort">
+                           <HBox.margin>
+                              <Insets left="97.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Aktueller Job:">
+                           <HBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField promptText="Aktueller Job">
+                           <HBox.margin>
+                              <Insets left="75.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="18.0" />
+                     </VBox.margin>
                   </HBox>
                   <HBox>
                      <VBox.margin>

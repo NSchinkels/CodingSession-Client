@@ -6,10 +6,10 @@ import Persistence.*;
 
 public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	
-	//Regulaere Ausdruecke für die Valdierung
+	//Regulaere Ausdruecke für die Eingabevaldierung
 	private final String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+"
 									+ "(\\.[A-Za-z0-9]+)*(\\-[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	private final String passwortRegex = "^[a-zA-Z0-9!§$%&/()=?@#^+-_*~'\"]{8,25}$";
+	private final String passwortRegex = "^[a-zA-Z0-9!§$%&/()=?@#^+-_*~'\"\\s]{8,25}$";
 	private final String vornameRegex = "^[a-zA-Z]{3,20}";
 	private final String nachnameRegex = "^[a-zA-Z]{3,20}";
 	private final String nicknameRegex = "^[a-zA-Z][\\w_-]{3,25}$";
