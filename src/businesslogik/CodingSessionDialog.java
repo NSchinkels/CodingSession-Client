@@ -288,4 +288,18 @@ public class CodingSessionDialog {
 		ControllerMediator.getInstance().addCommunityFeed(dialog.showAndWait().get());
 	}
 
+	public void erstellePersistenzExceptionDialog(){
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Datenbank-Fehler");
+		alert.setHeaderText(null);
+		alert.setContentText("Ups, da stimmt wohl etwas mit der Datenbank nicht!");
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets()
+				.add(getClass().getResource("/view/css/styles.css")
+						.toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
 }

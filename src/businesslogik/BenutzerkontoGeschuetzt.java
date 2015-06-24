@@ -63,7 +63,7 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		} catch (EmailVorhandenException ev) {
 			new CodingSessionDialog().erstelleEmailVorhandenDialog();
 		} catch (PersistenzException pe) {
-			// Was sinvolles machen
+			new CodingSessionDialog().erstellePersistenzExceptionDialog();
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		} catch (EmailVorhandenException ev) {
 			new CodingSessionDialog().erstelleEmailVorhandenDialog();
 		} catch (PersistenzException pe) {
-			// Was sinvolles machen
+			new CodingSessionDialog().erstellePersistenzExceptionDialog();
 		}
 	}
 	
