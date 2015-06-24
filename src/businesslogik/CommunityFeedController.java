@@ -6,8 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.io.Serializable;
+
 import javax.persistence.*;
 
+import Persistence.Datenhaltung;
+import Persistence.PersistenzException;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,12 +39,17 @@ public class CommunityFeedController implements Initializable,Serializable{
 
 	public CommunityFeedController() {
 		beitraege=new LinkedList<Beitrag>();
-		beitraege.add(new Beitrag(new CodingSessionModell(5,"huhu@web.de","titel1",true,"public test"), "Fehler", "Hab hier krassen Fehler", false));
-		beitraege.add(new Beitrag(new CodingSessionModell(6,"huhuer@web.de","titel2",true,"public test"), "Fehler schon wieder", "Hab hier wieder krassen Fehler", false));
+		beitraege.add(new Beitrag(new CodingSessionModell(3,"Test@web.de","Beispiel",true,"public test"), "Beispiel", "nur ein Beispiel", false));
 		
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		try {
+			beitraege=Datenhaltung.leseCF().getBeitrag();
+		} catch (PersistenzException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ObservableList<Beitrag> communityFeedItems = listCommunityFeed.getItems();
        for(Beitrag b:beitraege){
     	   communityFeedItems.add(b);
@@ -70,8 +78,7 @@ public class CommunityFeedController implements Initializable,Serializable{
 	
 	@FXML
 	public void communityFeedAktualisierenGeklickt(ActionEvent event){
-		//beitreage=Datenhaltung.leseCf();
-		//this.initialzie(null,null);
+		this.initialize(null,null);
 	}
 	
 	@FXML
@@ -83,5 +90,14 @@ public class CommunityFeedController implements Initializable,Serializable{
 
 	public void addBeitrag(Beitrag beitrag) {
 		beitraege.add(beitrag);
+		try {
+			Datenhaltung.schreibeCF(this);
+		} catch (PersistenzException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public List<Beitrag> getBeitrag(){
+		return this.beitraege;
 	}
 }
