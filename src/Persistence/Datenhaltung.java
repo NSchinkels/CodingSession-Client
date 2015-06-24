@@ -228,6 +228,21 @@ public class Datenhaltung {
 		}
 		return PM;
 	}
+	
+	public static void updateProfil(ProfilModell PM) throws PersistenzException{
+		try {
+			em.getTransaction().begin();
+			em.merge(PM);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			if (em.getTransaction() != null && em.getTransaction().isActive())
+				em.getTransaction().rollback();
+			throw new PersistenzException(
+					"Fehler bei der Synchronisation mit der Datenbank");
+		} finally {
+			em.close();
+		}
+	}
 
 	/**
 	 * Methode die Prueft, ob eine E-Mail Addresse schon vergeben ist
