@@ -14,60 +14,65 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginController{
-	
+public class LoginController {
+
 	@FXML
 	private TextField txtEmail;
-	
+
 	@FXML
 	private PasswordField pwdPasswort;
-	
+
 	/**
-	 * Wenn der Button 'Anmelden' geklickt wird und die Daten valide
-	 * sind wird die Loginmaske geschlossen und das Hauptfenster 
-	 * der Anwendung geladen. 
+	 * Wenn der Button 'Anmelden' geklickt wird und die Daten valide sind wird
+	 * die Loginmaske geschlossen und das Hauptfenster der Anwendung geladen.
 	 * 
-	 * @throws IOException Falls main.fxml nicht geladen werden kann.
+	 * @throws IOException
+	 *             Falls main.fxml nicht geladen werden kann.
 	 */
 	@FXML
-	private void anmeldenGeklickt(ActionEvent event){
-		if(txtEmail.getText().equals("test") && pwdPasswort.getText().equals("test")){
-		try{
-//			Wird ausgeklammert, sobald wir mit Accounts arbeiten
-			//if(Datenhaltung.passwortRichtig(txtEmail.getText(), pwdPasswort.getText())){
+	private void anmeldenGeklickt(ActionEvent event) {
+		try {
+			// Wird ausgeklammert, sobald wir mit Accounts arbeiten
+			if (Datenhaltung.passwortRichtig(txtEmail.getText(),
+					pwdPasswort.getText())) {
+				ControllerMediator.getInstance().setBenutzerkonto(
+						Datenhaltung.leseDB(txtEmail.getText()));
 				((Node) (event.getSource())).getScene().getWindow().hide();
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource(
+						"/view/fxml/hauptfenster.fxml"));
 				Parent root = (Parent) loader.load();
 				Stage stage = new Stage();
-				Scene scene = new Scene(root);		
+				Scene scene = new Scene(root);
 				stage.setScene(scene);
-			    stage.setMaximized(true); 
+				stage.setMaximized(true);
 				stage.show();
-			}catch(Exception e){
-				
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
-		
+
 	/**
-	 * Wenn der Hyperlink geklickt wird, schliesst die Loginmaske 
-	 * und die Registrierungsmaske wird geladen.
+	 * Wenn der Hyperlink geklickt wird, schliesst die Loginmaske und die
+	 * Registrierungsmaske wird geladen.
 	 * 
-	 * @throws IOException Falls registrierung.fxml nicht geladen werden kann.
+	 * @throws IOException
+	 *             Falls registrierung.fxml nicht geladen werden kann.
 	 */
 	@FXML
-	private void oeffneRegistrierungGeklickt(ActionEvent event){
-		try{
+	private void oeffneRegistrierungGeklickt(ActionEvent event) {
+		try {
 			((Node) (event.getSource())).getScene().getWindow().hide();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/registrierung.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(
+					"/view/fxml/registrierung.fxml"));
 			Parent root = (Parent) loader.load();
 			Stage stage = new Stage();
-			Scene scene = new Scene(root);		
+			Scene scene = new Scene(root);
 			stage.setTitle("Registrierung");
 			stage.setScene(scene);
 			stage.setResizable(false);
 			stage.show();
-		} catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
