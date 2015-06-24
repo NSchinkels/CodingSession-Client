@@ -38,18 +38,13 @@ public class CommunityFeedController implements Initializable,Serializable{
 	private ListView<Beitrag> listCommunityFeed;
 
 	public CommunityFeedController() {
-		beitraege=new LinkedList<Beitrag>();
-		beitraege.add(new Beitrag(new CodingSessionModell(3,"Test@web.de","Beispiel",true,"public test"), "Beispiel", "nur ein Beispiel", false));
+		
 		
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		try {
-			beitraege=Datenhaltung.leseCF().getBeitrag();
-		} catch (PersistenzException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		beitraege=new LinkedList<Beitrag>();
+		beitraege.add(new Beitrag(new CodingSessionModell(3,"Test@web.de","Beispiel",true,"public test"), "Beispiel", "nur ein Beispiel", false));
 		ObservableList<Beitrag> communityFeedItems = listCommunityFeed.getItems();
        for(Beitrag b:beitraege){
     	   communityFeedItems.add(b);
@@ -78,6 +73,12 @@ public class CommunityFeedController implements Initializable,Serializable{
 	
 	@FXML
 	public void communityFeedAktualisierenGeklickt(ActionEvent event){
+		try {
+			beitraege=Datenhaltung.leseCF().getBeitrag();
+		} catch (PersistenzException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.initialize(null,null);
 	}
 	

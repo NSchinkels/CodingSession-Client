@@ -258,8 +258,8 @@ public class CodingSessionDialog {
 		GridPane grid = new GridPane();
 		grid.add(lblBetreff, 1, 1);
 		grid.add(txtBetreff, 2, 1);
-		grid.add(txtBeschreibung, 2, 1);
-		grid.add(lblBeschreibung, 2, 2);
+		grid.add(txtBeschreibung, 2, 2);
+		grid.add(lblBeschreibung, 2, 1);
 		grid.add(lblSpeichern, 1, 3);
 		dialog.getDialogPane().setContent(grid);
 
