@@ -132,6 +132,7 @@ public class CodingSessionController implements Initializable {
 						Thread.sleep(200);
 					} catch (Exception e) {
 						running = false;
+						e.printStackTrace();
 					}
 				}
 			}
