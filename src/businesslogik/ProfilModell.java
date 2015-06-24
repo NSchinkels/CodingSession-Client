@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="ProfilModell")
 public class ProfilModell implements Serializable{
+	
 	@Id
 	private String benutzerMail;
 	private String geschlecht;

@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,11 +22,30 @@ public class ProfilController implements Initializable{
 	ProfilbearbeitungController bearbeitung;
 	FreundeSucheController suche;
 	List<BenutzerkontoOriginal> freunde;
+	
+	@FXML
+	private Label lblBenutzername;
+	
+	@FXML
+	private Label lblGeschlecht;
+	
+	@FXML
+	private Label lblGeburtsdatum;
+	
+	@FXML
+	private Label lblGeburtsort;
+	
+	@FXML
+	private Label lblWohnort;
+	
+	@FXML
+	private Label lblAktuellerJob;
+	
+	@FXML
+	private Label lblProgrammierkenntnisse;
+	
 	@FXML
 	ListView<Benutzerkonto> listFreunde;
-	
-	
-	
 	
 	public ProfilController(){
 		freunde=new LinkedList<BenutzerkontoOriginal>();
@@ -52,7 +72,6 @@ public class ProfilController implements Initializable{
 		
 	}
 	
-	
 	@FXML
 	public void abmeldenGeklickt(ActionEvent event){
 		new CodingSessionDialog().erstelleAbmeldeDialog();
@@ -61,6 +80,11 @@ public class ProfilController implements Initializable{
 	@FXML 
 	public void codingSessionStartenGeklickt(ActionEvent event){
 		ControllerMediator.getInstance().neueCodingSession();
+	}
+	
+	@FXML
+	public void impressumGeklickt(ActionEvent event){
+		
 	}
 	
 	@FXML
