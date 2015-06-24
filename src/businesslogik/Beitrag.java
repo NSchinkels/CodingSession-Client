@@ -2,13 +2,23 @@ package businesslogik;
 
 import java.io.Serializable;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="Beitrag")
 public class Beitrag implements Serializable{
+	@ManyToOne(targetEntity=CodingSessionModell.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "benutzerMail")
 	private CodingSessionModell session;
 	private String betreff;
 	private String beschreibung;
 	private boolean schreibschutz;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	long date;
+	
+	public Beitrag(){}
 	
 	public Beitrag(CodingSessionModell session, String betreff, String beschreibung,
 			boolean schreibschutz) {
