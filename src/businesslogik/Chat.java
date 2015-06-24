@@ -57,7 +57,12 @@ public class Chat {
 	}
 	
 	public void speichern(){
-//			Datenhaltung.upateChat(this);
+			try {
+				Datenhaltung.schreibeChat(this);
+			} catch (PersistenzException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	public String getSender() {
