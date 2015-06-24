@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 public class CodingSessionController implements Initializable {
 
 	private CodingSessionModell codingSessionModell;
+	private String benutzerEmail;
 
 	// Aktueller Code
 	private String code = "";
@@ -58,12 +59,13 @@ public class CodingSessionController implements Initializable {
 		this.codingSessionModell = codingSessionModell;
 		this.kommunikationIn = kommunikationIn;
 		this.kommunikationOut = kommunikationOut;
+		benutzerEmail=ControllerMediator.getInstance().getBenutzerkonto().getEmail();
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		try {
-			packageExplorer = new PackageExplorerController(codingSessionModell.getBenutzerMail());
+			packageExplorer = new PackageExplorerController(benutzerEmail);
 		} catch (PersistenzException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -85,7 +87,7 @@ public class CodingSessionController implements Initializable {
 				}
 			}
 		});
-		chat = new Chat(kommunikationOut, kommunikationIn,codingSessionModell.getBenutzerMail(), codingSessionModell.getId());
+		chat = new Chat(kommunikationOut, kommunikationIn,benutzerEmail, codingSessionModell.getId());
 		kommunikationOut
 				.starteCs("CodingSession" + codingSessionModell.getId());
 		kommunikationIn.bekommeCode(

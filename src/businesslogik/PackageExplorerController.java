@@ -1,6 +1,5 @@
 package businesslogik;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import Persistence.Datenhaltung;
@@ -12,11 +11,12 @@ public class PackageExplorerController{
 	
 	public PackageExplorerController(String benutzerEmail) throws PersistenzException{
 		inhalt=Datenhaltung.leseCS(benutzerEmail);
+		inhalt.add(0, new CodingSessionModell(0,"Beispielklasse","Beispiel",false,"Hier können sie Code eingeben"));
 	}
 	public void add(CodingSessionModell cs) {
 		inhalt.add(cs);
 	}
-	public LinkedList<CodingSessionModell> get(){
-		return (LinkedList<CodingSessionModell>)inhalt;
+	public List<CodingSessionModell> get(){
+		return inhalt;
 	}
 }
