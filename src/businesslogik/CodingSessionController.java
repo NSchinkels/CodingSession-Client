@@ -34,9 +34,9 @@ public class CodingSessionController implements Initializable {
 	// Chat von dieser CS
 	private Chat chat;
 	private PackageExplorerController packageExplorer;
-	Thread codingSessionThread;
+	private Thread codingSessionThread;
 
-	int speicherCounter = 0;
+	private int speicherCounter = 10;
 
 	@FXML
 	private Button btnTest;
@@ -53,7 +53,8 @@ public class CodingSessionController implements Initializable {
 	private ListView<CodingSessionModell> listCodingSession;
 
 	public CodingSessionController(CodingSessionModell codingSessionModell,
-			KommunikationIncoming kommunikationIn, KommunikationOutgoing kommunikationOut) {
+			KommunikationIncoming kommunikationIn,
+			KommunikationOutgoing kommunikationOut) {
 		this.codingSessionModell = codingSessionModell;
 		this.kommunikationIn = kommunikationIn;
 		this.kommunikationOut = kommunikationOut;
@@ -62,7 +63,7 @@ public class CodingSessionController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		try {
-			packageExplorer = new PackageExplorerController("12");
+			packageExplorer = new PackageExplorerController(codingSessionModell.getBenutzerMail());
 		} catch (PersistenzException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -84,9 +85,11 @@ public class CodingSessionController implements Initializable {
 				}
 			}
 		});
-		chat = new Chat(kommunikationOut, kommunikationIn, "" + ControllerMediator.getInstance().getBenutzerkonto().getName(), codingSessionModell.getId());
-		kommunikationOut.starteCs("CodingSession" + codingSessionModell.getId());
-		kommunikationIn.bekommeCode("CodingSession" + codingSessionModell.getId(),
+		chat = new Chat(kommunikationOut, kommunikationIn,codingSessionModell.getBenutzerMail(), codingSessionModell.getId());
+		kommunikationOut
+				.starteCs("CodingSession" + codingSessionModell.getId());
+		kommunikationIn.bekommeCode(
+				"CodingSession" + codingSessionModell.getId(),
 				codingSessionModell.getBenutzerMail());
 		netCode = code = codingSessionModell.getCode();
 		txtCodingSession.setText(code);
@@ -112,18 +115,20 @@ public class CodingSessionController implements Initializable {
 						}
 						if (chat.empfangen().size() > chat.getSize()) {
 							txtChatRead.setText("");
+							chat.setSize(chat.empfangen().size());
 							for (String text : chat.empfangen()) {
 								txtChatRead.appendText(text);
 							}
 						}
-						if (speicherCounter++ > 10 && codingSessionModell.isSpeichern()) {
-							// Persistence.Datenhaltung.schreibeCS(codingSesssionModell);
+						if (speicherCounter++ > 10
+								&& codingSessionModell.isSpeichern()) {
+							Persistence.Datenhaltung
+									.schreibeCS(codingSessionModell);
 							speicherCounter = 0;
 						}
 						codingSessionModell.setCode(code);
 						Thread.sleep(200);
 					} catch (Exception e) {
-						System.out.println("kaputt");
 						running = false;
 					}
 				}
@@ -133,15 +138,15 @@ public class CodingSessionController implements Initializable {
 	}
 
 	@FXML
-	public void abmeldenGeklickt(ActionEvent event){
+	public void abmeldenGeklickt(ActionEvent event) {
 		new CodingSessionDialog().erstelleAbmeldeDialog();
 	}
-	
+
 	@FXML
-	public void codingSessionSchliessenGeklickt(ActionEvent event){
+	public void codingSessionSchliessenGeklickt(ActionEvent event) {
 		new CodingSessionDialog().erstelleEndDialog();
 	}
-	
+
 	@FXML
 	public void txtChatEnterGeklickt(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
@@ -149,20 +154,22 @@ public class CodingSessionController implements Initializable {
 			txtChatWrite.setText("");
 		}
 	}
-	
+
 	@FXML
 	public void txtCodingSessionFormatierung(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
-			synchronized(txtCodingSession){
-			//txtCodingSession.setText(einruecken(txtCodingSession.getText()));
+			synchronized (txtCodingSession) {
+				// txtCodingSession.setText(einruecken(txtCodingSession.getText()));
 			}
 		}
 	}
-	
+
 	@FXML
-	public void commFeedTeilen(ActionEvent event){
-		new CodingSessionDialog().cfBeitragHinzufuegen(this.codingSessionModell);
+	public void commFeedTeilen(ActionEvent event) {
+		new CodingSessionDialog()
+				.cfBeitragHinzufuegen(this.codingSessionModell);
 	}
+
 	public boolean addTeilnehmer(String b) {
 		if (codingSessionModell.getAnzahlTeilnehmer() < 10) {
 			codingSessionModell.addTeilnehmer(b);
@@ -170,7 +177,7 @@ public class CodingSessionController implements Initializable {
 		}
 		return false;
 	}
-	
+
 	// Methode die zeitlich aufgrufen wird, um den alten Code mit dem neuen zu
 	// ersetzen
 	public void aktualisiereCode(String text, boolean selbst) {
@@ -180,55 +187,14 @@ public class CodingSessionController implements Initializable {
 			netCode = text;
 		}
 	}
-	
+
 	public void beenden() {
 		codingSessionThread.interrupt();
 		kommunikationIn.beenden();
 	}
-	
-	// Funktion zum Einr�cken des Codes
-		public static String einruecken(String eingabe) {
-
-			String tabulator = "";
-
-			// for-Schleife durchl�uft gesamten eingabe-String
-			for (int i = 0; i < eingabe.length(); i++) {
-
-				// Tabulator wird hinzugef�gt bei offener Klammer
-				if (eingabe.charAt(i) == '{') {
-					tabulator = tabulator + "\t";
-				}
-
-				// Bei Zeilenumbruch wird der Tabulator-String eingef�gt, sozusagen
-				// String wird "einger�ckt"
-				if (eingabe.charAt(i) == '\n') {
-
-					// �berpr�fung, ob eine geschlossene Klammer in voriger Zeile
-					// oder neuer Zeile
-					// am Ende vorhanden war, um diese richtig "auszur�cken"
-					if (eingabe.charAt(i + 1) == '}'
-							|| eingabe.charAt(i - 1) == '}') {
-						if (!tabulator.equals("")) {
-							tabulator = tabulator.substring(0,
-									tabulator.length() - 1);
-						}
-						// Durch Substring wird Tabulator-String bis auf seine
-						// letzten 2 Zeichen reduziert
-					}
-
-					eingabe = eingabe.substring(0, i + 1) + tabulator
-							+ eingabe.substring(i + 1, eingabe.length());
-					// Substring zur \n-Stelle + Tabulator + Substring nach
-					// \n-Stelle
-				}
-			}
-		return eingabe;
-	}
-		
-	public void killThread(){
+	public void killThread() {
 		codingSessionThread.interrupt();
 	}
-
 	public void neuerCodeGUI(String neuerCode) {
 		if (!neuerCode.equals(netCode)) {
 			aktualisiereCode(neuerCode, true);
@@ -236,7 +202,46 @@ public class CodingSessionController implements Initializable {
 	}
 
 	public void sendeEinladung(String benutzer) {
-		System.out.println("Sende Einladung zu "+benutzer);
+		System.out.println("Sende Einladung zu " + benutzer);
 		kommunikationOut.ladeEin(codingSessionModell, benutzer);
+	}
+
+	// Funktion zum Einr�cken des Codes
+	public static String einruecken(String eingabe) {
+
+		String tabulator = "";
+
+		// for-Schleife durchl�uft gesamten eingabe-String
+		for (int i = 0; i < eingabe.length(); i++) {
+
+			// Tabulator wird hinzugef�gt bei offener Klammer
+			if (eingabe.charAt(i) == '{') {
+				tabulator = tabulator + "\t";
+			}
+
+			// Bei Zeilenumbruch wird der Tabulator-String eingef�gt, sozusagen
+			// String wird "einger�ckt"
+			if (eingabe.charAt(i) == '\n') {
+
+				// �berpr�fung, ob eine geschlossene Klammer in voriger Zeile
+				// oder neuer Zeile
+				// am Ende vorhanden war, um diese richtig "auszur�cken"
+				if (eingabe.charAt(i + 1) == '}'
+						|| eingabe.charAt(i - 1) == '}') {
+					if (!tabulator.equals("")) {
+						tabulator = tabulator.substring(0,
+								tabulator.length() - 1);
+					}
+					// Durch Substring wird Tabulator-String bis auf seine
+					// letzten 2 Zeichen reduziert
+				}
+
+				eingabe = eingabe.substring(0, i + 1) + tabulator
+						+ eingabe.substring(i + 1, eingabe.length());
+				// Substring zur \n-Stelle + Tabulator + Substring nach
+				// \n-Stelle
+			}
+		}
+		return eingabe;
 	}
 }

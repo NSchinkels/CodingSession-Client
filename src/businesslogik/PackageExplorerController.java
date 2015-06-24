@@ -10,12 +10,8 @@ public class PackageExplorerController{
 	// CodingSessions werden über die ID geholt
 	private List<CodingSessionModell> inhalt;
 	
-	public PackageExplorerController(String id) throws PersistenzException{
-		//inhalt=Datenhaltung.leseCS(id);
-		inhalt=new LinkedList<CodingSessionModell>();
-		inhalt.add(new CodingSessionModell(8,"Test titel","TestBenutzer",false,"Public void "));
-		inhalt.add(new CodingSessionModell(9,"Test titel nummer 2","TestBenutzer 34",false,"Public void whatever"));
-		
+	public PackageExplorerController(String benutzerEmail) throws PersistenzException{
+		inhalt=Datenhaltung.leseCS(benutzerEmail);
 	}
 	public void add(CodingSessionModell cs) {
 		inhalt.add(cs);

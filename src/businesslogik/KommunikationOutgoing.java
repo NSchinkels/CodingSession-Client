@@ -1,13 +1,10 @@
 package businesslogik;
 
-import java.util.HashMap;
-
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.jms.TextMessage;
-import javax.jms.Topic;
 
 public class KommunikationOutgoing {
 

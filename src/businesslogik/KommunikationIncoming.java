@@ -2,13 +2,6 @@ package businesslogik;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Alert.AlertType;
-
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;

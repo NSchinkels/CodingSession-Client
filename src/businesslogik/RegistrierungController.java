@@ -149,6 +149,7 @@ public class RegistrierungController implements Initializable {
 	 */
 	private void ladeNeuesHauptfenster(){
 		try{
+			ControllerMediator.getInstance().setBenutzerkonto(bg);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
 			Parent root = (Parent) loader.load();
 			Stage stage = new Stage();

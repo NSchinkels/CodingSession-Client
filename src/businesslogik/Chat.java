@@ -13,31 +13,36 @@ public class Chat {
 	@ElementCollection
 	private List<String> verlauf;
 	@Transient
-	private static int size=0;
+	private  int size=0;
 	private String sender;
 	@Transient
-	private KommunikationOutgoing como;
+	private KommunikationOutgoing kommunikationOut;
 	@Transient
-	private KommunikationIncoming comi;
+	private KommunikationIncoming kommunikationIn;
 	
 	public Chat(){}
 	
-	public Chat(KommunikationOutgoing como,KommunikationIncoming comi,String sender,int id){
+	public Chat(KommunikationOutgoing kommunikationOut,KommunikationIncoming kommunikationIn,String sender,int id){
 		this.id=id;
 		this.verlauf=new LinkedList<String>();
-		this.como=como;
-		this.comi=comi;
+		this.kommunikationOut=kommunikationOut;
+		this.kommunikationIn=kommunikationIn;
 		this.sender=sender;
-		como.starteChat("Chat"+id);
-		comi.bekommeChat(id, verlauf);
+		kommunikationOut.starteChat("Chat"+id);
+		kommunikationIn.bekommeChat(id, verlauf);
 	}
 	public void senden(String nachricht){
-		como.veroeffentlicheChat(nachricht, sender);
+		kommunikationOut.veroeffentlicheChat(nachricht, sender);
 	}
 	public List<String> empfangen(){
 		return this.verlauf;
 	}
 	public int getSize(){
-		return this.size;
+		return size;
 	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+	
 }

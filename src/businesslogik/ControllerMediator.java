@@ -60,7 +60,7 @@ public class ControllerMediator {
 			codingsession.beenden();
 	}
 
-	public void changeCodingSession() {
+	public void einladungAngenommen() {
 		hauptfenster.neueCodingSession(false,KommunikationIncoming.getEinladung());
 	}
 

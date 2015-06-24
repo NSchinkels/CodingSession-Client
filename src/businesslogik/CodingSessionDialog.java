@@ -233,7 +233,7 @@ public class CodingSessionDialog {
 		dialogPane.getStyleClass().add("dialog");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			ControllerMediator.getInstance().changeCodingSession();
+			ControllerMediator.getInstance().einladungAngenommen();;
 		}
 	}
 
