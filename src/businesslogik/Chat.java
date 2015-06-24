@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import Persistence.Datenhaltung;
+import Persistence.PersistenzException;
 
 @Entity
 @Table(name = "Chat")
@@ -53,6 +54,15 @@ public class Chat {
 
 	public List<String> empfangen() {
 		return this.verlauf;
+	}
+	
+	public void speichern(){
+		try {
+			Datenhaltung.schreibeChat(this);
+		} catch (PersistenzException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public int getSize() {
