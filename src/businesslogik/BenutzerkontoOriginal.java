@@ -2,6 +2,7 @@ package businesslogik;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.io.*;
 
 import javax.persistence.*;
@@ -69,7 +70,7 @@ public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Ser
 		}
 	}
 	
-	public LinkedList<BenutzerkontoOriginal> getFreunde() {
+	public List<BenutzerkontoOriginal> getFreunde() {
 		return freunde;
 	}
 	

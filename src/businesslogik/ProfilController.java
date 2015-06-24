@@ -1,6 +1,8 @@
 package businesslogik;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
@@ -18,6 +20,7 @@ public class ProfilController implements Initializable{
 	
 	ProfilbearbeitungController bearbeitung;
 	FreundeSucheController suche;
+	List<BenutzerkontoOriginal> freunde;
 	@FXML
 	ListView<Benutzerkonto> listFreunde;
 	
@@ -25,14 +28,17 @@ public class ProfilController implements Initializable{
 	
 	
 	public ProfilController(){
-		
+		freunde=new LinkedList<BenutzerkontoOriginal>();
 	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		this.freunde=ControllerMediator.getInstance().getBenutzerkonto().getFreunde();
 		ObservableList<Benutzerkonto> items = listFreunde.getItems();
-		items.add(new BenutzerkontoNickname("testemail1","huhuhu","tztz",3));
-        items.add(new BenutzerkontoRealname("testemail2","Test2","Test3","huhu",5));
+		items.add(new BenutzerkontoNickname("testemail1","Beispielfreund","Beispielfreund",3));
+        for(Benutzerkonto b:freunde){
+        	items.add(b);
+        }
         listFreunde.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {

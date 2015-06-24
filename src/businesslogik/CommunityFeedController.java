@@ -1,6 +1,8 @@
 package businesslogik;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
@@ -16,24 +18,24 @@ import javafx.scene.input.MouseEvent;
 
 public class CommunityFeedController implements Initializable{
 	
-	private Beitrag[] beitraege;
+	private List<Beitrag> beitraege;
 	private static int anzahl;
 	
 	@FXML
 	private ListView<Beitrag> listCommunityFeed;
 
 	public CommunityFeedController() {
-		// hier werden noch die Sachen vom Server gezogen
-		beitraege=new Beitrag[10];
-		beitraege[0]=new Beitrag(new CodingSessionModell(5,"huhu@web.de","titel1",true,"public test"), "Fehler", "Hab hier krassen Fehler", false);
-		beitraege[1]=new Beitrag(new CodingSessionModell(6,"huhuer@web.de","titel2",true,"public test"), "Fehler schon wieder", "Hab hier wieder krassen Fehler", false);
+		beitraege=new LinkedList<Beitrag>();
+		beitraege.add(new Beitrag(new CodingSessionModell(5,"huhu@web.de","titel1",true,"public test"), "Fehler", "Hab hier krassen Fehler", false));
+		beitraege.add(new Beitrag(new CodingSessionModell(6,"huhuer@web.de","titel2",true,"public test"), "Fehler schon wieder", "Hab hier wieder krassen Fehler", false));
 		
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList<Beitrag> communityFeedItems = listCommunityFeed.getItems();
-        communityFeedItems.add(beitraege[0]);
-        communityFeedItems.add(beitraege[1]);
+       for(Beitrag b:beitraege){
+    	   communityFeedItems.add(b);
+       }
         listCommunityFeed.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -58,7 +60,8 @@ public class CommunityFeedController implements Initializable{
 	
 	@FXML
 	public void communityFeedAktualisierenGeklickt(ActionEvent event){
-		System.out.println("Test");
+		//beitreage=Datenhaltung.leseCf();
+		//this.initialzie(null,null);
 	}
 	
 	@FXML
@@ -69,17 +72,6 @@ public class CommunityFeedController implements Initializable{
 	}
 
 	public void addBeitrag(Beitrag beitrag) {
-		//aktuelle Anzahl vom Server ziehen
-		//beitraege[anzahl++] = beitrag;
-		//hier wird dann gespeichert
+		//Datenhaltung.schreibeCF(beitrag);
 	}
-	public static int getAnzahl(){
-		//zuerst aktualisieren vom server
-		return anzahl;
-	}
-	public Beitrag[] getBeitraege() {
-		return beitraege;
-	}
-
-	
 }

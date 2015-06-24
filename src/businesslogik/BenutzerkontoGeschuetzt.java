@@ -1,6 +1,7 @@
 package businesslogik;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import Persistence.*;
 
@@ -107,7 +108,7 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		echtesKonto.delFreund(fr);
 	}
 	
-	public LinkedList<BenutzerkontoOriginal> getFreunde(){
+	public List<BenutzerkontoOriginal> getFreunde(){
 		return echtesKonto.getFreunde();
 	}
 	
