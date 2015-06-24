@@ -28,7 +28,7 @@ public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Ser
 	private int id;
 	@ManyToMany
 	@JoinTable(name="freunde")
-	private LinkedList<BenutzerkontoOriginal> freunde = new LinkedList<BenutzerkontoOriginal>();
+	private List<BenutzerkontoOriginal> freunde ;
 	
 	/**Konstruktor musste angepasst werden um erstmal das Problem mit der ID 
 	 * zu umgehen; id wird jetzt zeitweise mit übergeben**/
