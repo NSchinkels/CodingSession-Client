@@ -37,6 +37,7 @@ public class HauptfensterController implements Initializable {
 	CodingSessionModell codingSessionModell;
 	Benutzerkonto benutzerkonto;
 	Object lock;
+	Thread hauptfensterThread;
 
 	private Tab tabCodingSession;
 
@@ -62,7 +63,7 @@ public class HauptfensterController implements Initializable {
 		
 		ControllerMediator.getInstance().setHauptfenster(this);
 		kommunikationIn.bekommeEinladung();
-		new Thread() {
+		hauptfensterThread=new Thread() {
 			public void run() {
 				while (true) {
 					synchronized (lock) {
@@ -84,7 +85,8 @@ public class HauptfensterController implements Initializable {
 					}
 				}
 			}
-		}.start();
+		};
+		hauptfensterThread.start();
 		try {
 			this.neuesProfil();
 			FXMLLoader loaderCF = new FXMLLoader(getClass().getResource(
