@@ -125,7 +125,7 @@ public class CodingSessionController implements Initializable {
 						if (speicherCounter++ > 10
 								&& codingSessionModell.isSpeichern()) {
 							Persistence.Datenhaltung
-									.schreibeCS(codingSessionModell);
+									.updateCS(codingSessionModell);
 							chat.speichern();
 							speicherCounter = 0;
 						}
