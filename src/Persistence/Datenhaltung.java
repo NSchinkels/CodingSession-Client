@@ -169,12 +169,47 @@ public class Datenhaltung {
 	public static CommunityFeedController leseCF() throws PersistenzException{
 		CommunityFeedController CF = null;
 		try {
-			CF = em.find(CommunityFeedController.class, 1);
+			CF = em.find(CommunityFeedController.class, "1");
 		} catch (Exception e) {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		}
 		return CF;
+	}
+	/**
+	 * Schreibt Profil in DB
+	 * @param PM
+	 * @throws PersistenzException
+	 */
+	public static void schreibeProfil(ProfilModell PM) throws PersistenzException{
+		try {
+			em.getTransaction().begin();
+			em.persist(PM);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			if(em.getTransaction() != null && em.getTransaction().isActive())
+				em.getTransaction().rollback();
+			throw new PersistenzException(
+					"Fehler bei der Synchronisation mit der Datenbank");
+		}finally{
+			em.close();
+		}
+	}
+	/**
+	 * Liest Profil anhand der Mail aus DB
+	 * @param email
+	 * @return
+	 * @throws PersistenzException
+	 */
+	public static ProfilModell leseProfil(String email) throws PersistenzException{
+		ProfilModell PM = null;
+		try {
+			PM = em.find(ProfilModell.class, email);
+		} catch (Exception e) {
+			throw new PersistenzException(
+					"Fehler bei der Synchronisation mit der Datenbank");
+		}
+		return PM;
 	}
 
 	/**
