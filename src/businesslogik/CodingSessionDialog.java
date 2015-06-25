@@ -29,8 +29,7 @@ public class CodingSessionDialog {
 		txtTitel.setPromptText("Titel der CodingSession");
 
 		Label lblTitel = new Label("Titel: ");
-		Label lblSpeichern = new Label(
-				"Soll die nachfolgende CodingSession in Zukunft gespeichert werden?");
+		Label lblSpeichern = new Label("Soll die nachfolgende CodingSession in Zukunft gespeichert werden?");
 
 		GridPane grid = new GridPane();
 		grid.add(lblTitel, 1, 1);
@@ -40,26 +39,15 @@ public class CodingSessionDialog {
 
 		ButtonType jaButtonType = new ButtonType("Ja", ButtonData.YES);
 		ButtonType neinButtonType = new ButtonType("Nein", ButtonData.NO);
-		ButtonType abbrechenButtonType = new ButtonType("Abbrechen",
-				ButtonData.CANCEL_CLOSE);
-		dialog.getDialogPane().getButtonTypes()
-				.addAll(jaButtonType, neinButtonType, abbrechenButtonType);
-		dialog.getDialogPane()
-				.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		ButtonType abbrechenButtonType = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
+		dialog.getDialogPane().getButtonTypes().addAll(jaButtonType, neinButtonType, abbrechenButtonType);
+		dialog.getDialogPane().getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == jaButtonType) {
-				return new CodingSessionModell(
-						(int) (Math.random() * 10000),
-						ControllerMediator.getInstance().getBenutzerkonto()
-								.getEmail(), txtTitel.getText(), true, "Hier bitte Code eingeben");
+				return new CodingSessionModell((int) (Math.random() * 10000), ControllerMediator.getInstance().getBenutzerkonto().getEmail(), txtTitel.getText(), true, "Hier bitte Code eingeben");
 			} else if (dialogButton == neinButtonType) {
-				return new CodingSessionModell(
-						(int) (Math.random() * 10000),
-						ControllerMediator.getInstance().getBenutzerkonto()
-								.getEmail(), txtTitel.getText(), false, "Hier bitte Code eingeben");
+				return new CodingSessionModell((int) (Math.random() * 10000), ControllerMediator.getInstance().getBenutzerkonto().getEmail(), txtTitel.getText(), false, "Hier bitte Code eingeben");
 			}
 			return null;
 		});
@@ -74,13 +62,10 @@ public class CodingSessionDialog {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("CodingSession schliessen");
 		alert.setHeaderText(null);
-		alert.setContentText("Willst du die CodingSession wirklich schließen?\n"
-				+ "Alle nicht gespeicherten Änderungen gehen verloren.");
+		alert.setContentText("Willst du die CodingSession wirklich schließen?\n" + "Alle nicht gespeicherten Änderungen gehen verloren.");
 
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		Optional<ButtonType> result = alert.showAndWait();
@@ -99,9 +84,7 @@ public class CodingSessionDialog {
 		alert.setContentText("Willst du dich wirklich abmelden?");
 
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		Optional<ButtonType> result = alert.showAndWait();
@@ -121,9 +104,7 @@ public class CodingSessionDialog {
 		alert.setContentText("Bitte gebe eine gültige E-Mail-Adresse ein!");
 
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
@@ -136,9 +117,7 @@ public class CodingSessionDialog {
 		alert.setContentText("Bitte gebe ein gültiges Passwort ein!");
 
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
@@ -151,9 +130,7 @@ public class CodingSessionDialog {
 		alert.setContentText("Bitte gebe einen gültigen Vornamen ein!");
 
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
@@ -166,9 +143,7 @@ public class CodingSessionDialog {
 		alert.setContentText("Bitte gebe einen gültigen Nachnamen ein!");
 
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
@@ -181,9 +156,7 @@ public class CodingSessionDialog {
 		alert.setContentText("Bitte gebe einen gültigen Nicknamen ein!");
 
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
@@ -196,9 +169,7 @@ public class CodingSessionDialog {
 		alert.setContentText("Die von dir eingegebene E-Mail-Adresse ist bereits vergeben!");
 
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
@@ -208,13 +179,10 @@ public class CodingSessionDialog {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Login fehlgeschlagen");
 		alert.setHeaderText(null);
-		alert.setContentText("Die von dir eingegebene E-Mail-Adresse oder das Passwort ist ungültig.\n"
-				+ "Versuche es bitte erneut.");
+		alert.setContentText("Die von dir eingegebene E-Mail-Adresse oder das Passwort ist ungültig.\n" + "Versuche es bitte erneut.");
 
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();
@@ -224,16 +192,14 @@ public class CodingSessionDialog {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Einladung");
 		alert.setHeaderText("Einladung erhalten");
-		alert.setContentText("Sie haben eine Einladung vom Benutzer " + email
-				+ " erhalten");
+		alert.setContentText("Sie haben eine Einladung vom Benutzer " + email + " erhalten");
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			ControllerMediator.getInstance().einladungAngenommen();;
+			ControllerMediator.getInstance().einladungAngenommen();
+			;
 		}
 	}
 
@@ -252,8 +218,7 @@ public class CodingSessionDialog {
 
 		Label lblBeschreibung = new Label("Betreff: ");
 
-		Label lblSpeichern = new Label(
-				"Sollen andere Benutzer den Code verändert dürfen?");
+		Label lblSpeichern = new Label("Sollen andere Benutzer den Code verändert dürfen?");
 
 		GridPane grid = new GridPane();
 		grid.add(lblBetreff, 1, 1);
@@ -265,22 +230,15 @@ public class CodingSessionDialog {
 
 		ButtonType jaButtonType = new ButtonType("Ja", ButtonData.YES);
 		ButtonType neinButtonType = new ButtonType("Nein", ButtonData.NO);
-		ButtonType abbrechenButtonType = new ButtonType("Abbrechen",
-				ButtonData.CANCEL_CLOSE);
-		dialog.getDialogPane().getButtonTypes()
-				.addAll(jaButtonType, neinButtonType, abbrechenButtonType);
-		dialog.getDialogPane()
-				.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		ButtonType abbrechenButtonType = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
+		dialog.getDialogPane().getButtonTypes().addAll(jaButtonType, neinButtonType, abbrechenButtonType);
+		dialog.getDialogPane().getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == jaButtonType) {
-				return new Beitrag(codingSessionModell, txtBetreff.getText(),
-						txtBeschreibung.getText(), false);
+				return new Beitrag(codingSessionModell, txtBetreff.getText(), txtBeschreibung.getText(), false);
 			} else if (dialogButton == neinButtonType) {
-				return new Beitrag(codingSessionModell, txtBetreff.getText(),
-						txtBeschreibung.getText(), true);
+				return new Beitrag(codingSessionModell, txtBetreff.getText(), txtBeschreibung.getText(), true);
 			}
 			return null;
 		});
@@ -288,16 +246,14 @@ public class CodingSessionDialog {
 		ControllerMediator.getInstance().addCommunityFeed(dialog.showAndWait().get());
 	}
 
-	public void erstellePersistenzExceptionDialog(){
+	public void erstellePersistenzExceptionDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Datenbank-Fehler");
 		alert.setHeaderText(null);
 		alert.setContentText("Ups, da stimmt wohl etwas mit der Datenbank nicht!");
 
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets()
-				.add(getClass().getResource("/view/css/styles.css")
-						.toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
 		alert.showAndWait();

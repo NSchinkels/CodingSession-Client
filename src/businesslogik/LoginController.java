@@ -45,6 +45,8 @@ public class LoginController {
 				});
 				
 				stage.show();
+			}else{
+				new CodingSessionDialog().erstellePasswortValidierungDialog();
 			}
 		} catch(IOException e){
 			e.printStackTrace();

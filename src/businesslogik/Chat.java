@@ -43,6 +43,16 @@ public class Chat {
 		kommunikationOut.veroeffentlicheChat(nachricht, sender);
 	}
 
+	public void setKommunikationOut(KommunikationOutgoing kommunikationOut) {
+		this.kommunikationOut = kommunikationOut;
+		kommunikationOut.starteChat("Chat" + id);
+	}
+
+	public void setKommunikationIn(KommunikationIncoming kommunikationIn) {
+		this.kommunikationIn = kommunikationIn;
+		kommunikationIn.bekommeChat(id, verlauf);
+	}
+
 	public List<String> empfangen() {
 		return this.verlauf;
 	}
