@@ -98,8 +98,8 @@ public class RegistrierungController implements Initializable {
 	 */
 	@FXML
 	private void abbrechenGeklickt(ActionEvent event) {
-		((Node) (event.getSource())).getScene().getWindow().hide();
 		try {
+			((Node) (event.getSource())).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/login.fxml"));
 			Parent root = (Parent) loader.load();
 			Stage stage = new Stage();
@@ -157,8 +157,8 @@ public class RegistrierungController implements Initializable {
 		}
 
 		if (konto.getBenutzerkontoOriginal() != null) {
-			((Node) (event.getSource())).getScene().getWindow().hide();
 			try {
+				((Node) (event.getSource())).getScene().getWindow().hide();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
 				Parent root = (Parent) loader.load();
 				Stage stage = new Stage();
