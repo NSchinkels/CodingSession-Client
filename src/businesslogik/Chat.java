@@ -25,25 +25,16 @@ public class Chat {
 	private KommunikationIncoming kommunikationIn;
 
 	public Chat() {
+		this.verlauf = new LinkedList<String>();
 	}
 
 	public Chat(KommunikationOutgoing kommunikationOut,
 			KommunikationIncoming kommunikationIn, String sender, int id) {
-
 		this.id = id;
 		this.verlauf = new LinkedList<String>();
 		this.kommunikationOut = kommunikationOut;
 		this.kommunikationIn = kommunikationIn;
 		this.sender = sender;
-		try {
-			for (Chat chatDb : Datenhaltung.leseChat(sender)) {
-				if(chatDb.getId()==id){
-					this.verlauf=chatDb.verlauf;
-				}
-			}
-		} catch (Exception e) {
-
-		}
 		kommunikationOut.starteChat("Chat" + id);
 		kommunikationIn.bekommeChat(id, verlauf);
 	}

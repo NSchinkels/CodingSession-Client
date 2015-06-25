@@ -56,14 +56,12 @@ public class HauptfensterController implements Initializable {
 		lock = new Object();
 		benutzerkonto = ControllerMediator.getInstance().getBenutzerkonto();
 		kommunikationStart = new KommunikationStart(benutzerkonto.getEmail());
-		kommunikationIn = new KommunikationIncoming(benutzerkonto.getEmail(),
-				kommunikationStart, lock);
-		kommunikationOut = new KommunikationOutgoing(benutzerkonto.getEmail(),
-				kommunikationStart);
-		
+		kommunikationIn = new KommunikationIncoming(benutzerkonto.getEmail(), kommunikationStart, lock);
+		kommunikationOut = new KommunikationOutgoing(benutzerkonto.getEmail(), kommunikationStart);
+
 		ControllerMediator.getInstance().setHauptfenster(this);
 		kommunikationIn.bekommeEinladung();
-		hauptfensterThread=new Thread() {
+		hauptfensterThread = new Thread() {
 			public void run() {
 				while (true) {
 					synchronized (lock) {
@@ -72,10 +70,7 @@ public class HauptfensterController implements Initializable {
 							Platform.runLater(new Runnable() {
 								@Override
 								public void run() {
-									new CodingSessionDialog()
-											.erstelleEinladungDialog(KommunikationIncoming
-													.getEinladung()
-													.getBenutzerMail());
+									new CodingSessionDialog().erstelleEinladungDialog(KommunikationIncoming.getEinladung().getBenutzerMail());
 								}
 							});
 						} catch (InterruptedException e) {
@@ -89,11 +84,9 @@ public class HauptfensterController implements Initializable {
 		hauptfensterThread.start();
 		try {
 			this.neuesProfil();
-			FXMLLoader loaderCF = new FXMLLoader(getClass().getResource(
-					"/view/fxml/community_feed.fxml"));
+			FXMLLoader loaderCF = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));
 			communityFeedController = new CommunityFeedController();
-			ControllerMediator.getInstance().setCommunityfeed(
-					communityFeedController);
+			ControllerMediator.getInstance().setCommunityfeed(communityFeedController);
 			loaderCF.setController(communityFeedController);
 			Parent rootCF = (Parent) loaderCF.load();
 			tabCommunityFeed.setContent(rootCF);
@@ -102,32 +95,19 @@ public class HauptfensterController implements Initializable {
 		}
 	}
 
-	public void neueCodingSession(boolean dialog,
-			CodingSessionModell codingSessionModell) {
+	public void neueCodingSession(boolean dialog, CodingSessionModell codingSessionModell) {
 		if (codingSessionController != null) {
 			codingSessionController.killThread();
 			schliesseCodingSession();
 		}
 		if (dialog) {
-			codingSessionModell = new CodingSessionDialog()
-					.erstelleStartDialog();
-			if (codingSessionModell.isSpeichern()) {
-				try {
-					Persistence.Datenhaltung.schreibeCS(codingSessionModell);
-				} catch (PersistenzException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			codingSessionModell = new CodingSessionDialog().erstelleStartDialog();
 		}
 		codingSessionController = null;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(
-					"/view/fxml/codingsession.fxml"));
-			codingSessionController = new CodingSessionController(
-					codingSessionModell, kommunikationIn, kommunikationOut);
-			ControllerMediator.getInstance().setCodingSession(
-					codingSessionController);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/codingsession.fxml"));
+			codingSessionController = new CodingSessionController(codingSessionModell, kommunikationIn, kommunikationOut);
+			ControllerMediator.getInstance().setCodingSession(codingSessionController);
 			loader.setController(codingSessionController);
 			Parent root = (Parent) loader.load();
 			tabCodingSession = new Tab("CodingSession");
@@ -135,7 +115,7 @@ public class HauptfensterController implements Initializable {
 			tabPane.setTabClosingPolicy(TabClosingPolicy.SELECTED_TAB);
 			tabPane.getTabs().add(tabCodingSession);
 			tabPane.getSelectionModel().selectLast();
-
+			
 			// Das kann man bestimmt schoener machen..
 			tabCodingSession.setOnCloseRequest(new EventHandler<Event>() {
 				@Override
@@ -153,11 +133,9 @@ public class HauptfensterController implements Initializable {
 
 	public void neueFreundeSuche() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(
-					"/view/fxml/freunde_suche.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/freunde_suche.fxml"));
 			freundeSucheController = new FreundeSucheController();
-			ControllerMediator.getInstance().setFreundeSuche(
-					freundeSucheController);
+			ControllerMediator.getInstance().setFreundeSuche(freundeSucheController);
 			loader.setController(freundeSucheController);
 			Parent root = (Parent) loader.load();
 			Stage stage = new Stage();
@@ -172,11 +150,9 @@ public class HauptfensterController implements Initializable {
 
 	public void neueProfilBearbeitung() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(
-					"/view/fxml/profilbearbeitung.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profilbearbeitung.fxml"));
 			profilbearbeitungController = new ProfilbearbeitungController();
-			ControllerMediator.getInstance().setProfilbearbeitung(
-					profilbearbeitungController);
+			ControllerMediator.getInstance().setProfilbearbeitung(profilbearbeitungController);
 			loader.setController(profilbearbeitungController);
 			Parent root = (Parent) loader.load();
 			tabProfil.setText("Profil: Profilbearbeitung");
@@ -188,8 +164,7 @@ public class HauptfensterController implements Initializable {
 
 	public void neuesProfil() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(
-					"/view/fxml/profil.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profil.fxml"));
 			profilController = new ProfilController();
 			ControllerMediator.getInstance().setProfil(profilController);
 			loader.setController(profilController);

@@ -26,25 +26,27 @@ import javafx.scene.input.MouseEvent;
 @Entity
 @Table(name="CommunityFeedController")
 public class CommunityFeedController implements Initializable,Serializable{
+	/**
+	 * 
+	 */
+	@Transient
+	private static final long serialVersionUID = 1L;
 	@OneToMany(targetEntity=Beitrag.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Beitrag> beitraege;
 	//Da es nur einen CFController geben soll PK ID auf 1 gesetzt
 	@Id
 	private int ID = 1;
-	private static int anzahl;
 	
 	@FXML
 	@Transient
 	private ListView<Beitrag> listCommunityFeed;
 
 	public CommunityFeedController() {
-		
-		
+		beitraege=new LinkedList<Beitrag>();
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		beitraege=new LinkedList<Beitrag>();
-		beitraege.add(new Beitrag(new CodingSessionModell(3,"Test@web.de","Beispiel",true,"public test"), "Beispiel", "nur ein Beispiel", false));
+		listCommunityFeed.getItems().clear();
 		ObservableList<Beitrag> communityFeedItems = listCommunityFeed.getItems();
        for(Beitrag b:beitraege){
     	   communityFeedItems.add(b);
@@ -91,8 +93,10 @@ public class CommunityFeedController implements Initializable,Serializable{
 
 	public void addBeitrag(Beitrag beitrag) {
 		beitraege.add(beitrag);
+		CommunityFeedController cf=new CommunityFeedController();
+		cf.setBeitrag(beitraege);
 		try {
-			Datenhaltung.schreibeCF(this);
+			Datenhaltung.schreibeCF(cf);
 		} catch (PersistenzException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -100,5 +104,8 @@ public class CommunityFeedController implements Initializable,Serializable{
 	}
 	public List<Beitrag> getBeitrag(){
 		return this.beitraege;
+	}
+	public void setBeitrag(List<Beitrag> beitrag){
+		this.beitraege=beitrag;
 	}
 }

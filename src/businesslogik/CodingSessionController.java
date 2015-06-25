@@ -3,6 +3,7 @@ package businesslogik;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import Persistence.Datenhaltung;
 import Persistence.PersistenzException;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -53,13 +54,11 @@ public class CodingSessionController implements Initializable {
 	@FXML
 	private ListView<CodingSessionModell> listCodingSession;
 
-	public CodingSessionController(CodingSessionModell codingSessionModell,
-			KommunikationIncoming kommunikationIn,
-			KommunikationOutgoing kommunikationOut) {
+	public CodingSessionController(CodingSessionModell codingSessionModell, KommunikationIncoming kommunikationIn, KommunikationOutgoing kommunikationOut) {
 		this.codingSessionModell = codingSessionModell;
 		this.kommunikationIn = kommunikationIn;
 		this.kommunikationOut = kommunikationOut;
-		benutzerEmail=ControllerMediator.getInstance().getBenutzerkonto().getEmail();
+		benutzerEmail = ControllerMediator.getInstance().getBenutzerkonto().getEmail();
 	}
 
 	@Override
@@ -70,8 +69,7 @@ public class CodingSessionController implements Initializable {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		ObservableList<CodingSessionModell> codingSessionItems = listCodingSession
-				.getItems();
+		ObservableList<CodingSessionModell> codingSessionItems = listCodingSession.getItems();
 		for (CodingSessionModell cs : packageExplorer.get()) {
 			codingSessionItems.add(cs);
 		}
@@ -80,19 +78,24 @@ public class CodingSessionController implements Initializable {
 			public void handle(MouseEvent mouseEvent) {
 				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 					if (mouseEvent.getClickCount() == 2) {
-						ControllerMediator.getInstance().changeCodingSession(
-								listCodingSession.getSelectionModel()
-										.getSelectedItem());
+						ControllerMediator.getInstance().changeCodingSession(listCodingSession.getSelectionModel().getSelectedItem());
 					}
 				}
 			}
 		});
-		chat = new Chat(kommunikationOut, kommunikationIn,benutzerEmail, codingSessionModell.getId());
-		kommunikationOut
-				.starteCs("CodingSession" + codingSessionModell.getId());
-		kommunikationIn.bekommeCode(
-				"CodingSession" + codingSessionModell.getId(),
-				codingSessionModell.getBenutzerMail());
+		
+		
+		try {
+			chat=Datenhaltung.leseChat(codingSessionModell.getId());
+		} catch (PersistenzException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if(chat==null){
+			chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
+		}
+		kommunikationOut.starteCs("CodingSession" + codingSessionModell.getId());
+		kommunikationIn.bekommeCode("CodingSession" + codingSessionModell.getId(), codingSessionModell.getBenutzerMail());
 		netCode = code = codingSessionModell.getCode();
 		txtCodingSession.setText(code);
 		codingSessionThread = new Thread() {
@@ -110,9 +113,7 @@ public class CodingSessionController implements Initializable {
 
 								}
 							} else {
-								CodingSessionController.this
-										.neuerCodeGUI(txtCodingSession
-												.getText());
+								CodingSessionController.this.neuerCodeGUI(txtCodingSession.getText());
 							}
 						}
 						if (chat.empfangen().size() > chat.getSize()) {
@@ -122,9 +123,8 @@ public class CodingSessionController implements Initializable {
 								txtChatRead.appendText(text);
 							}
 						}
-						if (speicherCounter++ > 20
-								&& codingSessionModell.isSpeichern()) {
-							Persistence.Datenhaltung.schreibeCS(codingSessionModell);
+						if (speicherCounter++ > 10 && codingSessionModell.isSpeichern()) {
+							speichern();
 							chat.speichern();
 							speicherCounter = 0;
 						}
@@ -169,8 +169,7 @@ public class CodingSessionController implements Initializable {
 
 	@FXML
 	public void commFeedTeilen(ActionEvent event) {
-		new CodingSessionDialog()
-				.erstelleCfBeitragHinzufuegenDialog(this.codingSessionModell);
+		new CodingSessionDialog().erstelleCfBeitragHinzufuegenDialog(this.codingSessionModell);
 	}
 
 	public boolean addTeilnehmer(String b) {
@@ -195,9 +194,11 @@ public class CodingSessionController implements Initializable {
 		codingSessionThread.interrupt();
 		kommunikationIn.beenden();
 	}
+
 	public void killThread() {
 		codingSessionThread.interrupt();
 	}
+
 	public void neuerCodeGUI(String neuerCode) {
 		if (!neuerCode.equals(netCode)) {
 			aktualisiereCode(neuerCode, true);
@@ -207,6 +208,15 @@ public class CodingSessionController implements Initializable {
 	public void sendeEinladung(String benutzer) {
 		System.out.println("Sende Einladung zu " + benutzer);
 		kommunikationOut.ladeEin(codingSessionModell, benutzer);
+	}
+
+	public void speichern() {
+		try {
+			Persistence.Datenhaltung.schreibeCS(codingSessionModell);
+		} catch (PersistenzException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// Funktion zum Einr�cken des Codes
@@ -229,18 +239,15 @@ public class CodingSessionController implements Initializable {
 				// �berpr�fung, ob eine geschlossene Klammer in voriger Zeile
 				// oder neuer Zeile
 				// am Ende vorhanden war, um diese richtig "auszur�cken"
-				if (eingabe.charAt(i + 1) == '}'
-						|| eingabe.charAt(i - 1) == '}') {
+				if (eingabe.charAt(i + 1) == '}' || eingabe.charAt(i - 1) == '}') {
 					if (!tabulator.equals("")) {
-						tabulator = tabulator.substring(0,
-								tabulator.length() - 1);
+						tabulator = tabulator.substring(0, tabulator.length() - 1);
 					}
 					// Durch Substring wird Tabulator-String bis auf seine
 					// letzten 2 Zeichen reduziert
 				}
 
-				eingabe = eingabe.substring(0, i + 1) + tabulator
-						+ eingabe.substring(i + 1, eingabe.length());
+				eingabe = eingabe.substring(0, i + 1) + tabulator + eingabe.substring(i + 1, eingabe.length());
 				// Substring zur \n-Stelle + Tabulator + Substring nach
 				// \n-Stelle
 			}

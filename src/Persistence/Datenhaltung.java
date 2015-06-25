@@ -132,18 +132,14 @@ public class Datenhaltung {
 	 */
 	// Hab hier nicht richtig verstanden, nach welchen Parameter du suchen
 	// musst, evntl. noch bescheid geben gez. Break Free
-	public static List<Chat> leseChat(String sender) throws PersistenzException {
-		List<Chat> list = null;
+	public static Chat leseChat(int id) throws PersistenzException {
+		Chat chat = null;
 		try {
-			Query q = em.createQuery(
-					"Select ch from Chat ch where ch.sender = :cmail",
-					CodingSessionModell.class);
-			q.setParameter("cmail", sender);
-			list = q.getResultList();
+			chat=em.find(Chat.class, id);
 		} catch (Exception e) {
 			throw new PersistenzException();
 		}
-		return list;
+		return chat;
 
 	}
 
