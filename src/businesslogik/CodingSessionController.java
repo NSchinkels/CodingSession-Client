@@ -122,7 +122,7 @@ public class CodingSessionController implements Initializable {
 								txtChatRead.appendText(text);
 							}
 						}
-						if (speicherCounter++ > 10
+						if (speicherCounter++ > 20
 								&& codingSessionModell.isSpeichern()) {
 							Persistence.Datenhaltung.schreibeCS(codingSessionModell);
 							chat.speichern();

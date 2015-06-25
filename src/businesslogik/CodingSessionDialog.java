@@ -52,14 +52,14 @@ public class CodingSessionDialog {
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == jaButtonType) {
 				return new CodingSessionModell(
-						(int) (Math.random() * Integer.MAX_VALUE),
+						(int) (Math.random() * 10000),
 						ControllerMediator.getInstance().getBenutzerkonto()
-								.getEmail(), txtTitel.getText(), true, "");
+								.getEmail(), txtTitel.getText(), true, "Hier bitte Code eingeben");
 			} else if (dialogButton == neinButtonType) {
 				return new CodingSessionModell(
-						(int) (Math.random() * Integer.MAX_VALUE),
+						(int) (Math.random() * 10000),
 						ControllerMediator.getInstance().getBenutzerkonto()
-								.getEmail(), txtTitel.getText(), false, "");
+								.getEmail(), txtTitel.getText(), false, "Hier bitte Code eingeben");
 			}
 			return null;
 		});
