@@ -162,6 +162,32 @@ public class CodingSessionDialog {
 		alert.showAndWait();
 	}
 
+	public void erstelleAltesPasswortValidierungDialog() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültiges Passwort");
+		alert.setHeaderText(null);
+		alert.setContentText("Das alte Passwort stimmt nicht mit dem des Benutzers überein!");
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
+	
+	public void erstellePasswoerterWiderspruchDialog() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültiges Passwort");
+		alert.setHeaderText(null);
+		alert.setContentText("Die eingegebenen neuen Passwörter stimmen nicht überein!");
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
+	
 	public void erstelleEmailVorhandenDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Ungültige E-Mail-Adresse");

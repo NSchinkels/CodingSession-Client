@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
@@ -28,6 +29,7 @@ public class ProfilbearbeitungController implements Initializable{
 	private final String passwortRegex = "^$|[a-zA-Z0-9!§$%&/()=?@#^+-_*~'\"\\s]{8,25}";
 	
 	ProfilModell profilModell = new ProfilModell();
+	Benutzerkonto benutzerkonto = ControllerMediator.getInstance().getBenutzerkonto();
 	
 	@FXML
 	private HBox hboxVorname;
@@ -65,6 +67,15 @@ public class ProfilbearbeitungController implements Initializable{
 	@FXML
 	private TextField txtProgrammierkenntnisse;
 	
+	@FXML
+	private PasswordField pwdAltesPasswort;
+	
+	@FXML
+	private PasswordField pwdNeuesPasswort;
+	
+	@FXML
+	private PasswordField pwdPasswortBestaetigung;
+	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		hboxVorname.managedProperty().bind(hboxVorname.visibleProperty());
@@ -72,6 +83,16 @@ public class ProfilbearbeitungController implements Initializable{
 		hboxNickname.managedProperty().bind(hboxNickname.visibleProperty());
 		choiceBox.setItems(FXCollections.observableArrayList("Weiblich", "Männlich"));
 		choiceBox.setTooltip(new Tooltip("Wähle dein Geschlecht"));
+		
+		if(benutzerkonto instanceof BenutzerkontoRealname) {
+			hboxNickname.setVisible(false);
+			hboxVorname.setVisible(true);
+			hboxNachname.setVisible(true);
+		} else {
+			hboxNickname.setVisible(true);
+			hboxVorname.setVisible(false);
+			hboxNachname.setVisible(false);
+		}
 	}
 	
 	@FXML
@@ -82,18 +103,39 @@ public class ProfilbearbeitungController implements Initializable{
 	@FXML
 	public void aenderungenSpeichernGeklickt(ActionEvent event){
 		try {
-			profilModell = Datenhaltung.leseProfil(ControllerMediator.getInstance().getBenutzerkonto().getEmail());
+			profilModell = Datenhaltung.leseProfil(benutzerkonto.getEmail());
 		} catch (PersistenzException e) {
 			e.printStackTrace();
 		}
 		
+		if(benutzerkonto instanceof BenutzerkontoRealname) {
+			benutzerkonto.setVorname(txtVorname.getText());
+			benutzerkonto.setNachname(txtNachname.getText());
+		} else {
+			benutzerkonto.setNickname(txtNickname.getText());
+		}
+		
+		profilModell.setGeschlecht(choiceBox.getValue());
 		profilModell.setGeburtsdatum(txtGeburtsdatum.getText());
 		profilModell.setGeburtsort(txtGeburtsort.getText());
 		profilModell.setWohnort(txtWohnort.getText());
 		profilModell.setAktuellerJob(txtAktuellerJob.getText());
 		profilModell.setProgrammierkenntnisse(txtProgrammierkenntnisse.getText());
 		
+		if(pwdAltesPasswort == null && pwdNeuesPasswort == null && pwdPasswortBestaetigung == null){
+			if(benutzerkonto.getPasswort().equals(pwdAltesPasswort.getText())) {
+				if(pwdNeuesPasswort.getText().equals(pwdPasswortBestaetigung.getText())){
+					benutzerkonto.setPasswort(pwdNeuesPasswort.getText());
+				} else {
+					new CodingSessionDialog().erstellePasswoerterWiderspruchDialog();
+				}
+			} else {
+				new CodingSessionDialog().erstelleAltesPasswortValidierungDialog();
+			}
+		}
+		
 		try {
+			Datenhaltung.updateDB((BenutzerkontoOriginal) benutzerkonto);
 			Datenhaltung.updateProfil(profilModell);
 		} catch (PersistenzException e) {
 			e.printStackTrace();

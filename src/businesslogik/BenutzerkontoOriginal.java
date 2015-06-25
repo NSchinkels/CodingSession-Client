@@ -55,6 +55,16 @@ public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Ser
 	
 	public abstract String getName();
 	
+	public void setPasswort(String passwort){
+		this.passwort = passwort;
+	}
+	
+	public abstract void setVorname(String vorname);
+	
+	public abstract void setNachname(String nachname);
+	
+	public abstract void setNickname(String nickname);
+	
 	public BenutzerkontoOriginal getBenutzerkontoOriginal(){
 		return this;
 	}
@@ -76,7 +86,4 @@ public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Ser
 	public List<String> getFreunde() {
 		return freund;
 	}
-	
-	
-	
 }

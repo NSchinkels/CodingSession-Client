@@ -23,7 +23,17 @@ public class BenutzerkontoNickname extends BenutzerkontoOriginal {
 		return nickname;
 	}
 	
-	public void setName(String nick) {
-		this.nickname = nick;
+	@Override
+	public void setVorname(String vorname) {	
 	}
+	
+	@Override
+	public void setNachname(String nachname) {
+
+	}
+	
+	@Override
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}	
 }

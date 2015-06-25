@@ -25,9 +25,19 @@ public class BenutzerkontoRealname extends BenutzerkontoOriginal{
 		return vorname + " " + nachname;
 	}
 	
-	public void setName(String vor, String nach) {
-		this.vorname = vor;
-		this.nachname = nach;
+	@Override
+	public void setVorname(String vorname) {
+		this.vorname = vorname;
+		
 	}
 	
+	@Override
+	public void setNachname(String nachname) {
+		this.nachname = nachname;
+	}
+	
+	@Override
+	public void setNickname(String nickname) {
+	
+	}	
 }

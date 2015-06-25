@@ -104,6 +104,22 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		return echtesKonto;
 	}
 	
+	public void setPasswort(String passwort){
+		this.passwort = passwort;
+	}
+	
+	public void setVorname(String vorname){
+		
+	}
+	
+	public void setNachname(String nachname){
+		
+	}
+	
+	public void setNickname(String nickname){
+		
+	}
+	
 	public void addFreund(String freundEmail){
 		echtesKonto.addFreund(freundEmail);
 	}

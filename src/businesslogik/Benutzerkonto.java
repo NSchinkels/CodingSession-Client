@@ -15,6 +15,14 @@ public abstract class Benutzerkonto {
 
 	public abstract String getName();
 	
+	public abstract void setPasswort(String passwort);
+	
+	public abstract void setVorname(String vorname);
+	
+	public abstract void setNachname(String nachname);
+	
+	public abstract void setNickname(String nickname);
+	
 	public abstract BenutzerkontoOriginal getBenutzerkontoOriginal();
 
 	public abstract void addFreund(String freundEmail);
