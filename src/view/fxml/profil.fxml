@@ -76,10 +76,13 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="lblGeschlecht" text="-----" />
+                        <Label fx:id="lblGeschlecht" text="-----">
+                           <HBox.margin>
+                              <Insets left="80.0" />
+                           </HBox.margin></Label>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="8.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox>
@@ -89,10 +92,13 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="lblGeburtsdatum" text="-----" />
+                        <Label fx:id="lblGeburtsdatum" text="-----">
+                           <HBox.margin>
+                              <Insets left="62.0" />
+                           </HBox.margin></Label>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="8.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox>
@@ -102,10 +108,13 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="lblGeburtsort" text="-----" />
+                        <Label fx:id="lblGeburtsort" text="-----">
+                           <HBox.margin>
+                              <Insets left="82.0" />
+                           </HBox.margin></Label>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="8.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox>
@@ -115,10 +124,13 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="lblWohnort" text="-----" />
+                        <Label fx:id="lblWohnort" text="-----">
+                           <HBox.margin>
+                              <Insets left="92.0" />
+                           </HBox.margin></Label>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="8.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox>
@@ -128,10 +140,13 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="lblAktuellerJob" text="-----" />
+                        <Label fx:id="lblAktuellerJob" text="-----">
+                           <HBox.margin>
+                              <Insets left="70.0" />
+                           </HBox.margin></Label>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="8.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox>
@@ -143,12 +158,12 @@
                         </Label>
                         <Label fx:id="lblProgrammierkenntnisse" text="-----">
                            <HBox.margin>
-                              <Insets left="8.0" />
+                              <Insets left="14.0" />
                            </HBox.margin>
                         </Label>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="8.0" />
                      </VBox.margin>
                   </HBox>
                </children></VBox>

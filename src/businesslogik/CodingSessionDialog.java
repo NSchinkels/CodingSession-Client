@@ -198,21 +198,16 @@ public class CodingSessionDialog {
 		TextField txtBetreff = new TextField();
 		txtBetreff.setPromptText("Betreff der CodingSession");
 
-		Label lblBetreff = new Label("Betreff: ");
-
 		TextArea txtBeschreibung = new TextArea();
+		txtBeschreibung.getStyleClass().add("text-area-cf");
 		txtBeschreibung.setPromptText("Beschreibung der CodingSession");
-
-		Label lblBeschreibung = new Label("Betreff: ");
 
 		Label lblSpeichern = new Label("Sollen andere Benutzer den Code verändert dürfen?");
 
 		GridPane grid = new GridPane();
-		grid.add(lblBetreff, 1, 1);
-		grid.add(txtBetreff, 2, 1);
-		grid.add(txtBeschreibung, 2, 2);
-		grid.add(lblBeschreibung, 2, 1);
-		grid.add(lblSpeichern, 1, 3);
+		grid.add(txtBetreff, 0, 2);
+		grid.add(txtBeschreibung, 0, 3);
+		grid.add(lblSpeichern, 0, 0);
 		dialog.getDialogPane().setContent(grid);
 
 		ButtonType jaButtonType = new ButtonType("Ja", ButtonData.YES);
