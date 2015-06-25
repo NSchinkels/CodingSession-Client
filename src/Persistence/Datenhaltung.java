@@ -29,7 +29,23 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			//em.flush();
+			// em.flush();
+		}
+	}
+
+	public static void updateDB(BenutzerkontoOriginal konto)
+			throws PersistenzException {
+		try {
+			em.getTransaction().begin();
+			em.merge(konto);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			if (em.getTransaction() != null && em.getTransaction().isActive())
+				em.getTransaction().rollback();
+			throw new PersistenzException(
+					"Fehler bei der Synchronisation mit der Datenbank");
+		} finally {
+			// em.flush();
 		}
 	}
 
@@ -51,7 +67,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			//em.flush();
+			// em.flush();
 		}
 	}
 
@@ -116,7 +132,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			//em.flush();
+			// em.flush();
 		}
 	}
 
@@ -134,7 +150,7 @@ public class Datenhaltung {
 	public static Chat leseChat(int id) throws PersistenzException {
 		Chat chat = null;
 		try {
-			chat=em.find(Chat.class, id);
+			chat = em.find(Chat.class, id);
 		} catch (Exception e) {
 			throw new PersistenzException();
 		}
@@ -162,7 +178,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			//em.flush();
+			// em.flush();
 		}
 	}
 
@@ -201,7 +217,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			//em.flush();
+			// em.flush();
 		}
 	}
 
@@ -223,8 +239,8 @@ public class Datenhaltung {
 		}
 		return PM;
 	}
-	
-	public static void updateProfil(ProfilModell PM) throws PersistenzException{
+
+	public static void updateProfil(ProfilModell PM) throws PersistenzException {
 		try {
 			em.getTransaction().begin();
 			em.merge(PM);
@@ -235,13 +251,14 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			//em.flush();
+			// em.flush();
 		}
 	}
+
 	/**
 	 * Methode die beim Beenden der Anwendung ausgefuehrt werden sollte
 	 */
-	public static void closeEM(){
+	public static void closeEM() {
 		em.close();
 	}
 
