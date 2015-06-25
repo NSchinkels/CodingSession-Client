@@ -104,15 +104,15 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		return echtesKonto;
 	}
 	
-	public void addFreund(BenutzerkontoOriginal fr){
-		echtesKonto.addFreund(fr);
+	public void addFreund(String freundEmail){
+		echtesKonto.addFreund(freundEmail);
 	}
 	
-	public void delFreund(BenutzerkontoOriginal fr){
-		echtesKonto.delFreund(fr);
+	public void delFreund(String freundEmail){
+		echtesKonto.delFreund(freundEmail);
 	}
 	
-	public List<BenutzerkontoOriginal> getFreunde(){
+	public List<String> getFreunde(){
 		return echtesKonto.getFreunde();
 	}
 	

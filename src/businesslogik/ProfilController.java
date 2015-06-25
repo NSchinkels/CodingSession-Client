@@ -26,7 +26,7 @@ public class ProfilController implements Initializable {
 	
 	ProfilModell profilModell = new ProfilModell();
 
-	List<BenutzerkontoOriginal> freunde;
+	List<String> freunde;
 
 	@FXML
 	private Label lblBenutzername;
@@ -50,10 +50,10 @@ public class ProfilController implements Initializable {
 	private Label lblProgrammierkenntnisse;
 
 	@FXML
-	ListView<Benutzerkonto> listFreunde;
+	ListView<String> listFreunde;
 
 	public ProfilController() {
-		freunde = new LinkedList<BenutzerkontoOriginal>();
+		freunde = new LinkedList<String>();
 	}
 
 	@Override
@@ -84,12 +84,12 @@ public class ProfilController implements Initializable {
 			lblAktuellerJob.setText(profilModell.getAktuellerJob());
 			lblProgrammierkenntnisse.setText(profilModell.getProgrammierkenntnisse());
 		}
-
-		this.freunde = ControllerMediator.getInstance().getBenutzerkonto().getFreunde();
-		ObservableList<Benutzerkonto> items = listFreunde.getItems();
-		items.add(new BenutzerkontoNickname("testemail1", "Beispielfreund","Beispielfreund", 3));
 		
-		for (Benutzerkonto b : freunde) {
+		this.freunde = ControllerMediator.getInstance().getBenutzerkonto().getFreunde();
+		ObservableList<String> items = listFreunde.getItems();
+		items.add("testmail@me.org");
+		
+		for (String b : freunde) {
 			items.add(b);
 		}
 		
@@ -100,7 +100,7 @@ public class ProfilController implements Initializable {
 					if (mouseEvent.getClickCount() == 3) {
 						ControllerMediator.getInstance().einladen(
 								listFreunde.getSelectionModel()
-										.getSelectedItem().getEmail());
+										.getSelectedItem());
 					}
 				}
 			}

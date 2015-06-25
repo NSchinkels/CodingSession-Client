@@ -26,9 +26,8 @@ public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Ser
 	//Achtung: Hier wurde testweise der statische Kontext entfernt
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToMany
-	@JoinTable(name="freunde")
-	private List<BenutzerkontoOriginal> freunde ;
+	@ElementCollection
+	private List<String> freund ;
 	
 	/**Konstruktor musste angepasst werden um erstmal das Problem mit der ID 
 	 * zu umgehen; id wird jetzt zeitweise mit übergeben**/
@@ -60,22 +59,22 @@ public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Ser
 		return this;
 	}
 	
-	public void addFreund(BenutzerkontoOriginal fr) {
-		if(!freunde.contains(fr)) {
-			freunde.add(fr);
-		    fr.addFreund(this);
+	public void addFreund(String freundEmail) {
+		if(!freund.contains(freundEmail)) {
+			freund.add(freundEmail);
+		    //fr.addFreund(this);
 		}
 	}
 	
-	public void delFreund(BenutzerkontoOriginal fr) {
-		if(freunde.contains(fr)) {
-			freunde.remove(fr);
-			fr.delFreund(this);
+	public void delFreund(String freundEmail) {
+		if(freund.contains(freundEmail)) {
+			freund.remove(freundEmail);
+			//fr.delFreund(this);
 		}
 	}
 	
-	public List<BenutzerkontoOriginal> getFreunde() {
-		return freunde;
+	public List<String> getFreunde() {
+		return freund;
 	}
 	
 	

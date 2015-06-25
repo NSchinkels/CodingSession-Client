@@ -17,11 +17,11 @@ public abstract class Benutzerkonto {
 	
 	public abstract BenutzerkontoOriginal getBenutzerkontoOriginal();
 
-	public abstract void addFreund(BenutzerkontoOriginal fr);
+	public abstract void addFreund(String freundEmail);
 
-	public abstract void delFreund(BenutzerkontoOriginal fr);
+	public abstract void delFreund(String freundEmail);
 
-	public abstract List<BenutzerkontoOriginal> getFreunde();
+	public abstract List<String> getFreunde();
 	//zum testen
 	public String toString(){
 		return this.getName();
