@@ -29,7 +29,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			// em.close();
+			em.flush();
 		}
 	}
 
@@ -51,7 +51,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			// em.close();
+			em.flush();
 		}
 	}
 
@@ -117,7 +117,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			//em.close();
+			em.flush();
 		}
 	}
 
@@ -163,7 +163,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			//em.close();
+			em.flush();
 		}
 	}
 
@@ -202,7 +202,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			//em.close();
+			em.flush();
 		}
 	}
 
@@ -236,8 +236,14 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			//em.close();
+			em.flush();
 		}
+	}
+	/**
+	 * Methode die beim Beenden der Anwendung ausgefuehrt werden sollte
+	 */
+	public static void closeEM(){
+		em.close();
 	}
 
 	/**
