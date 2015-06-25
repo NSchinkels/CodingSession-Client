@@ -239,7 +239,7 @@ public class Datenhaltung {
 		}
 	}
 	/**
-	 * Methode, die beim Beenden der Anwendung ausgefuehrt werden sollte
+	 * Methode die beim Beenden der Anwendung ausgefuehrt werden sollte
 	 */
 	public static void closeEM(){
 		em.close();
