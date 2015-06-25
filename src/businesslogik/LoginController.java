@@ -51,7 +51,7 @@ public class LoginController {
 		} catch(IOException e){
 			e.printStackTrace();
 		} catch (PersistenzException e) {
-			new CodingSessionDialog().erstelleLoginFehlgeschlagenDialog();
+			new CodingSessionDialog().erstelleEmailValidierungDialog();;
 		}
 	}
 
