@@ -94,6 +94,7 @@ public class CodingSessionController implements Initializable {
 			chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
 		} else {
 			chat.setSize(chat.empfangen().size());
+			txtChatRead.setText(chat.getChat());
 		}
 		kommunikationOut.starteCs("CodingSession" + codingSessionModell.getId());
 		kommunikationIn.bekommeCode("CodingSession" + codingSessionModell.getId(), codingSessionModell.getBenutzerMail());
@@ -111,18 +112,14 @@ public class CodingSessionController implements Initializable {
 								if (!netCode.equals(code)) {
 									code = netCode;
 									txtCodingSession.setText(code);
-
 								}
 							} else {
 								CodingSessionController.this.neuerCodeGUI(txtCodingSession.getText());
 							}
 						}
 						if (chat.empfangen().size() > chat.getSize()) {
-							txtChatRead.setText("");
+							txtChatRead.setText(chat.getChat());
 							chat.setSize(chat.empfangen().size());
-							for (String text : chat.empfangen()) {
-								txtChatRead.appendText(text);
-							}
 						}
 						if (speicherCounter++ > 10 && codingSessionModell.isSpeichern()) {
 							speichern();

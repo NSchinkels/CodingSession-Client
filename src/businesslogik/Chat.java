@@ -79,5 +79,12 @@ public class Chat {
 	public int getId() {
 		return this.id;
 	}
+	public String getChat(){
+		String c="";
+		for(String a:verlauf){
+			c+=a;
+		}
+		return c;
+	}
 
 }

@@ -64,7 +64,8 @@ public class HauptfensterController implements Initializable {
 		kommunikationIn.bekommeEinladung();
 		hauptfensterThread = new Thread() {
 			public void run() {
-				while (true) {
+				boolean running=true;
+				while (running) {
 					synchronized (lock) {
 						try {
 							lock.wait();
@@ -75,7 +76,7 @@ public class HauptfensterController implements Initializable {
 								}
 							});
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
+							running=false;
 							e.printStackTrace();
 						}
 					}
