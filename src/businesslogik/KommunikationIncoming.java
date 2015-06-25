@@ -26,12 +26,12 @@ public class KommunikationIncoming {
 	boolean change;
 	Object lock;
 
-	public KommunikationIncoming(String benutzerId, KommunikationStart kommunikationStart,Object lock) {
+	public KommunikationIncoming(String benutzerId, KommunikationStart kommunikationStart, Object lock) {
 
 		this.session = kommunikationStart.getSession();
 		this.benutzerId = benutzerId;
 		this.kommunikationStart = kommunikationStart;
-		this.lock=lock;
+		this.lock = lock;
 	}
 
 	public void bekommeCode(String topic, String benutzer) {
@@ -45,14 +45,11 @@ public class KommunikationIncoming {
 			}
 		}
 		try {
-			topsubCode = session.createDurableSubscriber(kommunikationStart.getTopicCode(),
-					"Benutzer" + benutzer);
+			topsubCode = session.createDurableSubscriber(kommunikationStart.getTopicCode(), "Benutzer" + benutzer);
 			listnerFuerCode = new MessageListener() {
 				public void onMessage(Message message) {
 					try {
-						if (!neuerCode
-								.equals(((TextMessage) message).getText())
-								&& message.getStringProperty("sender") != benutzer) {
+						if (!neuerCode.equals(((TextMessage) message).getText()) && message.getStringProperty("sender") != benutzer) {
 							neuerCode = ((TextMessage) message).getText();
 							change = true;
 						}
@@ -72,21 +69,20 @@ public class KommunikationIncoming {
 				public void onMessage(Message message) {
 					System.out.println("NACHRICHT");
 					try {
-						synchronized(lock){
-						if (message.getStringProperty("id").equals(ControllerMediator.getInstance().getBenutzerkonto().getEmail())) {
-							System.out.println("neue om erhalten");
-							csEinladung = ((CodingSessionModell) ((ObjectMessage) message).getObject());
-							ControllerMediator.getInstance().einladen("huhu");
-							lock.notifyAll();
-						}
+						synchronized (lock) {
+							if (message.getStringProperty("id").equals(ControllerMediator.getInstance().getBenutzerkonto().getEmail())) {
+								System.out.println("neue om erhalten");
+								csEinladung = ((CodingSessionModell) ((ObjectMessage) message).getObject());
+								ControllerMediator.getInstance().einladen("huhu");
+								lock.notifyAll();
+							}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			};
-			kommunikationStart.getTopsubEinladung()
-					.setMessageListener(listnerFuerEinladung);
+			kommunikationStart.getTopsubEinladung().setMessageListener(listnerFuerEinladung);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			;
@@ -103,16 +99,12 @@ public class KommunikationIncoming {
 			}
 		}
 		try {
-			tobsubChat = session.createDurableSubscriber(kommunikationStart.getTopicChat(),
-					"Chatter" + benutzerId);
+			tobsubChat = session.createDurableSubscriber(kommunikationStart.getTopicChat(), "Chatter" + benutzerId);
 			listnerFuerChat = new MessageListener() {
 				public void onMessage(Message message) {
 					if (message instanceof TextMessage) {
 						try {
-							((LinkedList<String>) chatLog).addLast(message
-									.getStringProperty("sender")
-									+ ": "
-									+ ((TextMessage) message).getText());
+							((LinkedList<String>) chatLog).addLast(message.getStringProperty("sender") + ": " + ((TextMessage) message).getText());
 						} catch (JMSException e) {
 							e.printStackTrace();
 						}
@@ -146,11 +138,13 @@ public class KommunikationIncoming {
 	}
 
 	public void beenden() {
-		try{
-		topsubEinladung.close();
-		topsubCode.close();
-		tobsubChat.close();
-		}catch(Exception e){}
-		kommunikationStart.beenden();
+		try {
+			topsubEinladung.close();
+			topsubCode.close();
+			tobsubChat.close();
+			kommunikationStart.beenden();
+		} catch (Exception e) {
+		}
+		
 	}
 }

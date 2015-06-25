@@ -97,6 +97,7 @@ public class ControllerMediator {
 	}
 
 	public void schliesseCodingSession() {
+		codingsession.killThread();
 		hauptfenster.schliesseCodingSession();
 	}
 

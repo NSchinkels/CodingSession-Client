@@ -83,16 +83,17 @@ public class CodingSessionController implements Initializable {
 				}
 			}
 		});
-		
-		
+
 		try {
-			chat=Datenhaltung.leseChat(codingSessionModell.getId());
-		} catch (PersistenzException e1) {
+			chat = Datenhaltung.leseChat(codingSessionModell.getId());
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		if(chat==null){
+		if (chat == null) {
 			chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
+		} else {
+			chat.setSize(chat.empfangen().size());
 		}
 		kommunikationOut.starteCs("CodingSession" + codingSessionModell.getId());
 		kommunikationIn.bekommeCode("CodingSession" + codingSessionModell.getId(), codingSessionModell.getBenutzerMail());
