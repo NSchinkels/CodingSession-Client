@@ -63,11 +63,11 @@ public class ProfilModell implements Serializable{
 		this.aktuellerJob = aktuellerJob;
 	}
 	
-	public String getProgrammierkenntnise(){
+	public String getProgrammierkenntnisse(){
 		return this.programmierkenntnisse;
 	}
 	
-	public void setProgrammierkenntnise(String programmierkenntnisse){
+	public void setProgrammierkenntnisse(String programmierkenntnisse){
 		this.programmierkenntnisse = programmierkenntnisse;
 	}
 }

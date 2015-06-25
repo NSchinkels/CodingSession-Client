@@ -126,7 +126,7 @@
                               <Insets left="20.0" top="2.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField promptText="TT.MM.JJJJ">
+                        <TextField fx:id="txtGeburtsdatum" promptText="TT.MM.JJJJ">
                            <HBox.margin>
                               <Insets left="68.0" />
                            </HBox.margin>
@@ -140,7 +140,7 @@
                               <Insets left="20.0" top="2.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField promptText="Geburtsort">
+                        <TextField fx:id="txtGeburtsort" promptText="Geburtsort">
                            <HBox.margin>
                               <Insets left="87.0" />
                            </HBox.margin>
@@ -160,7 +160,7 @@
                               <Insets left="20.0" top="2.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField promptText="Wohnort">
+                        <TextField fx:id="txtWohnort" promptText="Wohnort">
                            <HBox.margin>
                               <Insets left="97.0" />
                            </HBox.margin>
@@ -174,7 +174,7 @@
                               <Insets left="20.0" top="2.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField promptText="Aktueller Job">
+                        <TextField fx:id="txtAktuellerJob" promptText="Aktueller Job">
                            <HBox.margin>
                               <Insets left="75.0" />
                            </HBox.margin>
@@ -194,7 +194,7 @@
                               <Insets left="20.0" top="2.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txtProgKenntnisse" promptText="Programmierkenntnisse">
+                        <TextField fx:id="txtProgrammierkenntnisse" promptText="Programmierkenntnisse">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin></TextField>

@@ -141,7 +141,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="lblProgrammkenntnisse" text="-----">
+                        <Label fx:id="lblProgrammierkenntnisse" text="-----">
                            <HBox.margin>
                               <Insets left="8.0" />
                            </HBox.margin>

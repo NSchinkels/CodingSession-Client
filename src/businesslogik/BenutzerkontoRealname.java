@@ -22,7 +22,7 @@ public class BenutzerkontoRealname extends BenutzerkontoOriginal{
 	public BenutzerkontoRealname(){}
 	
 	public String getName() {
-		return nachname + ", " + vorname;
+		return vorname + " " + nachname;
 	}
 	
 	public void setName(String vor, String nach) {

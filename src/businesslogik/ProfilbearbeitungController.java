@@ -8,8 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
+import Persistence.Datenhaltung;
+import Persistence.PersistenzException;
 
 public class ProfilbearbeitungController implements Initializable{
 
@@ -24,6 +27,8 @@ public class ProfilbearbeitungController implements Initializable{
 	private final String pKenntnisseRegex = "^$|[a-zA-Z0-9#+-/.,!\\s]{3,100}";
 	private final String passwortRegex = "^$|[a-zA-Z0-9!§$%&/()=?@#^+-_*~'\"\\s]{8,25}";
 	
+	ProfilModell profilModell = new ProfilModell();
+	
 	@FXML
 	private HBox hboxVorname;
 	
@@ -35,6 +40,30 @@ public class ProfilbearbeitungController implements Initializable{
 	
 	@FXML
 	private ChoiceBox<String> choiceBox;
+	
+	@FXML
+	private TextField txtVorname;
+	
+	@FXML
+	private TextField txtNachname;
+	
+	@FXML
+	private TextField txtNickname;
+	
+	@FXML
+	private TextField txtGeburtsdatum;
+	
+	@FXML
+	private TextField txtGeburtsort;
+	
+	@FXML
+	private TextField txtWohnort;
+	
+	@FXML
+	private TextField txtAktuellerJob;
+	
+	@FXML
+	private TextField txtProgrammierkenntnisse;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -52,7 +81,23 @@ public class ProfilbearbeitungController implements Initializable{
 	
 	@FXML
 	public void aenderungenSpeichernGeklickt(ActionEvent event){
+		try {
+			profilModell = Datenhaltung.leseProfil(ControllerMediator.getInstance().getBenutzerkonto().getEmail());
+		} catch (PersistenzException e) {
+			e.printStackTrace();
+		}
 		
+		profilModell.setGeburtsdatum(txtGeburtsdatum.getText());
+		profilModell.setGeburtsort(txtGeburtsort.getText());
+		profilModell.setWohnort(txtWohnort.getText());
+		profilModell.setAktuellerJob(txtAktuellerJob.getText());
+		profilModell.setProgrammierkenntnisse(txtProgrammierkenntnisse.getText());
+		
+		try {
+			Datenhaltung.updateProfil(profilModell);
+		} catch (PersistenzException e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	@FXML
