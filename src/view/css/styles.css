@@ -48,7 +48,12 @@
     -fx-background-color: #282828;
 }
 
-.text-area .content {  
+.text-area-cf .content{
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
+.text-area .content{  
     -fx-background-color: #282828 ;
     -fx-text-fill: #F8F8F8;  
 }  
