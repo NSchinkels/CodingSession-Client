@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import Persistence.Datenhaltung;
+import Persistence.PersistenzException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,12 +28,8 @@ public class RegistrierungController implements Initializable {
 	// Zwischenzeitlich, bis bessere Loesung gefunden ist.
 	int id = 5;
 
-	// Nur vorruebergehend
-	private BenutzerkontoGeschuetzt bg = new BenutzerkontoGeschuetzt();
-
+	private Benutzerkonto konto;
 	private ProfilModell profilModell;
-
-	// private Benutzerkonto bg;
 
 	@FXML
 	private VBox vboxRoot;
@@ -123,24 +121,42 @@ public class RegistrierungController implements Initializable {
 	 */
 	@FXML
 	private void registrierenGeklickt(ActionEvent event) {
-		if (choiceBox.getValue().equals("Realname") && bg.ueberpruefeReal(txtVorname.getText(), txtNachname.getText(), txtEmail.getText(), txtPasswort.getText())) {
+		if (choiceBox.getValue().equals("Realname") && BenutzerkontoGeschuetzt.ueberpruefeReal(txtVorname.getText(), 
+				txtNachname.getText(), txtEmail.getText(), txtPasswort.getText())) {
 
-			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), txtVorname.getText(), txtNachname.getText(), id);
-
-			// Hauptfenster das bk geben
-			ControllerMediator.getInstance().setBenutzerkonto(bg);
-			profilModell = new ProfilModell(txtEmail.getText());
-
-		} else if (choiceBox.getValue().equals("Nickname") && bg.ueberpruefeNick(txtNickname.getText(), txtEmail.getText(), txtPasswort.getText())) {
-
-			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), txtNickname.getText(), id);
+			konto = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), 
+					txtVorname.getText(), txtNachname.getText(), id);
 
 			// Hauptfenster das bk geben
-			ControllerMediator.getInstance().setBenutzerkonto(bg);
+			ControllerMediator.getInstance().setBenutzerkonto(konto);
 			profilModell = new ProfilModell(txtEmail.getText());
+			
+			try {
+				Datenhaltung.schreibeProfil(profilModell);
+			} catch (PersistenzException e) {
+				//Das fenster wird bis jetzt immer aufgerufen. Siehe Datenhaltung Zeile 202
+				new CodingSessionDialog().erstellePersistenzExceptionDialog();
+			}
+
+		} else if (choiceBox.getValue().equals("Nickname") && BenutzerkontoGeschuetzt.ueberpruefeNick(txtNickname.getText(), 
+				txtEmail.getText(), txtPasswort.getText())) {
+
+			konto = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), 
+					txtNickname.getText(), id);
+
+			// Hauptfenster das bk geben
+			ControllerMediator.getInstance().setBenutzerkonto(konto);
+			profilModell = new ProfilModell(txtEmail.getText());
+			
+			try {
+				Datenhaltung.schreibeProfil(profilModell);
+			} catch (PersistenzException e) {
+				//Das fenster wird bis jetzt immer aufgerufen. Siehe Datenhaltung Zeile 202
+				new CodingSessionDialog().erstellePersistenzExceptionDialog();
+			}
 		}
 
-		if (bg.getBenutzerkontoOriginal() != null) {
+		if (konto.getBenutzerkontoOriginal() != null) {
 			((Node) (event.getSource())).getScene().getWindow().hide();
 			try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));

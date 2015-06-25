@@ -8,12 +8,12 @@ import Persistence.*;
 public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	
 	//Regulaere Ausdruecke f�r die Eingabevaldierung
-	private final String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+"
-									+ "(\\.[A-Za-z0-9]+)*(\\-[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	private final String passwortRegex = "^[a-zA-Z0-9!�$%&/()=?@#^+-_*~'\"\\s]{8,25}$";
-	private final String vornameRegex = "^[a-zA-Z]{3,20}";
-	private final String nachnameRegex = "^[a-zA-Z]{3,20}";
-	private final String nicknameRegex = "^[a-zA-Z][\\w_-]{3,25}$";
+	private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+"
+										    + "(\\.[A-Za-z0-9]+)*(\\-[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	private static final String PASSWORT_REGEX = "^[a-zA-Z0-9!�$%&/()=?@#^+-_*~'\"\\s]{8,25}$";
+	private static final String VORNAME_REGEX = "^[a-zA-Z]{3,20}";
+	private static final String NACHNAME_REGEX = "^[a-zA-Z]{3,20}";
+	private static final String NICKNAME_REGEX = "^[a-zA-Z][\\w_-]{3,25}$";
 			
 	private BenutzerkontoOriginal echtesKonto;
 	//ID hier noch notwedig? Evntl. entfernen?
@@ -116,17 +116,17 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		return echtesKonto.getFreunde();
 	}
 	
-	public boolean ueberpruefeReal(String vorname, String nachname, String email, String passwort) {
-		if(!vorname.matches(vornameRegex)) {
+	public static boolean ueberpruefeReal(String vorname, String nachname, String email, String passwort) {
+		if(!vorname.matches(VORNAME_REGEX)) {
 			new CodingSessionDialog().erstelleVornameValidierungDialog();
 			return false;
-		} else if(!nachname.matches(nachnameRegex)) {
+		} else if(!nachname.matches(NACHNAME_REGEX)) {
 			new CodingSessionDialog().erstelleNachnameValidierungDialog();
 			return false;
-		} else if(!email.matches(emailRegex)) {
+		} else if(!email.matches(EMAIL_REGEX)) {
 			new CodingSessionDialog().erstelleEmailValidierungDialog();
 			return false;
-		} else if(!passwort.matches(passwortRegex)) {
+		} else if(!passwort.matches(PASSWORT_REGEX)) {
 			new CodingSessionDialog().erstellePasswortValidierungDialog();
 			return false;
 		} else {
@@ -134,14 +134,14 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		}
 	}
 
-	public boolean ueberpruefeNick(String nickname, String email, String passwort) {
-		if(!nickname.matches(nicknameRegex)) {
+	public static boolean ueberpruefeNick(String nickname, String email, String passwort) {
+		if(!nickname.matches(NICKNAME_REGEX)) {
 			new CodingSessionDialog().erstelleNicknameValidierungDialog();
 			return false;
-		} else if(!email.matches(emailRegex)) {
+		} else if(!email.matches(EMAIL_REGEX)) {
 			new CodingSessionDialog().erstelleEmailValidierungDialog();
 			return false;
-		} else if(!passwort.matches(passwortRegex)) {
+		} else if(!passwort.matches(PASSWORT_REGEX)) {
 			new CodingSessionDialog().erstellePasswortValidierungDialog();
 			return false;
 		} else {
