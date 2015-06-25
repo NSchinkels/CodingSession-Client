@@ -69,8 +69,7 @@ public class Datenhaltung {
 		try {
 			konto = em.find(BenutzerkontoOriginal.class, email);
 		} catch (Exception e) {
-			throw new PersistenzException(
-					"Fehler bei der Synchronisation mit der Datenbank");
+			throw new PersistenzException();
 		}
 		return konto;
 	}
@@ -278,8 +277,8 @@ public class Datenhaltung {
 			} else {
 				return false;
 			}
-		} catch (Exception e) {
-			throw new PersistenzException();
+		} catch (PersistenzException exception) {
+			throw exception;
 		}
 	}
 }

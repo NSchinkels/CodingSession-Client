@@ -30,25 +30,26 @@ public class LoginController {
 	private void anmeldenGeklickt(ActionEvent event) {
 		try {
 			if (Datenhaltung.passwortRichtig(txtEmail.getText(), pwdPasswort.getText())) {
-				try {
-					ControllerMediator.getInstance().setBenutzerkonto(Datenhaltung.leseDB(txtEmail.getText()));
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
-					Parent root = (Parent) loader.load();
-					Stage stage = new Stage();
-					Scene scene = new Scene(root);
-					stage.setScene(scene);
-					stage.setMaximized(true);
-					stage.setOnCloseRequest(e -> {
-						e.consume();
-						new CodingSessionDialog().erstelleAbmeldeDialog();
-					});
-					stage.show();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				ControllerMediator.getInstance().setBenutzerkonto(Datenhaltung.leseDB(txtEmail.getText()));
+				((Node) (event.getSource())).getScene().getWindow().hide();
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
+				Parent root = (Parent) loader.load();
+				Stage stage = new Stage();
+				Scene scene = new Scene(root);
+				stage.setScene(scene);
+				stage.setMaximized(true);
+				
+				stage.setOnCloseRequest(e -> {
+					e.consume();
+					new CodingSessionDialog().erstelleAbmeldeDialog();
+				});
+				
+				stage.show();
 			}
-		} catch (PersistenzException e) {
+		} catch(IOException e){
 			e.printStackTrace();
+		} catch (PersistenzException e) {
+			new CodingSessionDialog().erstelleLoginFehlgeschlagenDialog();
 		}
 	}
 
@@ -58,8 +59,8 @@ public class LoginController {
 	 */
 	@FXML
 	private void oeffneRegistrierungGeklickt(ActionEvent event) {
-		((Node) (event.getSource())).getScene().getWindow().hide();
 		try {
+			((Node) (event.getSource())).getScene().getWindow().hide();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/registrierung.fxml"));
 			Parent root = (Parent) loader.load();
 			Stage stage = new Stage();
