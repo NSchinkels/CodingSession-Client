@@ -29,7 +29,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			em.flush();
+			//em.flush();
 		}
 	}
 
@@ -51,7 +51,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			em.flush();
+			//em.flush();
 		}
 	}
 
@@ -116,7 +116,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			em.flush();
+			//em.flush();
 		}
 	}
 
@@ -162,7 +162,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			em.flush();
+			//em.flush();
 		}
 	}
 
@@ -201,7 +201,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			em.flush();
+			//em.flush();
 		}
 	}
 
@@ -235,7 +235,7 @@ public class Datenhaltung {
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			em.flush();
+			//em.flush();
 		}
 	}
 	/**
