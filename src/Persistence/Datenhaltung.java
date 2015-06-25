@@ -277,8 +277,8 @@ public class Datenhaltung {
 			} else {
 				return false;
 			}
-		} catch (PersistenzException exception) {
-			throw exception;
+		} catch (Exception e) {
+			throw new PersistenzException();
 		}
 	}
 }
