@@ -109,20 +109,39 @@ public class ProfilbearbeitungController implements Initializable{
 		}
 		
 		if(benutzerkonto instanceof BenutzerkontoRealname) {
-			benutzerkonto.setVorname(txtVorname.getText());
-			benutzerkonto.setNachname(txtNachname.getText());
+			if(!istLeer(txtVorname) && !istLeer(txtNachname)) {
+				benutzerkonto.setVorname(txtVorname.getText());
+				benutzerkonto.setNachname(txtNachname.getText());
+			}
 		} else {
-			benutzerkonto.setNickname(txtNickname.getText());
+			if(!istLeer(txtNickname)) {
+				benutzerkonto.setNickname(txtNickname.getText());
+			}
 		}
 		
 		profilModell.setGeschlecht(choiceBox.getValue());
-		profilModell.setGeburtsdatum(txtGeburtsdatum.getText());
-		profilModell.setGeburtsort(txtGeburtsort.getText());
-		profilModell.setWohnort(txtWohnort.getText());
-		profilModell.setAktuellerJob(txtAktuellerJob.getText());
-		profilModell.setProgrammierkenntnisse(txtProgrammierkenntnisse.getText());
+
+		if(!istLeer(txtGeburtsdatum)){
+			profilModell.setGeburtsdatum(txtGeburtsdatum.getText());
+		}
 		
-		if(pwdAltesPasswort == null && pwdNeuesPasswort == null && pwdPasswortBestaetigung == null){
+		if(!istLeer(txtGeburtsort)){
+			profilModell.setGeburtsort(txtGeburtsort.getText());
+		}
+		
+		if(!istLeer(txtWohnort)){
+			profilModell.setWohnort(txtWohnort.getText());
+		}
+		
+		if(!istLeer(txtAktuellerJob)){
+			profilModell.setAktuellerJob(txtAktuellerJob.getText());
+		}
+
+		if(!istLeer(txtProgrammierkenntnisse)){
+			profilModell.setProgrammierkenntnisse(txtProgrammierkenntnisse.getText());
+		}
+		
+		if(!istLeer(pwdAltesPasswort) && !istLeer(pwdNeuesPasswort) && !istLeer(pwdPasswortBestaetigung)) {
 			if(benutzerkonto.getPasswort().equals(pwdAltesPasswort.getText())) {
 				if(pwdNeuesPasswort.getText().equals(pwdPasswortBestaetigung.getText())){
 					benutzerkonto.setPasswort(pwdNeuesPasswort.getText());
@@ -145,5 +164,21 @@ public class ProfilbearbeitungController implements Initializable{
 	@FXML
 	public void zurueckZumProfilGeklickt(ActionEvent event){
 		ControllerMediator.getInstance().neuesProfil();
+	}
+	
+	private boolean istLeer(TextField textFeld){
+		if(textFeld.getText().equals(null) && !textFeld.getText().trim().isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean istLeer(PasswordField passwortFeld){
+		if(passwortFeld.getText().equals(null) && !passwortFeld.getText().trim().isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
