@@ -93,6 +93,8 @@ public class CodingSessionController implements Initializable {
 		if (chat == null) {
 			chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
 		} else {
+			chat.setKommunikationIn(kommunikationIn);
+			chat.setKommunikationOut(kommunikationOut);
 			chat.setSize(chat.empfangen().size());
 			txtChatRead.setText(chat.getChat());
 		}
