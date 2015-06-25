@@ -86,15 +86,17 @@ public class CodingSessionController implements Initializable {
 
 		try {
 			chat = Datenhaltung.leseChat(codingSessionModell.getId());
+			System.out.println("Chat war in Db");
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		if (chat == null) {
 			chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
+			System.out.println("Chat war null");
 		} else {
-			chat.setKommunikationIn(kommunikationIn);
 			chat.setKommunikationOut(kommunikationOut);
+			chat.setKommunikationIn(kommunikationIn);
 			chat.setSize(chat.empfangen().size());
 			txtChatRead.setText(chat.getChat());
 		}

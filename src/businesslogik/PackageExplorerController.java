@@ -11,7 +11,6 @@ public class PackageExplorerController{
 	
 	public PackageExplorerController(String benutzerEmail) throws PersistenzException{
 		inhalt=Datenhaltung.leseCS(benutzerEmail);
-		inhalt.add(0, new CodingSessionModell(0,"Beispielklasse","Beispiel",false,"Hier können sie Code eingeben"));
 	}
 	public void add(CodingSessionModell cs) {
 		inhalt.add(cs);

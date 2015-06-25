@@ -23,7 +23,6 @@ public class KommunikationOutgoing {
 	}
 
 	public void starteCs(String topic) {
-		System.out.println(session.toString());
 		try {
 			kommunikationStart.setTopicCode(session.createTopic(topic));
 			producerCode = session.createProducer(kommunikationStart.getTopicCode());
