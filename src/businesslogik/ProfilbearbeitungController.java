@@ -109,39 +109,41 @@ public class ProfilbearbeitungController implements Initializable{
 		}
 		
 		if(benutzerkonto instanceof BenutzerkontoRealname) {
-			if(!istLeer(txtVorname) && !istLeer(txtNachname)) {
+			if(!istLeer(txtVorname.getText()) && !istLeer(txtNachname.getText())) {
 				benutzerkonto.setVorname(txtVorname.getText());
 				benutzerkonto.setNachname(txtNachname.getText());
 			}
 		} else {
-			if(!istLeer(txtNickname)) {
+			if(!istLeer(txtNickname.getText())) {
 				benutzerkonto.setNickname(txtNickname.getText());
 			}
 		}
 		
-		profilModell.setGeschlecht(choiceBox.getValue());
+		if(!istLeer(choiceBox.getValue())){
+			profilModell.setGeschlecht(choiceBox.getValue());
+		}
 
-		if(!istLeer(txtGeburtsdatum)){
+		if(!istLeer(txtGeburtsdatum.getText())){
 			profilModell.setGeburtsdatum(txtGeburtsdatum.getText());
 		}
 		
-		if(!istLeer(txtGeburtsort)){
+		if(!istLeer(txtGeburtsort.getText())){
 			profilModell.setGeburtsort(txtGeburtsort.getText());
 		}
 		
-		if(!istLeer(txtWohnort)){
+		if(!istLeer(txtWohnort.getText())){
 			profilModell.setWohnort(txtWohnort.getText());
 		}
 		
-		if(!istLeer(txtAktuellerJob)){
+		if(!istLeer(txtAktuellerJob.getText())){
 			profilModell.setAktuellerJob(txtAktuellerJob.getText());
 		}
 
-		if(!istLeer(txtProgrammierkenntnisse)){
+		if(!istLeer(txtProgrammierkenntnisse.getText())){
 			profilModell.setProgrammierkenntnisse(txtProgrammierkenntnisse.getText());
 		}
 		
-		if(!istLeer(pwdAltesPasswort) && !istLeer(pwdNeuesPasswort) && !istLeer(pwdPasswortBestaetigung)) {
+		if(!istLeer(pwdAltesPasswort.getText()) && !istLeer(pwdNeuesPasswort.getText()) && !istLeer(pwdPasswortBestaetigung.getText())) {
 			if(benutzerkonto.getPasswort().equals(pwdAltesPasswort.getText())) {
 				if(pwdNeuesPasswort.getText().equals(pwdPasswortBestaetigung.getText())){
 					benutzerkonto.setPasswort(pwdNeuesPasswort.getText());
@@ -166,16 +168,8 @@ public class ProfilbearbeitungController implements Initializable{
 		ControllerMediator.getInstance().neuesProfil();
 	}
 	
-	private boolean istLeer(TextField textFeld){
-		if(textFeld.getText().equals(null) && !textFeld.getText().trim().isEmpty()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	private boolean istLeer(PasswordField passwortFeld){
-		if(passwortFeld.getText().equals(null) && !passwortFeld.getText().trim().isEmpty()) {
+	private boolean istLeer(String text){
+		if(text.equals(null) || text.trim().isEmpty()) {
 			return true;
 		} else {
 			return false;
