@@ -1,5 +1,6 @@
 package businesslogik;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -8,25 +9,29 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class RegistrierungController implements Initializable {
 
 	// Zwischenzeitlich, bis bessere Loesung gefunden ist.
 	int id = 5;
 
-	//Nur vorruebergehend
+	// Nur vorruebergehend
 	private BenutzerkontoGeschuetzt bg = new BenutzerkontoGeschuetzt();
-	
+
 	private ProfilModell profilModell;
 
-//	private Benutzerkonto bg;
+	// private Benutzerkonto bg;
 
 	@FXML
 	private VBox vboxRoot;
@@ -45,24 +50,24 @@ public class RegistrierungController implements Initializable {
 
 	@FXML
 	private TextField txtVorname;
-	
+
 	@FXML
 	private TextField txtNachname;
-	
+
 	@FXML
 	private TextField txtNickname;
-	
+
 	@FXML
 	private TextField txtEmail;
-	
+
 	@FXML
 	private TextField txtPasswort;
-	
+
 	/**
 	 * Initialisiert die Registrierungsmaske wie folgt: Fuellt die Choice-Box
-	 * mit den Strings 'Realname' und 'Nickname' (Standardauswahl ist 'Realname').
-	 * Je nach Auswahl in der Choice-Box werden unterschiedliche Textfelder und 
-	 * Label angezeigt.
+	 * mit den Strings 'Realname' und 'Nickname' (Standardauswahl ist
+	 * 'Realname'). Je nach Auswahl in der Choice-Box werden unterschiedliche
+	 * Textfelder und Label angezeigt.
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -90,47 +95,69 @@ public class RegistrierungController implements Initializable {
 	}
 
 	/**
-	 * Wenn der Button 'Abbrechen' geklickt wird, schliesst die 
-	 * Registrierungsmaske und die Loginmaske wird geoeffnet. 
+	 * Wenn der Button 'Abbrechen' geklickt wird, schliesst die
+	 * Registrierungsmaske und die Loginmaske wird geoeffnet.
 	 */
 	@FXML
 	private void abbrechenGeklickt(ActionEvent event) {
 		((Node) (event.getSource())).getScene().getWindow().hide();
-		ControllerMediator.getInstance().neueLoginMaske();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/login.fxml"));
+			Parent root = (Parent) loader.load();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+			stage.setTitle("Login");
+			stage.setScene(scene);
+			stage.setResizable(false);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * Wenn der Button 'Registrieren' geklickt wird, werden die in den
-	 * Textfeldern eingegebenen Daten (je nach Auswahl in der Choice-Box) 
+	 * Textfeldern eingegebenen Daten (je nach Auswahl in der Choice-Box)
 	 * validiert und bei Erfolg ein Benutzerkonto mit diesen Daten erstellt.
 	 * Anschliessend wird der Benutzer zum Hauptfenster weitergeleitet.
 	 */
 	@FXML
 	private void registrierenGeklickt(ActionEvent event) {
-		if (choiceBox.getValue().equals("Realname") && bg.ueberpruefeReal(txtVorname.getText(), 
-				txtNachname.getText(), txtEmail.getText(), txtPasswort.getText())) {
-			
-			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), 
-					txtVorname.getText(), txtNachname.getText(), id);
-			
-			//Hauptfenster das bk geben
+		if (choiceBox.getValue().equals("Realname") && bg.ueberpruefeReal(txtVorname.getText(), txtNachname.getText(), txtEmail.getText(), txtPasswort.getText())) {
+
+			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), txtVorname.getText(), txtNachname.getText(), id);
+
+			// Hauptfenster das bk geben
 			ControllerMediator.getInstance().setBenutzerkonto(bg);
 			profilModell = new ProfilModell(txtEmail.getText());
-			
-		} else if(choiceBox.getValue().equals("Nickname") && bg.ueberpruefeNick(txtNickname.getText(),
-				txtEmail.getText(), txtPasswort.getText())) {
-			
-			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(),
-					txtNickname.getText(), id);
-			
-			//Hauptfenster das bk geben
+
+		} else if (choiceBox.getValue().equals("Nickname") && bg.ueberpruefeNick(txtNickname.getText(), txtEmail.getText(), txtPasswort.getText())) {
+
+			bg = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), txtNickname.getText(), id);
+
+			// Hauptfenster das bk geben
 			ControllerMediator.getInstance().setBenutzerkonto(bg);
 			profilModell = new ProfilModell(txtEmail.getText());
 		}
-		
-		if(bg.getBenutzerkontoOriginal() != null){
+
+		if (bg.getBenutzerkontoOriginal() != null) {
 			((Node) (event.getSource())).getScene().getWindow().hide();
-			ControllerMediator.getInstance().neuesHauptfenster();
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
+				Parent root = (Parent) loader.load();
+				Stage stage = new Stage();
+				Scene scene = new Scene(root);
+				stage.setScene(scene);
+				stage.setMaximized(true);
+				stage.setOnCloseRequest(e -> {
+					e.consume();
+					new CodingSessionDialog().erstelleAbmeldeDialog();
+				});
+				stage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
 }

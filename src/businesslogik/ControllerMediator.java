@@ -54,8 +54,7 @@ public class ControllerMediator {
 		this.profil = profil;
 	}
 
-	public void setProfilbearbeitung(
-			ProfilbearbeitungController profilbearbeitung) {
+	public void setProfilbearbeitung(ProfilbearbeitungController profilbearbeitung) {
 		this.profilbearbeitung = profilbearbeitung;
 	}
 
@@ -66,73 +65,23 @@ public class ControllerMediator {
 	public void beenden() {
 		if (codingsession != null)
 			codingsession.beenden();
-		hauptfenster.hauptfensterThread.interrupt();;
+		hauptfenster.hauptfensterThread.interrupt();
 	}
 
 	public void einladungAngenommen() {
-		hauptfenster.neueCodingSession(false,KommunikationIncoming.getEinladung());
+		hauptfenster.neueCodingSession(false, KommunikationIncoming.getEinladung());
 	}
 
 	public void changeCodingSession(CodingSessionModell cmod) {
-		hauptfenster.neueCodingSession(false,cmod);
+		hauptfenster.neueCodingSession(false, cmod);
 	}
-	
-	public void einladen(String email){
+
+	public void einladen(String email) {
 		codingsession.sendeEinladung(email);
 	}
-	
-	public void neuesHauptfenster(){
-		try{
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
-			Parent root = (Parent) loader.load();
-			Stage stage = new Stage();
-			Scene scene = new Scene(root);		
-			stage.setScene(scene);
-		    stage.setMaximized(true); 
-		    
-		    stage.setOnCloseRequest(e -> {
-		    	e.consume();
-		    	new CodingSessionDialog().erstelleAbmeldeDialog();
-		    });
-		    
-			stage.show();
-		} catch(IOException e){
-			e.printStackTrace();
-		}
-	}
-	
-	public void neueLoginMaske(){
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/login.fxml"));
-			Parent root = (Parent) loader.load();
-			Stage stage = new Stage();
-			Scene scene = new Scene(root);
-			stage.setTitle("Login");
-			stage.setScene(scene);
-			stage.setResizable(false);
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void neueRegistrierungsMaske(){
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/registrierung.fxml"));
-			Parent root = (Parent) loader.load();
-			Stage stage = new Stage();
-			Scene scene = new Scene(root);
-			stage.setTitle("Registrierung");
-			stage.setScene(scene);
-			stage.setResizable(false);
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
+
 	public void neueCodingSession() {
-		hauptfenster.neueCodingSession(true,null);
+		hauptfenster.neueCodingSession(true, null);
 	}
 
 	public void neueFreundeSuche() {
@@ -146,7 +95,7 @@ public class ControllerMediator {
 	public void neuesProfil() {
 		hauptfenster.neuesProfil();
 	}
-	
+
 	public void schliesseCodingSession() {
 		hauptfenster.schliesseCodingSession();
 	}

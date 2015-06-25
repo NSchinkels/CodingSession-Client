@@ -146,6 +146,11 @@ public class KommunikationIncoming {
 	}
 
 	public void beenden() {
+		try{
+		topsubEinladung.close();
+		topsubCode.close();
+		tobsubChat.close();
+		}catch(Exception e){}
 		kommunikationStart.beenden();
 	}
 }

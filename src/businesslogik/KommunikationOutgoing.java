@@ -15,13 +15,14 @@ public class KommunikationOutgoing {
 	Session session;
 	String benutzerId;
 
-	public KommunikationOutgoing(String benutzerId,KommunikationStart kommunikationStart) {
-		this.session=kommunikationStart.getSession();
-		this.benutzerId=benutzerId;
-		this.kommunikationStart=kommunikationStart;
+	public KommunikationOutgoing(String benutzerId, KommunikationStart kommunikationStart) {
+		this.session = kommunikationStart.getSession();
+		this.benutzerId = benutzerId;
+		this.kommunikationStart = kommunikationStart;
 
 	}
-	public void starteCs(String topic){
+
+	public void starteCs(String topic) {
 		System.out.println(session.toString());
 		try {
 			kommunikationStart.setTopicCode(session.createTopic(topic));
@@ -30,9 +31,10 @@ public class KommunikationOutgoing {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	public void starteChat(String topic){
+
+	public void starteChat(String topic) {
 		try {
 			kommunikationStart.setTopicChat(session.createTopic(topic));
 			producerChat = session.createProducer(kommunikationStart.getTopicChat());
@@ -40,35 +42,33 @@ public class KommunikationOutgoing {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
 
 	public void veroeffentlicheCode(String nachricht) {
 		// code an topic geschrieben
 		try {
 			textMessage = session.createTextMessage(nachricht);
-			textMessage.setStringProperty("sender",benutzerId);
+			textMessage.setStringProperty("sender", benutzerId);
 			producerCode.send(textMessage);
-			System.out.println("Code veröffentlicht von "+benutzerId);
+			System.out.println("Code veröffentlicht von " + benutzerId);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
+
 	public void veroeffentlicheChat(String nachricht, String sender) {
 		// code an topic geschrieben
 		try {
 			textMessage = session.createTextMessage(nachricht);
-			textMessage.setStringProperty("sender",sender);
+			textMessage.setStringProperty("sender", sender);
 			producerChat.send(textMessage);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
 
 	public void ladeEin(CodingSessionModell cs, String freundEmail) {
 		try {
@@ -82,5 +82,12 @@ public class KommunikationOutgoing {
 		}
 
 	}
-	
+
+	public void beenden() {
+		try {
+			producerCode.close();
+			producerChat.close();
+		} catch (Exception e) {}
+	}
+
 }

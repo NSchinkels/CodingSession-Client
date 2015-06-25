@@ -25,26 +25,23 @@ public class KommunikationStart {
 	TopicSubscriber topsubEinladung;
 	String benutzerId;
 
-	
 	public KommunikationStart(String benutzerId) {
-		this.benutzerId=benutzerId;
+		this.benutzerId = benutzerId;
 		try {
 			connectionFactory = new ActiveMQConnectionFactory();
 			connectionFactory.setBrokerURL("tcp://84.200.247.147:61616");
 			connection = connectionFactory.createConnection();
-			connection.setClientID("Benutzer: "+benutzerId);
+			connection.setClientID("Benutzer: " + benutzerId);
 			connection.start();
-			session = connection.createSession(false,
-					Session.AUTO_ACKNOWLEDGE);
+			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			topicEinladung = session.createTopic("Einladung");
 			producerEinladung = session.createProducer(topicEinladung);
 			producerEinladung.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
-			topsubEinladung = session.createDurableSubscriber(topicEinladung,benutzerId);
+			topsubEinladung = session.createDurableSubscriber(topicEinladung, benutzerId);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public void beenden() {
 		try {
@@ -54,7 +51,7 @@ public class KommunikationStart {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	public Session getSession() {
 		return session;
 	}
@@ -62,6 +59,7 @@ public class KommunikationStart {
 	public void setSession(Session session) {
 		this.session = session;
 	}
+
 	public MessageProducer getProducerEinladung() {
 		return producerEinladung;
 	}

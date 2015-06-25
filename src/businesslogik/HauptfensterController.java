@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import Persistence.Datenhaltung;
 import Persistence.PersistenzException;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -102,6 +103,12 @@ public class HauptfensterController implements Initializable {
 		}
 		if (dialog) {
 			codingSessionModell = new CodingSessionDialog().erstelleStartDialog();
+			try {
+				Datenhaltung.schreibeCS(codingSessionModell);
+			} catch (PersistenzException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		codingSessionController = null;
 		try {

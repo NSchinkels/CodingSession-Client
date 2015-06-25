@@ -192,6 +192,7 @@ public class CodingSessionController implements Initializable {
 
 	public void beenden() {
 		codingSessionThread.interrupt();
+		kommunikationOut.beenden();
 		kommunikationIn.beenden();
 	}
 
