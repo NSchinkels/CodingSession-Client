@@ -175,6 +175,71 @@ public class CodingSessionDialog {
 		alert.showAndWait();
 	}
 	
+	public void erstelleGeburtsortValidierungDialog() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültiger Geburtsort");
+		alert.setHeaderText(null);
+		alert.setContentText("Bitte gebe einen gültigen Geburtsort ein!");
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	} 
+	
+	public void erstelleWohnortValidierungDialog() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültiger Wohnort");
+		alert.setHeaderText(null);
+		alert.setContentText("Bitte gebe einen gültigen Wohnort ein!");
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	} 
+	
+	public void erstelleAktuellerJobValidierungDialog() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültiger Job");
+		alert.setHeaderText(null);
+		alert.setContentText("Bitte gebe einen gültigen aktuellen Job ein!");
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	} 
+	
+	public void erstelleProgrammierkenntnisseValidierungDialog() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültige Programmierkenntnisse");
+		alert.setHeaderText(null);
+		alert.setContentText("Bitte gebe nur gültige Programmiersprachen ein!");
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
+	
+	public void erstelleGeburtsdatumValidierungDialog() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültiges Geburtsdatum");
+		alert.setHeaderText(null);
+		alert.setContentText("Bitte gebe ein gültiges Geburtsdatum ein!");
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
+	
 	public void erstellePasswoerterWiderspruchDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Ungültiges Passwort");
@@ -266,6 +331,7 @@ public class CodingSessionDialog {
 
 		alert.showAndWait();
 	}
+	
 	public void erstelleFehlerMeldung(String meldung){
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Fehler");

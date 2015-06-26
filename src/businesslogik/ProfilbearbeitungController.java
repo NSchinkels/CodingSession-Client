@@ -18,15 +18,15 @@ import Persistence.PersistenzException;
 public class ProfilbearbeitungController implements Initializable{
 
 	//Regulaere Ausdruecke fuer die Eingabevalidierung
-	private final String vornameRegex = "^$|[a-zA-Z]{3,20}";
-	private final String nachnameRegex = "^$|[a-zA-Z]{3,20}";
-	private final String nicknameRegex = "^$|[a-zA-Z][\\w_-]{3,25}";
-	private final String geburtsdatumRegex = "$|";
-	private final String geburtsortRegex= "^$|[a-zA-Z-\\s]{3,20}";
-	private final String wohnortRegex = "^$|[a-zA-Z-\\s]{3,20}";
-	private final String aktuellerJobRegex = "^$|[a-zA-Z\\s]{3,100}";
-	private final String pKenntnisseRegex = "^$|[a-zA-Z0-9#+-/.,!\\s]{3,100}";
-	private final String passwortRegex = "^$|[a-zA-Z0-9!§$%&/()=?@#^+-_*~'\"\\s]{8,25}";
+	private final String vornameRegex = "^[a-zA-Z]{3,20}$";
+	private final String nachnameRegex = "^[a-zA-Z]{3,20}$";
+	private final String nicknameRegex = "^[a-zA-Z][\\w_-]{3,25}$";
+	private final String geburtsdatumRegex = "^([01][0-9]).([01][0-9]).([12][089][0-9][0-9])$";
+	private final String geburtsortRegex= "^[a-zA-Z-\\s]{3,20}$";
+	private final String wohnortRegex = "^[a-zA-Z-\\s]{3,20}$";
+	private final String aktuellerJobRegex = "^[a-zA-Z\\s]{3,100}$";
+	private final String pkenntnisseRegex = "^[a-zA-Z0-9#+-/.,!\\s]{3,100}$";
+	private final String passwortRegex = "^[a-zA-Z0-9!§$%&/()=?@#^+-_*~'\"\\s]{8,25}$";
 	
 	ProfilModell profilModell = new ProfilModell();
 	Benutzerkonto benutzerkonto = ControllerMediator.getInstance().getBenutzerkonto();
@@ -100,6 +100,7 @@ public class ProfilbearbeitungController implements Initializable{
 		new CodingSessionDialog().erstelleAbmeldeDialog();
 	}
 	
+	//Wenn Zeit uebrig bleibt, mach ich das noch schoener.
 	@FXML
 	public void aenderungenSpeichernGeklickt(ActionEvent event){
 		try {
@@ -109,47 +110,89 @@ public class ProfilbearbeitungController implements Initializable{
 		}
 		
 		if(benutzerkonto instanceof BenutzerkontoRealname) {
-			if(!istLeer(txtVorname.getText()) && !istLeer(txtNachname.getText())) {
-				benutzerkonto.setVorname(txtVorname.getText());
-				benutzerkonto.setNachname(txtNachname.getText());
+			if(!istLeer(txtVorname.getText())) {
+				if(txtVorname.getText().matches(vornameRegex)) {
+					benutzerkonto.setVorname(txtVorname.getText());
+				} else {
+					new CodingSessionDialog().erstelleVornameValidierungDialog();
+				}
+			}
+			
+			if(!istLeer(txtNachname.getText())) {
+				if(txtNachname.getText().matches(nachnameRegex)) {
+					benutzerkonto.setNachname(txtNachname.getText());
+				} else {
+					new CodingSessionDialog().erstelleNachnameValidierungDialog();
+				}
 			}
 		} else {
 			if(!istLeer(txtNickname.getText())) {
-				benutzerkonto.setNickname(txtNickname.getText());
+				if(txtNickname.getText().matches(nicknameRegex)) {
+					benutzerkonto.setNickname(txtNickname.getText());
+				} else {
+					new CodingSessionDialog().erstelleNicknameValidierungDialog();
+				}
 			}
 		}
 		
-		if(!istLeer(choiceBox.getValue())){
+		if(choiceBox.getValue() != null){
 			profilModell.setGeschlecht(choiceBox.getValue());
 		}
 
-		if(!istLeer(txtGeburtsdatum.getText())){
-			profilModell.setGeburtsdatum(txtGeburtsdatum.getText());
+		if(!istLeer(txtGeburtsdatum.getText())) {
+			if(txtGeburtsdatum.getText().matches(geburtsdatumRegex)) {
+				profilModell.setGeburtsdatum(txtGeburtsdatum.getText());
+			} else {
+				new CodingSessionDialog().erstelleGeburtsdatumValidierungDialog();
+			}	
 		}
 		
-		if(!istLeer(txtGeburtsort.getText())){
-			profilModell.setGeburtsort(txtGeburtsort.getText());
+		if(!istLeer(txtGeburtsort.getText())) {
+			if(txtGeburtsort.getText().matches(geburtsortRegex)) {
+				profilModell.setGeburtsort(txtGeburtsort.getText());
+			} else {
+				new CodingSessionDialog().erstelleGeburtsortValidierungDialog();
+			}
 		}
 		
-		if(!istLeer(txtWohnort.getText())){
-			profilModell.setWohnort(txtWohnort.getText());
+		if(!istLeer(txtWohnort.getText())) {
+			if(txtWohnort.getText().matches(wohnortRegex)) {
+				profilModell.setWohnort(txtWohnort.getText());
+			} else {
+				new CodingSessionDialog().erstelleWohnortValidierungDialog();
+			}
 		}
 		
-		if(!istLeer(txtAktuellerJob.getText())){
-			profilModell.setAktuellerJob(txtAktuellerJob.getText());
+		if(!istLeer(txtAktuellerJob.getText())) {
+			if(txtAktuellerJob.getText().matches(aktuellerJobRegex)) {
+				profilModell.setAktuellerJob(txtAktuellerJob.getText());
+			} else {
+				new CodingSessionDialog().erstelleAktuellerJobValidierungDialog();
+			}		
 		}
 
-		if(!istLeer(txtProgrammierkenntnisse.getText())){
-			profilModell.setProgrammierkenntnisse(txtProgrammierkenntnisse.getText());
+		if(!istLeer(txtProgrammierkenntnisse.getText())) {
+			if(txtProgrammierkenntnisse.getText().matches(pkenntnisseRegex)) {
+				profilModell.setProgrammierkenntnisse(txtProgrammierkenntnisse.getText());
+			} else {
+				new CodingSessionDialog().erstelleProgrammierkenntnisseValidierungDialog();
+			}
+			
 		}
 		
-		if(!istLeer(pwdAltesPasswort.getText()) && !istLeer(pwdNeuesPasswort.getText()) && !istLeer(pwdPasswortBestaetigung.getText())) {
+		if(!istLeer(pwdAltesPasswort.getText()) && !istLeer(pwdNeuesPasswort.getText()) && 
+		   !istLeer(pwdPasswortBestaetigung.getText())) {
 			if(benutzerkonto.getPasswort().equals(pwdAltesPasswort.getText())) {
-				if(pwdNeuesPasswort.getText().equals(pwdPasswortBestaetigung.getText())){
-					benutzerkonto.setPasswort(pwdNeuesPasswort.getText());
+				if(pwdNeuesPasswort.getText().matches(passwortRegex) && 
+				   pwdPasswortBestaetigung.getText().matches(passwortRegex)) {
+					if(pwdNeuesPasswort.getText().equals(pwdPasswortBestaetigung.getText())) {
+						benutzerkonto.setPasswort(pwdNeuesPasswort.getText());
+					} else {
+						new CodingSessionDialog().erstellePasswoerterWiderspruchDialog();
+					}
 				} else {
-					new CodingSessionDialog().erstellePasswoerterWiderspruchDialog();
-				}
+					new CodingSessionDialog().erstellePasswortValidierungDialog();
+				}		
 			} else {
 				new CodingSessionDialog().erstelleAltesPasswortValidierungDialog();
 			}
@@ -164,7 +207,7 @@ public class ProfilbearbeitungController implements Initializable{
 	}
 	
 	@FXML
-	public void zurueckZumProfilGeklickt(ActionEvent event){
+	public void zurueckZumProfilGeklickt(ActionEvent event) {
 		ControllerMediator.getInstance().neuesProfil();
 	}
 	
