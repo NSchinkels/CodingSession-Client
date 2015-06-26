@@ -22,12 +22,15 @@ import javafx.scene.input.MouseEvent;
 
 public class ProfilController implements Initializable {
 
+	//Regulaerer Ausdruck fuer die Freunde-Suche
+	private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+"
+		    								+ "(\\.[A-Za-z0-9]+)*(\\-[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	
 	ProfilbearbeitungController bearbeitung;
 	Benutzerkonto benutzerkonto;
 	ProfilModell profilModell = new ProfilModell();
 	List<String> freundesliste;
 	ObservableList<String> freundeslisteItems;
-	
 
 	@FXML
 	private Label lblBenutzername;
@@ -74,7 +77,6 @@ public class ProfilController implements Initializable {
 		freundeslisteItems=listViewFreunde.getItems();
 		for(String e:freundesliste){
 			freundeslisteItems.add(e);
-			System.out.println(e);
 		}
 
 		lblBenutzername.setText(benutzerkonto.getName());
@@ -104,6 +106,14 @@ public class ProfilController implements Initializable {
 					if (mouseEvent.getClickCount() == 3) {
 						ControllerMediator.getInstance().einladen(listViewFreunde.getSelectionModel().getSelectedItem());
 					}
+					if (mouseEvent.getClickCount() == 2) {
+						try {
+							System.out.println(Datenhaltung.leseProfil(listViewFreunde.getSelectionModel().getSelectedItem()));
+						} catch (PersistenzException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 		});
@@ -121,11 +131,6 @@ public class ProfilController implements Initializable {
 	}
 
 	@FXML
-	public void impressumGeklickt(ActionEvent event) {
-
-	}
-
-	@FXML
 	public void profilBearbeitenGeklickt(ActionEvent event) {
 		ControllerMediator.getInstance().neueProfilbearbeitung();
 	}
@@ -133,13 +138,17 @@ public class ProfilController implements Initializable {
 	@FXML
 	public void txtSucheFreundeGeklickt(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
-			benutzerkonto.addFreund(txtSucheFreunde.getText());
-			freundeslisteItems.add(txtSucheFreunde.getText());
-			try {
-				Datenhaltung.schreibeDB((BenutzerkontoOriginal)(benutzerkonto));
-			} catch (PersistenzException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(txtSucheFreunde.getText().matches(EMAIL_REGEX)){
+				benutzerkonto.addFreund(txtSucheFreunde.getText());
+				freundeslisteItems.add(txtSucheFreunde.getText());
+				try {
+					Datenhaltung.schreibeDB((BenutzerkontoOriginal)(benutzerkonto));
+				} catch (PersistenzException e) {
+					e.printStackTrace();
+				}
+			} else {
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültige E-Mail-Adresse", 
+						"Bitte gebe eine gültige E-Mail-Adresse ein!");
 			}
 		}
 	}
