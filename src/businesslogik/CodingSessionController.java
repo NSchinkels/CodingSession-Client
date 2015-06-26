@@ -147,12 +147,12 @@ public class CodingSessionController implements Initializable {
 								if (!netCode.equals(code)) {
 									// Code wird aktualisert und angezeigt
 									code = netCode;
-									CodingSessionController.this.aktualisiereCode(txtCodingSession.getText(),false);
+									CodingSessionController.this.aktualisiereCode(txtCodingSession.getText(), false);
 								}
 							} else {
 								// kein neuer Code da eigenen Code aus dem
 								// Fenster an das JMS schreiben
-								CodingSessionController.this.aktualisiereCode(txtCodingSession.getText(),true);
+								CodingSessionController.this.aktualisiereCode(txtCodingSession.getText(), true);
 							}
 						}
 						// Wenn es neue Nachrichten gibt wird das Chat Fenster
@@ -247,6 +247,7 @@ public class CodingSessionController implements Initializable {
 	 * CommunityFeed gesendet
 	 * 
 	 * @param event
+	 *            wird nicht benutzt
 	 */
 
 	@FXML
@@ -260,6 +261,7 @@ public class CodingSessionController implements Initializable {
 	 * genug ist
 	 * 
 	 * @param benutzerEmail
+	 *            Die uebergebene Email wird gespeichert
 	 * @return
 	 */
 	public boolean addTeilnehmer(String benutzerEmail) {
@@ -283,7 +285,7 @@ public class CodingSessionController implements Initializable {
 
 	public void aktualisiereCode(String neuerCode, boolean selbst) {
 		if (!neuerCode.equals(netCode)) {
-		code = neuerCode;
+			code = neuerCode;
 		}
 		if (selbst) {
 			kommunikationOut.veroeffentlicheCode(code);
@@ -311,8 +313,6 @@ public class CodingSessionController implements Initializable {
 		codingSessionThread.interrupt();
 	}
 
-	
-
 	/**
 	 * Ein Benutzer wird uber seine Id eingeladen
 	 * 
@@ -328,7 +328,7 @@ public class CodingSessionController implements Initializable {
 	/**
 	 * Die CodingSession wird in der DB persistiert
 	 */
-	
+
 	public void speichern() {
 		try {
 			Persistence.Datenhaltung.schreibeCS(codingSessionModell);

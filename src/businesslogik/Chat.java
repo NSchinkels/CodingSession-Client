@@ -8,6 +8,12 @@ import javax.persistence.*;
 import Persistence.Datenhaltung;
 import Persistence.PersistenzException;
 
+/**
+ * 
+ * Eine einfache Chat Klasse fuer den Austausch zwischen Benutzern. Benutzt fuer
+ * den Austausch JMS Objekte
+ *
+ */
 @Entity
 @Table(name = "Chat")
 public class Chat {
@@ -28,17 +34,24 @@ public class Chat {
 		this.verlauf = new LinkedList<String>();
 	}
 
-	public Chat(KommunikationOutgoing kommunikationOut,
-			KommunikationIncoming kommunikationIn, String sender, int id) {
+	public Chat(KommunikationOutgoing kommunikationOut, KommunikationIncoming kommunikationIn, String sender, int id) {
 		this.id = id;
 		this.verlauf = new LinkedList<String>();
 		this.kommunikationOut = kommunikationOut;
 		this.kommunikationIn = kommunikationIn;
 		this.sender = sender;
+		// Startet das JMS Topic fure den Chat als Producer
 		kommunikationOut.starteChat("Chat" + id);
+		// Startet das JMS Topic als Subscriber
 		kommunikationIn.bekommeChat(id, verlauf);
 	}
 
+	/**
+	 * Schreibt eine Nachricht an das Chat Topic
+	 * 
+	 * @param nachricht
+	 *            Die zu schreibende Nachricht
+	 */
 	public void senden(String nachricht) {
 		kommunikationOut.veroeffentlicheChat(nachricht, sender);
 	}
@@ -56,14 +69,18 @@ public class Chat {
 	public List<String> empfangen() {
 		return this.verlauf;
 	}
-	
-	public void speichern(){
-			try {
-				Datenhaltung.schreibeChat(this);
-			} catch (PersistenzException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+	/**
+	 * Schreibt den Chat an die Datenbank
+	 */
+
+	public void speichern() {
+		try {
+			Datenhaltung.schreibeChat(this);
+		} catch (PersistenzException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String getSender() {
@@ -89,10 +106,17 @@ public class Chat {
 	public int getId() {
 		return this.id;
 	}
-	public String getChat(){
-		String c="";
-		for(String a:verlauf){
-			c+=a;
+
+	/**
+	 * 
+	 * @return Der komplette formatierte Chat wird returned
+	 * 
+	 */
+
+	public String getChat() {
+		String c = "";
+		for (String a : verlauf) {
+			c += a;
 		}
 		return c;
 	}
