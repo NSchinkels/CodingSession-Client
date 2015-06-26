@@ -215,7 +215,7 @@ public class CodingSessionController implements Initializable {
 
 	@FXML
 	public void codingSessionSchliessenGeklickt(ActionEvent event) {
-		new CodingSessionDialog().erstelleEndDialog();
+		new CodingSessionDialog().erstelleCsSchliessenDialog();
 	}
 
 	/**

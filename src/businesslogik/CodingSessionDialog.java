@@ -17,66 +17,6 @@ import javafx.scene.layout.GridPane;
 public class CodingSessionDialog {
 	private TextField txtTitel;
 
-	/**
-	 * Erstellt ein Dialog
-	 */
-	public CodingSessionModell erstelleStartDialog() {
-		Dialog<CodingSessionModell> dialog = new Dialog<>();
-		dialog.setTitle("CodingSession starten");
-		dialog.setHeaderText(null);
-
-		txtTitel = new TextField();
-		txtTitel.setPromptText("Titel der CodingSession");
-
-		Label lblTitel = new Label("Titel: ");
-		Label lblSpeichern = new Label("Soll die nachfolgende CodingSession in Zukunft gespeichert werden?");
-
-		GridPane grid = new GridPane();
-		grid.add(lblTitel, 1, 1);
-		grid.add(txtTitel, 2, 1);
-		grid.add(lblSpeichern, 1, 2);
-		dialog.getDialogPane().setContent(grid);
-
-		ButtonType jaButtonType = new ButtonType("Ja", ButtonData.YES);
-		ButtonType neinButtonType = new ButtonType("Nein", ButtonData.NO);
-		ButtonType abbrechenButtonType = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
-		dialog.getDialogPane().getButtonTypes().addAll(jaButtonType, neinButtonType, abbrechenButtonType);
-		dialog.getDialogPane().getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-
-		dialog.setResultConverter(dialogButton -> {
-			if (dialogButton == jaButtonType) {
-				return new CodingSessionModell((int) (Math.random() * 10000), ControllerMediator.getInstance().getBenutzerkonto().getEmail(), txtTitel.getText(), true, "Hier bitte Code eingeben");
-			} else if (dialogButton == neinButtonType) {
-				return new CodingSessionModell((int) (Math.random() * 10000), ControllerMediator.getInstance().getBenutzerkonto().getEmail(), txtTitel.getText(), false, "Hier bitte Code eingeben");
-			}
-			return null;
-		});
-
-		return dialog.showAndWait().get();
-	}
-
-	/**
-	 * Erstellt ein Dialog
-	 */
-	public void erstelleEndDialog() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("CodingSession schliessen");
-		alert.setHeaderText(null);
-		alert.setContentText("Willst du die CodingSession wirklich schließen?\n" + "Alle nicht gespeicherten Änderungen gehen verloren.");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
-			ControllerMediator.getInstance().schliesseCodingSession();
-		} else {
-			// Falls der Benutzer den Button Abbrechen klickt, schliesst der
-			// Dialog
-		}
-	}
-
 	public void erstelleAbmeldeDialog() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("CodingSession schliessen");
@@ -97,112 +37,6 @@ public class CodingSessionDialog {
 		}
 	}
 	
-	public void erstelleGeburtsortValidierungDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültiger Geburtsort");
-		alert.setHeaderText(null);
-		alert.setContentText("Bitte gebe einen gültigen Geburtsort ein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	} 
-	
-	public void erstelleWohnortValidierungDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültiger Wohnort");
-		alert.setHeaderText(null);
-		alert.setContentText("Bitte gebe einen gültigen Wohnort ein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	} 
-	
-	public void erstelleAktuellerJobValidierungDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültiger Job");
-		alert.setHeaderText(null);
-		alert.setContentText("Bitte gebe einen gültigen aktuellen Job ein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	} 
-	
-	public void erstelleProgrammierkenntnisseValidierungDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültige Programmierkenntnisse");
-		alert.setHeaderText(null);
-		alert.setContentText("Bitte gebe nur gültige Programmiersprachen ein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	}
-	
-	public void erstelleGeburtsdatumValidierungDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültiges Geburtsdatum");
-		alert.setHeaderText(null);
-		alert.setContentText("Bitte gebe ein gültiges Geburtsdatum ein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	}
-	
-	public void erstellePasswoerterWiderspruchDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültiges Passwort");
-		alert.setHeaderText(null);
-		alert.setContentText("Die eingegebenen neuen Passwörter stimmen nicht überein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	}
-	
-	public void erstelleEmailVorhandenDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültige E-Mail-Adresse");
-		alert.setHeaderText(null);
-		alert.setContentText("Die von dir eingegebene E-Mail-Adresse ist bereits vergeben!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	}
-
-	public void erstelleEinladungDialog(String email) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Einladung");
-		alert.setHeaderText("Einladung erhalten");
-		alert.setContentText("Sie haben eine Einladung vom Benutzer " + email + " erhalten");
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
-			ControllerMediator.getInstance().einladungAngenommen();
-			;
-		}
-	}
-
 	public void erstelleCfBeitragHinzufuegenDialog(CodingSessionModell codingSessionModell) {
 		Dialog<Beitrag> dialog = new Dialog<>();
 		dialog.setTitle("CodingSession teilen");
@@ -240,18 +74,80 @@ public class CodingSessionDialog {
 
 		ControllerMediator.getInstance().addCommunityFeed(dialog.showAndWait().get());
 	}
-
-	public void erstellePersistenzExceptionDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Datenbank-Fehler");
+	
+	/**
+	 * Erstellt ein Dialog
+	 */
+	public void erstelleCsSchliessenDialog() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("CodingSession schliessen");
 		alert.setHeaderText(null);
-		alert.setContentText("Ups, da stimmt wohl etwas mit der Datenbank nicht!");
+		alert.setContentText("Willst du die CodingSession wirklich schließen?\n" + "Alle nicht gespeicherten Änderungen gehen verloren.");
 
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog");
 
-		alert.showAndWait();
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			ControllerMediator.getInstance().schliesseCodingSession();
+		} else {
+			// Falls der Benutzer den Button Abbrechen klickt, schliesst der
+			// Dialog
+		}
+	}
+	
+	/**
+	 * Erstellt ein Dialog
+	 */
+	public CodingSessionModell erstelleCsStartenDialog() {
+		Dialog<CodingSessionModell> dialog = new Dialog<>();
+		dialog.setTitle("CodingSession starten");
+		dialog.setHeaderText(null);
+
+		txtTitel = new TextField();
+		txtTitel.setPromptText("Titel der CodingSession");
+
+		Label lblTitel = new Label("Titel: ");
+		Label lblSpeichern = new Label("Soll die nachfolgende CodingSession in Zukunft gespeichert werden?");
+
+		GridPane grid = new GridPane();
+		grid.add(lblTitel, 1, 1);
+		grid.add(txtTitel, 2, 1);
+		grid.add(lblSpeichern, 1, 2);
+		dialog.getDialogPane().setContent(grid);
+
+		ButtonType jaButtonType = new ButtonType("Ja", ButtonData.YES);
+		ButtonType neinButtonType = new ButtonType("Nein", ButtonData.NO);
+		ButtonType abbrechenButtonType = new ButtonType("Abbrechen", ButtonData.CANCEL_CLOSE);
+		dialog.getDialogPane().getButtonTypes().addAll(jaButtonType, neinButtonType, abbrechenButtonType);
+		dialog.getDialogPane().getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+
+		dialog.setResultConverter(dialogButton -> {
+			if (dialogButton == jaButtonType) {
+				return new CodingSessionModell((int) (Math.random() * 10000), ControllerMediator.getInstance().getBenutzerkonto().getEmail(), txtTitel.getText(), true, "Hier bitte Code eingeben");
+			} else if (dialogButton == neinButtonType) {
+				return new CodingSessionModell((int) (Math.random() * 10000), ControllerMediator.getInstance().getBenutzerkonto().getEmail(), txtTitel.getText(), false, "Hier bitte Code eingeben");
+			}
+			return null;
+		});
+
+		return dialog.showAndWait().get();
+	}
+	
+	public void erstelleEinladungDialog(String email) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Einladung");
+		alert.setHeaderText("Einladung erhalten");
+		alert.setContentText("Sie haben eine Einladung vom Benutzer " + email + " erhalten");
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			ControllerMediator.getInstance().einladungAngenommen();
+			;
+		}
 	}
 	
 	public void erstelleFehlermeldungDialog(String ueberschrift, String fehler){

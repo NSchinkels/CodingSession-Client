@@ -135,7 +135,8 @@ public class RegistrierungController implements Initializable {
 				Datenhaltung.schreibeProfil(profilModell);
 			} catch (PersistenzException e) {
 				//Das fenster wird bis jetzt immer aufgerufen. Siehe Datenhaltung Zeile 202
-				new CodingSessionDialog().erstellePersistenzExceptionDialog();
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Datenbank-Fehler", 
+						"Ups, da stimmt wohl etwas mit der Datenbank nicht!");
 			}
 
 		} else if (choiceBox.getValue().equals("Nickname") && BenutzerkontoGeschuetzt.ueberpruefeNick(txtNickname.getText(), 
@@ -152,7 +153,8 @@ public class RegistrierungController implements Initializable {
 				Datenhaltung.schreibeProfil(profilModell);
 			} catch (PersistenzException e) {
 				//Das fenster wird bis jetzt immer aufgerufen. Siehe Datenhaltung Zeile 202
-				new CodingSessionDialog().erstellePersistenzExceptionDialog();
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Datenbank-Fehler", 
+						"Ups, da stimmt wohl etwas mit der Datenbank nicht!");
 			}
 		}
 

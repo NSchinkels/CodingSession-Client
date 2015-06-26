@@ -61,9 +61,11 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 			echtesKonto = new BenutzerkontoNickname(email, pw, name, id);
 			Datenhaltung.schreibeDB(echtesKonto);
 		} catch (EmailVorhandenException ev) {
-			new CodingSessionDialog().erstelleEmailVorhandenDialog();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültige E-Mail-Adresse", 
+					"Die von dir eingegebene E-Mail-Adresse ist bereits vergeben!");
 		} catch (PersistenzException pe) {
-			new CodingSessionDialog().erstellePersistenzExceptionDialog();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Datenbank-Fehler", 
+					"Ups, da stimmt wohl etwas mit der Datenbank nicht!");
 		}
 	}
 	
@@ -78,9 +80,11 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 			echtesKonto = new BenutzerkontoRealname(email, pw, vor, nach, id);
 			Datenhaltung.schreibeDB(echtesKonto);
 		} catch (EmailVorhandenException ev) {
-			new CodingSessionDialog().erstelleEmailVorhandenDialog();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültige E-Mail-Adresse", 
+					"Die von dir eingegebene E-Mail-Adresse ist bereits vergeben!");
 		} catch (PersistenzException pe) {
-			new CodingSessionDialog().erstellePersistenzExceptionDialog();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Datenbank-Fehler", 
+					"Ups, da stimmt wohl etwas mit der Datenbank nicht!");
 		}
 	}
 	

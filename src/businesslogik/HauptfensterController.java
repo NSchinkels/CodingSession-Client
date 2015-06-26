@@ -67,7 +67,7 @@ public class HauptfensterController implements Initializable {
 			schliesseCodingSession();
 		}
 		if (dialog) {
-			codingSessionModell = new CodingSessionDialog().erstelleStartDialog();
+			codingSessionModell = new CodingSessionDialog().erstelleCsStartenDialog();
 			if (codingSessionModell.isSpeichern()) {
 				try {
 					Datenhaltung.schreibeCS(codingSessionModell);
@@ -95,7 +95,7 @@ public class HauptfensterController implements Initializable {
 				@Override
 				public void handle(Event event) {
 					event.consume();
-					new CodingSessionDialog().erstelleEndDialog();
+					new CodingSessionDialog().erstelleCsSchliessenDialog();
 				}
 			});
 

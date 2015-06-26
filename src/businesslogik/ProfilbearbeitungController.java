@@ -146,7 +146,8 @@ public class ProfilbearbeitungController implements Initializable{
 			if(txtGeburtsdatum.getText().matches(geburtsdatumRegex)) {
 				profilModell.setGeburtsdatum(txtGeburtsdatum.getText());
 			} else {
-				new CodingSessionDialog().erstelleGeburtsdatumValidierungDialog();
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiges Geburtsdatum", 
+						"Bitte gebe ein gültiges Geburtsdatum ein!");
 			}	
 		}
 		
@@ -154,7 +155,8 @@ public class ProfilbearbeitungController implements Initializable{
 			if(txtGeburtsort.getText().matches(geburtsortRegex)) {
 				profilModell.setGeburtsort(txtGeburtsort.getText());
 			} else {
-				new CodingSessionDialog().erstelleGeburtsortValidierungDialog();
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiger Geburtsort",
+						"Bitte gebe einen gültigen Geburtsort ein!");
 			}
 		}
 		
@@ -162,7 +164,8 @@ public class ProfilbearbeitungController implements Initializable{
 			if(txtWohnort.getText().matches(wohnortRegex)) {
 				profilModell.setWohnort(txtWohnort.getText());
 			} else {
-				new CodingSessionDialog().erstelleWohnortValidierungDialog();
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiger Wohnort", 
+						"Bitte gebe einen gültigen Wohnort ein!");
 			}
 		}
 		
@@ -170,7 +173,8 @@ public class ProfilbearbeitungController implements Initializable{
 			if(txtAktuellerJob.getText().matches(aktuellerJobRegex)) {
 				profilModell.setAktuellerJob(txtAktuellerJob.getText());
 			} else {
-				new CodingSessionDialog().erstelleAktuellerJobValidierungDialog();
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiger aktueller Job",
+						"Bitte gebe einen gültigen aktuellen Job ein!");
 			}		
 		}
 
@@ -178,7 +182,8 @@ public class ProfilbearbeitungController implements Initializable{
 			if(txtProgrammierkenntnisse.getText().matches(pkenntnisseRegex)) {
 				profilModell.setProgrammierkenntnisse(txtProgrammierkenntnisse.getText());
 			} else {
-				new CodingSessionDialog().erstelleProgrammierkenntnisseValidierungDialog();
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültige Programmierkenntnisse", 
+						"Bitte gebe nur gültige Programmiersprachen ein!");
 			}
 			
 		}
@@ -191,7 +196,8 @@ public class ProfilbearbeitungController implements Initializable{
 					if(pwdNeuesPasswort.getText().equals(pwdPasswortBestaetigung.getText())) {
 						benutzerkonto.setPasswort(pwdNeuesPasswort.getText());
 					} else {
-						new CodingSessionDialog().erstellePasswoerterWiderspruchDialog();
+						new CodingSessionDialog().erstelleFehlermeldungDialog("Passwort Widerspruch", 
+								"Die eingegebenen neuen Passwörter stimmen nicht überein!");
 					}
 				} else {
 					new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiges Passwort", 
