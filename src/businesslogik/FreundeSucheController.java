@@ -1,6 +1,6 @@
 package businesslogik;
 
-public class FreundeSucheController {
 
+public class FreundeSucheController {
 	
 }

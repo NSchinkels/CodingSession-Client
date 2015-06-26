@@ -1,0 +1,15 @@
+ALTER TABLE Beitrag DROP CONSTRAINT BitragbenutzerMail
+ALTER TABLE BenutzerkontoOriginal_FREUND DROP CONSTRAINT BntzrkntrgnlMLDRSS
+ALTER TABLE Chat_VERLAUF DROP CONSTRAINT ChatVERLAUFChat_ID
+ALTER TABLE CommunityFeedController_Beitrag DROP CONSTRAINT CmCmmntyFdCntrllrD
+ALTER TABLE CommunityFeedController_Beitrag DROP CONSTRAINT CmmntyFdCntrlbtrgD
+DROP TABLE Benutzer_Herachie
+DROP TABLE Chat
+DROP TABLE CodingSessionModell
+DROP TABLE Beitrag
+DROP TABLE CommunityFeedController
+DROP TABLE ProfilModell
+DROP TABLE BenutzerkontoOriginal_FREUND
+DROP TABLE Chat_VERLAUF
+DROP TABLE CommunityFeedController_Beitrag
+DELETE FROM SEQUENCE WHERE SEQ_NAME = 'SEQ_GEN'

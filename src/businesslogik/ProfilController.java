@@ -87,7 +87,7 @@ public class ProfilController implements Initializable {
 		this.freunde = ControllerMediator.getInstance().getBenutzerkonto().getFreunde();
 		ObservableList<String> items = listFreunde.getItems();
 		items.add("testmail@me.org");
-
+		
 		for (String b : freunde) {
 			items.add(b);
 		}
