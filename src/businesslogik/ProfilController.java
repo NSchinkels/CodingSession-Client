@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -24,8 +25,11 @@ public class ProfilController implements Initializable {
 	ProfilbearbeitungController bearbeitung;
 
 	ProfilModell profilModell = new ProfilModell();
+	
+	Benutzerkonto benutzerkonto = ControllerMediator.getInstance().getBenutzerkonto();
 
-	List<String> freunde;
+	List<String> freundesliste = benutzerkonto.getFreunde();
+	ObservableList<String> freundeslisteItems;
 
 	@FXML
 	private Label lblBenutzername;
@@ -49,21 +53,24 @@ public class ProfilController implements Initializable {
 	private Label lblProgrammierkenntnisse;
 
 	@FXML
-	ListView<String> listFreunde;
+	private ListView<String> listViewFreunde;
+	
+	@FXML
+	private TextField txtSucheFreunde;
 
 	public ProfilController() {
-		freunde = new LinkedList<String>();
+		freundesliste = new LinkedList<String>();
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		try {
-			profilModell = Datenhaltung.leseProfil(ControllerMediator.getInstance().getBenutzerkonto().getEmail());
+			profilModell = Datenhaltung.leseProfil(benutzerkonto.getEmail());
 		} catch (PersistenzException e) {
 			e.printStackTrace();
 		}
 
-		lblBenutzername.setText(ControllerMediator.getInstance().getBenutzerkonto().getName());
+		lblBenutzername.setText(benutzerkonto.getName());
 
 		if (profilModell.getGeschlecht() == null && profilModell.getGeburtsdatum() == null && profilModell.getGeburtsdatum() == null && profilModell.getWohnort() == null
 				&& profilModell.getAktuellerJob() == null && profilModell.getProgrammierkenntnisse() == null) {
@@ -83,20 +90,12 @@ public class ProfilController implements Initializable {
 			lblProgrammierkenntnisse.setText(profilModell.getProgrammierkenntnisse());
 		}
 
-		this.freunde = ControllerMediator.getInstance().getBenutzerkonto().getFreunde();
-		ObservableList<String> items = listFreunde.getItems();
-		items.add("testmail@me.org");
-		
-		for (String b : freunde) {
-			items.add(b);
-		}
-
-		listFreunde.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		listViewFreunde.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 					if (mouseEvent.getClickCount() == 3) {
-						ControllerMediator.getInstance().einladen(listFreunde.getSelectionModel().getSelectedItem());
+						ControllerMediator.getInstance().einladen(listViewFreunde.getSelectionModel().getSelectedItem());
 					}
 				}
 			}
@@ -127,7 +126,9 @@ public class ProfilController implements Initializable {
 	@FXML
 	public void txtSucheFreundeGeklickt(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
-			
+			benutzerkonto.addFreund(txtSucheFreunde.getText());
+			freundeslisteItems = listViewFreunde.getItems();
+			freundeslisteItems.add(txtSucheFreunde.getText());
 		}
 	}
 

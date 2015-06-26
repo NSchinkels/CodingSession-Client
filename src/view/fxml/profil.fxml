@@ -33,7 +33,7 @@
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </HBox.margin>
             </Hyperlink>
-            <TextField onKeyPressed="#txtSucheFreundeGeklickt" promptText="Suche nach Freunden..">
+            <TextField fx:id="txtSucheFreunde" onKeyPressed="#txtSucheFreundeGeklickt" promptText="Suche nach Freunden..">
                <HBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </HBox.margin>
@@ -42,9 +42,9 @@
       </HBox>
    </top>
    <right>
-      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="318.0" prefWidth="125.0" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="318.0" prefWidth="180.0" BorderPane.alignment="CENTER">
          <content>
-            <ListView fx:id="listFreunde" />
+            <ListView fx:id="listViewFreunde" />
          </content>
       </ScrollPane>
    </right>
