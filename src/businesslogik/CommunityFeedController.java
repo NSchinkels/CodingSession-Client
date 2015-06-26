@@ -68,7 +68,7 @@ public class CommunityFeedController implements Initializable, Serializable {
 	}
 
 	/**
-	 * Der Benutzer kannsich hiermit abmelden
+	 * Der Benutzer kann sich hiermit abmelden
 	 * 
 	 * @param event
 	 */
@@ -98,19 +98,6 @@ public class CommunityFeedController implements Initializable, Serializable {
 	}
 
 	/**
-	 * Es wird nach Freunden gesucht
-	 * 
-	 * @param event
-	 */
-
-	@FXML
-	public void txtSucheFreundeGeklickt(KeyEvent event) {
-		if (event.getCode() == KeyCode.ENTER) {
-			ControllerMediator.getInstance().neueFreundeSuche();
-		}
-	}
-
-	/**
 	 * Ein neuer Beitrag wird zum CF hinzugefügt
 	 * 
 	 * @param beitrag
@@ -122,8 +109,6 @@ public class CommunityFeedController implements Initializable, Serializable {
 		try {
 			Datenhaltung.schreibeCF(this);
 		} catch (PersistenzException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
