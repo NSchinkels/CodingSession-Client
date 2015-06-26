@@ -65,10 +65,6 @@ public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Ser
 	
 	public abstract void setNickname(String nickname);
 	
-	public BenutzerkontoOriginal getBenutzerkontoOriginal(){
-		return this;
-	}
-	
 	public void addFreund(String freundEmail) {
 		if(!freund.contains(freundEmail)) {
 			freund.add(freundEmail);

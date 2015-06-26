@@ -7,9 +7,9 @@ import Persistence.*;
 
 public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	
-	//Regulaere Ausdruecke f�r die Eingabevaldierung
-	private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+$"
-										    + "^(\\.[A-Za-z0-9]+)*(\\-[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	//Regulaere Ausdruecke fuer die Eingabevaldierung
+	private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+"
+										    + "(\\.[A-Za-z0-9]+)*(\\-[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private static final String PASSWORT_REGEX = "^[a-zA-Z0-9!�$%&/()=?@#^+-_*~'\"\\s]{8,25}$";
 	private static final String VORNAME_REGEX = "^[a-zA-Z]{3,20}$";
 	private static final String NACHNAME_REGEX = "^[a-zA-Z]{3,20}$";
@@ -102,10 +102,6 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	
 	public String getName(){
 		return echtesKonto.getName();
-	}
-	
-	public BenutzerkontoOriginal getBenutzerkontoOriginal(){
-		return echtesKonto;
 	}
 	
 	public void setPasswort(String passwort){
