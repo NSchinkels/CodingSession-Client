@@ -3,6 +3,8 @@ package businesslogik;
 import java.util.LinkedList;
 import java.util.List;
 
+import javafx.application.Platform;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -30,14 +32,12 @@ public class KommunikationIncoming {
 	Session session;
 	String benutzerId;
 	boolean change;
-	Object lock;
 
-	public KommunikationIncoming(String benutzerId, KommunikationStart kommunikationStart, Object lock) {
+	public KommunikationIncoming(String benutzerId, KommunikationStart kommunikationStart) {
 
 		this.session = kommunikationStart.getSession();
 		this.benutzerId = benutzerId;
 		this.kommunikationStart = kommunikationStart;
-		this.lock = lock;
 	}
 
 	/**
@@ -81,30 +81,34 @@ public class KommunikationIncoming {
 
 	/**
 	 * Sobald der benutzer eine Einladung bekommt wird ein Dialog aufgerufen und
-	 * das gesendete CodingSessionModell als aktive CodingSession gesetzt wenn der Benutzer uebereinstimmt
-	 * und er den Dialog posetiv bentwortet
-	 * Der Thread im Hauptfenster wird informiert
+	 * das gesendete CodingSessionModell als aktive CodingSession gesetzt wenn
+	 * der Benutzer uebereinstimmt und er den Dialog posetiv bentwortet Der
+	 * Thread im Hauptfenster wird informiert
 	 */
 	public void bekommeEinladung() {
 		try {
 			listnerFuerEinladung = new MessageListener() {
 				public void onMessage(Message message) {
 					try {
-						synchronized (lock) {
-							if (message.getStringProperty("id").equals(ControllerMediator.getInstance().getBenutzerkonto().getEmail())) {
-								csEinladung = ((CodingSessionModell) ((ObjectMessage) message).getObject());
-								ControllerMediator.getInstance().einladen(csEinladung.getBenutzerMail());
-								lock.notifyAll();
-							}
+						if (message.getStringProperty("id").equals(ControllerMediator.getInstance().getBenutzerkonto().getEmail())) {
+							csEinladung = ((CodingSessionModell) ((ObjectMessage) message).getObject());
+							//Dialoge muessenueber den JavaFX Thread gestartet werden
+							Platform.runLater(new Runnable() {
+								public void run() {
+									System.out.println("einladung run");
+									new CodingSessionDialog().erstelleEinladungDialog(csEinladung.getBenutzerMail());
+								}
+							});
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+						new CodingSessionDialog().erstelleFehlerMeldung("Sie koennen nicht eingeladen werden");
 					}
 				}
 			};
 			kommunikationStart.getTopsubEinladung().setMessageListener(listnerFuerEinladung);
 		} catch (Exception e1) {
 			new CodingSessionDialog().erstelleFehlerMeldung("Sie koennen nicht eingeladen werden");
+			e1.printStackTrace();
 		}
 	}
 

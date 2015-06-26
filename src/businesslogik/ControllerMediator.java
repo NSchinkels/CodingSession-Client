@@ -64,7 +64,6 @@ public class ControllerMediator {
 	public void beenden() {
 		if (codingsession != null)
 			codingsession.beenden();
-		hauptfenster.hauptfensterThread.interrupt();
 	}
 
 	public void einladungAngenommen() {

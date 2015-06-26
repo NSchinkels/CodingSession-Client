@@ -37,8 +37,6 @@ public class HauptfensterController implements Initializable {
 	KommunikationOutgoing kommunikationOut;
 	CodingSessionModell codingSessionModell;
 	Benutzerkonto benutzerkonto;
-	Object lock;
-	Thread hauptfensterThread;
 
 	private Tab tabCodingSession;
 
@@ -53,37 +51,13 @@ public class HauptfensterController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		// wird durch richtige ersetzt
-		lock = new Object();
 		benutzerkonto = ControllerMediator.getInstance().getBenutzerkonto();
 		kommunikationStart = new KommunikationStart(benutzerkonto.getEmail());
-		kommunikationIn = new KommunikationIncoming(benutzerkonto.getEmail(), kommunikationStart, lock);
+		kommunikationIn = new KommunikationIncoming(benutzerkonto.getEmail(), kommunikationStart);
 		kommunikationOut = new KommunikationOutgoing(benutzerkonto.getEmail(), kommunikationStart);
 
 		ControllerMediator.getInstance().setHauptfenster(this);
 		kommunikationIn.bekommeEinladung();
-		hauptfensterThread = new Thread() {
-			public void run() {
-				boolean running = true;
-				while (running) {
-					synchronized (lock) {
-						try {
-							lock.wait();
-							Platform.runLater(new Runnable() {
-								@Override
-								public void run() {
-									new CodingSessionDialog().erstelleEinladungDialog(KommunikationIncoming.getEinladung().getBenutzerMail());
-								}
-							});
-						} catch (InterruptedException e) {
-							running = false;
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-		};
-		hauptfensterThread.start();
 			this.neuesProfil();
 			this.neuerCf();
 	}

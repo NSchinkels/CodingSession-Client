@@ -48,8 +48,10 @@ public class KommunikationStart {
 			producerEinladung = session.createProducer(topicEinladung);
 			producerEinladung.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 			topsubEinladung = session.createDurableSubscriber(topicEinladung, benutzerId);
+			
 		} catch (JMSException e) {
 			new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht am JMS anmelden\nHaben sie die Anwendung nicht richtig geschlossen?");
+		e.printStackTrace();
 		}
 	}
 	
