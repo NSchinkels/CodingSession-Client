@@ -32,11 +32,6 @@
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </HBox.margin>
             </Hyperlink>
-            <TextField onKeyPressed="#txtSucheFreundeGeklickt" promptText="Suche nach Freunden..">
-               <HBox.margin>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </HBox.margin>
-            </TextField>
          </children>
       </HBox>
    </top>

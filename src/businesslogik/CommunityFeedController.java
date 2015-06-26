@@ -98,19 +98,6 @@ public class CommunityFeedController implements Initializable, Serializable {
 	}
 
 	/**
-	 * Es wird nach Freunden gesucht
-	 * 
-	 * @param event
-	 */
-
-	@FXML
-	public void txtSucheFreundeGeklickt(KeyEvent event) {
-		if (event.getCode() == KeyCode.ENTER) {
-			ControllerMediator.getInstance().neueFreundeSuche();
-		}
-	}
-
-	/**
 	 * Ein neuer Beitrag wird zum CF hinzugefügt
 	 * 
 	 * @param beitrag

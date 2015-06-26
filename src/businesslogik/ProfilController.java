@@ -22,7 +22,6 @@ import javafx.scene.input.MouseEvent;
 public class ProfilController implements Initializable {
 
 	ProfilbearbeitungController bearbeitung;
-	FreundeSucheController suche;
 
 	ProfilModell profilModell = new ProfilModell();
 
@@ -128,7 +127,7 @@ public class ProfilController implements Initializable {
 	@FXML
 	public void txtSucheFreundeGeklickt(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
-			ControllerMediator.getInstance().neueFreundeSuche();
+			
 		}
 	}
 

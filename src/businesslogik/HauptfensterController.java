@@ -30,7 +30,6 @@ public class HauptfensterController implements Initializable {
 	ProfilController profilController;
 	CommunityFeedController communityFeedController;
 	ProfilbearbeitungController profilbearbeitungController;
-	FreundeSucheController freundeSucheController;
 	CodingSessionController codingSessionController;
 	KommunikationStart kommunikationStart;
 	KommunikationIncoming kommunikationIn;
@@ -100,23 +99,6 @@ public class HauptfensterController implements Initializable {
 			});
 
 			tabCodingSession.setContent(root);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void neueFreundeSuche() {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/freunde_suche.fxml"));
-			freundeSucheController = new FreundeSucheController();
-			ControllerMediator.getInstance().setFreundeSuche(freundeSucheController);
-			loader.setController(freundeSucheController);
-			Parent root = (Parent) loader.load();
-			Stage stage = new Stage();
-			Scene scene = new Scene(root);
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setScene(scene);
-			stage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

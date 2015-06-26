@@ -12,7 +12,6 @@ public class ControllerMediator {
 	private CommunityFeedController communityfeed;
 	private HauptfensterController hauptfenster;
 	private Benutzerkonto benutzerkonto;
-	private FreundeSucheController freundesuche;
 	private ProfilController profil;
 	private ProfilbearbeitungController profilbearbeitung;
 
@@ -39,10 +38,6 @@ public class ControllerMediator {
 
 	public void setCommunityfeed(CommunityFeedController communityfeed) {
 		this.communityfeed = communityfeed;
-	}
-
-	public void setFreundeSuche(FreundeSucheController freundesuche) {
-		this.freundesuche = freundesuche;
 	}
 
 	public void setProfil(ProfilController profil) {
@@ -80,10 +75,6 @@ public class ControllerMediator {
 
 	public void neueCodingSession() {
 		hauptfenster.neueCodingSession(true, null);
-	}
-
-	public void neueFreundeSuche() {
-		hauptfenster.neueFreundeSuche();
 	}
 
 	public void neueProfilbearbeitung() {
