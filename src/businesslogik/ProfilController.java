@@ -23,7 +23,7 @@ public class ProfilController implements Initializable {
 
 	ProfilbearbeitungController bearbeitung;
 	FreundeSucheController suche;
-	
+
 	ProfilModell profilModell = new ProfilModell();
 
 	List<String> freunde;
@@ -66,10 +66,9 @@ public class ProfilController implements Initializable {
 
 		lblBenutzername.setText(ControllerMediator.getInstance().getBenutzerkonto().getName());
 
-		if (profilModell.getGeschlecht() == null && profilModell.getGeburtsdatum() == null &&
-			profilModell.getGeburtsdatum() == null && profilModell.getWohnort() == null &&
-			profilModell.getAktuellerJob() == null && profilModell.getProgrammierkenntnisse() == null) {
-			
+		if (profilModell.getGeschlecht() == null && profilModell.getGeburtsdatum() == null && profilModell.getGeburtsdatum() == null && profilModell.getWohnort() == null
+				&& profilModell.getAktuellerJob() == null && profilModell.getProgrammierkenntnisse() == null) {
+
 			lblGeschlecht.setText("");
 			lblGeburtsdatum.setText("");
 			lblGeburtsort.setText("");
@@ -84,23 +83,21 @@ public class ProfilController implements Initializable {
 			lblAktuellerJob.setText(profilModell.getAktuellerJob());
 			lblProgrammierkenntnisse.setText(profilModell.getProgrammierkenntnisse());
 		}
-		
+
 		this.freunde = ControllerMediator.getInstance().getBenutzerkonto().getFreunde();
 		ObservableList<String> items = listFreunde.getItems();
 		items.add("testmail@me.org");
-		
+
 		for (String b : freunde) {
 			items.add(b);
 		}
-		
+
 		listFreunde.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 					if (mouseEvent.getClickCount() == 3) {
-						ControllerMediator.getInstance().einladen(
-								listFreunde.getSelectionModel()
-										.getSelectedItem());
+						ControllerMediator.getInstance().einladen(listFreunde.getSelectionModel().getSelectedItem());
 					}
 				}
 			}

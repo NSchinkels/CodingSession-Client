@@ -266,4 +266,16 @@ public class CodingSessionDialog {
 
 		alert.showAndWait();
 	}
+	public void erstelleFeherMeldung(String meldung){
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Ungültiges Passwort");
+		alert.setHeaderText(null);
+		alert.setContentText("Die eingegebenen neuen Passwörter stimmen nicht überein!");
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog");
+
+		alert.showAndWait();
+	}
 }

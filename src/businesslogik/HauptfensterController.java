@@ -64,7 +64,7 @@ public class HauptfensterController implements Initializable {
 		kommunikationIn.bekommeEinladung();
 		hauptfensterThread = new Thread() {
 			public void run() {
-				boolean running=true;
+				boolean running = true;
 				while (running) {
 					synchronized (lock) {
 						try {
@@ -76,7 +76,7 @@ public class HauptfensterController implements Initializable {
 								}
 							});
 						} catch (InterruptedException e) {
-							running=false;
+							running = false;
 							e.printStackTrace();
 						}
 					}
@@ -99,16 +99,17 @@ public class HauptfensterController implements Initializable {
 
 	public void neueCodingSession(boolean dialog, CodingSessionModell codingSessionModell) {
 		if (codingSessionController != null) {
-			codingSessionController.killThread();
 			schliesseCodingSession();
 		}
 		if (dialog) {
 			codingSessionModell = new CodingSessionDialog().erstelleStartDialog();
-			try {
-				Datenhaltung.schreibeCS(codingSessionModell);
-			} catch (PersistenzException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (codingSessionModell.isSpeichern()) {
+				try {
+					Datenhaltung.schreibeCS(codingSessionModell);
+				} catch (PersistenzException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		codingSessionController = null;
@@ -123,7 +124,7 @@ public class HauptfensterController implements Initializable {
 			tabPane.setTabClosingPolicy(TabClosingPolicy.SELECTED_TAB);
 			tabPane.getTabs().add(tabCodingSession);
 			tabPane.getSelectionModel().selectLast();
-			
+
 			// Das kann man bestimmt schoener machen..
 			tabCodingSession.setOnCloseRequest(new EventHandler<Event>() {
 				@Override
@@ -187,5 +188,6 @@ public class HauptfensterController implements Initializable {
 	public void schliesseCodingSession() {
 		tabPane.getTabs().remove(tabPane.getTabs().remove(tabCodingSession));
 		tabPane.getSelectionModel().selectFirst();
+		codingSessionController.killThread();
 	}
 }
