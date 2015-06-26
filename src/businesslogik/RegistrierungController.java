@@ -158,7 +158,7 @@ public class RegistrierungController implements Initializable {
 			}
 		}
 
-		if (konto.getBenutzerkontoOriginal() != null) {
+		if (konto != null) {
 			try {
 				((Node) (event.getSource())).getScene().getWindow().hide();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));

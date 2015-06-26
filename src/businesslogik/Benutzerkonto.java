@@ -22,8 +22,6 @@ public abstract class Benutzerkonto {
 	public abstract void setNachname(String nachname);
 	
 	public abstract void setNickname(String nickname);
-	
-	public abstract BenutzerkontoOriginal getBenutzerkontoOriginal();
 
 	public abstract void addFreund(String freundEmail);
 
