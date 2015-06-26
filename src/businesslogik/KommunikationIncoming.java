@@ -82,8 +82,9 @@ public class KommunikationIncoming {
 	/**
 	 * Sobald der benutzer eine Einladung bekommt wird ein Dialog aufgerufen und
 	 * das gesendete CodingSessionModell als aktive CodingSession gesetzt wenn
-	 * der Benutzer uebereinstimmt und er den Dialog posetiv bentwortet Der
-	 * Thread im Hauptfenster wird informiert
+	 * der Benutzer uebereinstimmt und er den Dialog posetiv bentwortet. Der
+	 * JavaFx Thread wird mit Platform.runLater aufgerufen, da nur dieser ein
+	 * Dialog erstellen kann
 	 */
 	public void bekommeEinladung() {
 		try {

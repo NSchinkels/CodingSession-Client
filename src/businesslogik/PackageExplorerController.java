@@ -6,7 +6,10 @@ import Persistence.Datenhaltung;
 import Persistence.PersistenzException;
 
 public class PackageExplorerController{
-	// CodingSessions werden über die ID geholt
+	/**
+	 * Der Container in dem alle von dem Benutzer erstellten CodingSessions inhalten sind
+	 * Sie werden ueber die Benutzeremail aus der Datenbank gelesen
+	 */
 	private List<CodingSessionModell> inhalt;
 	
 	public PackageExplorerController(String benutzerEmail) throws PersistenzException{
