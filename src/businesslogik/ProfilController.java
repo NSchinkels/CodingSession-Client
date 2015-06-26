@@ -23,13 +23,11 @@ import javafx.scene.input.MouseEvent;
 public class ProfilController implements Initializable {
 
 	ProfilbearbeitungController bearbeitung;
-
+	Benutzerkonto benutzerkonto;
 	ProfilModell profilModell = new ProfilModell();
-	
-	Benutzerkonto benutzerkonto = ControllerMediator.getInstance().getBenutzerkonto();
-
-	List<String> freundesliste = benutzerkonto.getFreunde();
+	List<String> freundesliste;
 	ObservableList<String> freundeslisteItems;
+	
 
 	@FXML
 	private Label lblBenutzername;
@@ -64,10 +62,19 @@ public class ProfilController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		benutzerkonto = ControllerMediator.getInstance().getBenutzerkonto();
+		freundesliste = benutzerkonto.getFreunde();
+		
 		try {
 			profilModell = Datenhaltung.leseProfil(benutzerkonto.getEmail());
 		} catch (PersistenzException e) {
 			e.printStackTrace();
+		}
+		listViewFreunde.getItems().clear();
+		freundeslisteItems=listViewFreunde.getItems();
+		for(String e:freundesliste){
+			freundeslisteItems.add(e);
+			System.out.println(e);
 		}
 
 		lblBenutzername.setText(benutzerkonto.getName());
@@ -127,8 +134,13 @@ public class ProfilController implements Initializable {
 	public void txtSucheFreundeGeklickt(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
 			benutzerkonto.addFreund(txtSucheFreunde.getText());
-			freundeslisteItems = listViewFreunde.getItems();
 			freundeslisteItems.add(txtSucheFreunde.getText());
+			try {
+				Datenhaltung.schreibeDB((BenutzerkontoOriginal)(benutzerkonto));
+			} catch (PersistenzException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
