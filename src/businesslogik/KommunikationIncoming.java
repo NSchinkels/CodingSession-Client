@@ -2,6 +2,7 @@ package businesslogik;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -11,6 +12,11 @@ import javax.jms.TextMessage;
 import javax.jms.TopicSubscriber;
 
 public class KommunikationIncoming {
+	/**
+	 * Diese Klasse ist fuer die einkommende Kommunikation mit dem JMS. Sie
+	 * verwaltet die Einladungen, den Code und den Chat Diese drei Komponeten
+	 * haben jewals einen TopicSubscriber und MessageListner
+	 */
 
 	public String neuerCode = "";
 	KommunikationStart kommunikationStart;
@@ -34,27 +40,37 @@ public class KommunikationIncoming {
 		this.lock = lock;
 	}
 
+	/**
+	 * Der Subscriber fuer den neuen Code
+	 * 
+	 * @param topic
+	 *            Das Topic in der der Code fuer die CodingSession gepostet wird
+	 * @param benutzer
+	 *            Email des Benutzers
+	 */
 	public void bekommeCode(String topic, String benutzer) {
-		// hier wartet später das JMS aud Code von Csen
+		// wenn eine Cs schon gestartet wurde wird diese zuerst geloescht
 		if (topsubCode != null) {
 			try {
 				topsubCode.close();
 			} catch (JMSException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht an der CodingSession anmdelden");
 			}
 		}
 		try {
+			// Der Subscriber wird von der Session erstellt
 			topsubCode = session.createDurableSubscriber(kommunikationStart.getTopicCode(), "Benutzer" + benutzer);
 			listnerFuerCode = new MessageListener() {
 				public void onMessage(Message message) {
 					try {
+						// Wenn neuer Code von einemandernbenutzer kommt wird
+						// dieser gespeichert
 						if (!neuerCode.equals(((TextMessage) message).getText()) && message.getStringProperty("sender") != benutzer) {
 							neuerCode = ((TextMessage) message).getText();
 							change = true;
 						}
 					} catch (JMSException e) {
-						// throw new Exception("Konnte nicht den Code teilen");
+						new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht an der CodingSession anmdelden");
 					}
 				}
 			};
@@ -63,17 +79,21 @@ public class KommunikationIncoming {
 		}
 	}
 
+	/**
+	 * Sobald der benutzer eine Einladung bekommt wird ein Dialog aufgerufen und
+	 * das gesendete CodingSessionModell als aktive CodingSession gesetzt wenn der Benutzer uebereinstimmt
+	 * und er den Dialog posetiv bentwortet
+	 * Der Thread im Hauptfenster wird informiert
+	 */
 	public void bekommeEinladung() {
 		try {
 			listnerFuerEinladung = new MessageListener() {
 				public void onMessage(Message message) {
-					System.out.println("NACHRICHT");
 					try {
 						synchronized (lock) {
 							if (message.getStringProperty("id").equals(ControllerMediator.getInstance().getBenutzerkonto().getEmail())) {
-								System.out.println("neue om erhalten");
 								csEinladung = ((CodingSessionModell) ((ObjectMessage) message).getObject());
-								ControllerMediator.getInstance().einladen("huhu");
+								ControllerMediator.getInstance().einladen(csEinladung.getBenutzerMail());
 								lock.notifyAll();
 							}
 						}
@@ -84,18 +104,25 @@ public class KommunikationIncoming {
 			};
 			kommunikationStart.getTopsubEinladung().setMessageListener(listnerFuerEinladung);
 		} catch (Exception e1) {
-			e1.printStackTrace();
-			;
+			new CodingSessionDialog().erstelleFehlerMeldung("Sie koennen nicht eingeladen werden");
 		}
 	}
 
+	/**
+	 * Aehnlich bekommeCode, nur werden alle Nachrichten empfangen und an eine
+	 * Liste gehangen
+	 * 
+	 * @param chatId
+	 *            die id des Chats
+	 * @param chatLog
+	 *            eine liste an die neue nachrichten angehangen werden
+	 */
 	public void bekommeChat(int chatId, List<String> chatLog) {
 		if (tobsubChat != null) {
 			try {
 				tobsubChat.close();
 			} catch (JMSException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht am Chat anmdelden");
 			}
 		}
 		try {
@@ -106,7 +133,7 @@ public class KommunikationIncoming {
 						try {
 							((LinkedList<String>) chatLog).addLast(message.getStringProperty("sender") + ": " + ((TextMessage) message).getText());
 						} catch (JMSException e) {
-							e.printStackTrace();
+							new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht am Chat anmdelden");
 						}
 					}
 				}
@@ -114,7 +141,7 @@ public class KommunikationIncoming {
 			};
 			tobsubChat.setMessageListener(listnerFuerChat);
 		} catch (Exception e1) {
-			e1.printStackTrace();
+			new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht am Chat anmdelden");
 		}
 
 	}
@@ -145,6 +172,6 @@ public class KommunikationIncoming {
 			kommunikationStart.beenden();
 		} catch (Exception e) {
 		}
-		
+
 	}
 }

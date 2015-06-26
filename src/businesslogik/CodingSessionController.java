@@ -133,7 +133,7 @@ public class CodingSessionController implements Initializable {
 			chat.setSize(chat.empfangen().size());
 			txtChatRead.setText(chat.getChat());
 		}
-		// Der Listner und Subscriber vom JMS wird gestartet
+		// Der Producer und Subscriber vom JMS wird gestartet
 		kommunikationOut.starteCs("CodingSession" + codingSessionModell.getId());
 		kommunikationIn.bekommeCode("CodingSession" + codingSessionModell.getId(), codingSessionModell.getBenutzerMail());
 		netCode = code = codingSessionModell.getCode();

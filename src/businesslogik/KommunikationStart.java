@@ -10,10 +10,12 @@ import javax.jms.TopicSubscriber;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-//Diese Klasse verwaltet die Connection und Session zum Server, sowie die Topics und erstellt die Producer und Subsciber für
-//Einladungen, da das Topic sich da nich ändert
-
 public class KommunikationStart {
+	/**
+	 * Diese Klasse verwaltet die Connection und Session zum Server, sowie die
+	 * Topics und erstellt die Producer und Subsciber für Einladungen, da das
+	 * Topic sich da nich ändert.
+	 */
 
 	ActiveMQConnectionFactory connectionFactory;
 	Connection connection;
@@ -25,6 +27,14 @@ public class KommunikationStart {
 	TopicSubscriber topsubEinladung;
 	String benutzerId;
 
+	/**
+	 * Startet die Kommunikation mit dem JMS und startet den Producer und
+	 * Subscriber fuer Einladungen
+	 * 
+	 * @param benutzerId
+	 *            Die email mit der sich der benutzer anmeldet wird auch zu der
+	 *            Anmeldung an dem JMS Server benutzt
+	 */
 	public KommunikationStart(String benutzerId) {
 		this.benutzerId = benutzerId;
 		try {
@@ -42,13 +52,13 @@ public class KommunikationStart {
 			new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht am JMS anmelden\nHaben sie die Anwendung nicht richtig geschlossen?");
 		}
 	}
+	
 
 	public void beenden() {
 		try {
 			session.close();
 			connection.close();
 		} catch (JMSException e1) {
-			e1.printStackTrace();
 		}
 	}
 
