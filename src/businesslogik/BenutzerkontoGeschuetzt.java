@@ -134,16 +134,20 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	
 	public static boolean ueberpruefeReal(String vorname, String nachname, String email, String passwort) {
 		if(!vorname.matches(VORNAME_REGEX)) {
-			new CodingSessionDialog().erstelleVornameValidierungDialog();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiger Vorname", 
+					"Bitte gebe einen gültigen Vornamen ein!");
 			return false;
 		} else if(!nachname.matches(NACHNAME_REGEX)) {
-			new CodingSessionDialog().erstelleNachnameValidierungDialog();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiger Nachname", 
+					"Bitte gebe einen gültigen Nachnamen ein!");
 			return false;
 		} else if(!email.matches(EMAIL_REGEX)) {
-			new CodingSessionDialog().erstelleEmailValidierungDialog();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültige E-Mail-Adresse", 
+					"Bitte gebe eine gültige E-Mail-Adresse ein!");
 			return false;
 		} else if(!passwort.matches(PASSWORT_REGEX)) {
-			new CodingSessionDialog().erstellePasswortValidierungDialog();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiges Passwort", 
+					"Bitte gebe ein gültiges Passwort ein!");
 			return false;
 		} else {
 			return true;
@@ -152,13 +156,16 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 
 	public static boolean ueberpruefeNick(String nickname, String email, String passwort) {
 		if(!nickname.matches(NICKNAME_REGEX)) {
-			new CodingSessionDialog().erstelleNicknameValidierungDialog();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiger Nickname", 
+					"Bitte gebe einen gültigen Nicknamen ein!");
 			return false;
 		} else if(!email.matches(EMAIL_REGEX)) {
-			new CodingSessionDialog().erstelleEmailValidierungDialog();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültige E-Mail-Adresse", 
+					"Bitte gebe eine gültige E-Mail-Adresse ein!");
 			return false;
 		} else if(!passwort.matches(PASSWORT_REGEX)) {
-			new CodingSessionDialog().erstellePasswortValidierungDialog();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiges Passwort", 
+					"Bitte gebe ein gültiges Passwort ein!");
 			return false;
 		} else {
 			return true;

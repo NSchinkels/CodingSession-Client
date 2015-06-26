@@ -46,12 +46,14 @@ public class LoginController {
 				
 				stage.show();
 			}else{
-				new CodingSessionDialog().erstellePasswortValidierungDialog();
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiges Passwort", 
+						"Bitte gebe ein gültiges Passwort ein!");
 			}
 		} catch(IOException e){
 			e.printStackTrace();
 		} catch (PersistenzException e) {
-			new CodingSessionDialog().erstelleEmailValidierungDialog();;
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültige E-Mail-Adresse", 
+					"Bitte gebe eine gültige E-Mail-Adresse ein!");
 		}
 	}
 

@@ -49,7 +49,7 @@ public class KommunikationStart {
 			producerEinladung.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 			topsubEinladung = session.createDurableSubscriber(topicEinladung, benutzerId);
 		} catch (JMSException e) {
-			new CodingSessionDialog().erstelleFehlermeldung("JMS-Fehler",
+			new CodingSessionDialog().erstelleFehlermeldungDialog("JMS-Fehler",
 					"Du konntest dich nicht am JMS anmelden.\nHast du die Anwendung vielleicht nicht richtig geschlossen?");
 		}
 	}

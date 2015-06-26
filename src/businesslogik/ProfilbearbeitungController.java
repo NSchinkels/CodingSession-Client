@@ -114,7 +114,8 @@ public class ProfilbearbeitungController implements Initializable{
 				if(txtVorname.getText().matches(vornameRegex)) {
 					benutzerkonto.setVorname(txtVorname.getText());
 				} else {
-					new CodingSessionDialog().erstelleVornameValidierungDialog();
+					new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiger Vorname", 
+							"Bitte gebe einen gültigen Vornamen ein!");
 				}
 			}
 			
@@ -122,7 +123,8 @@ public class ProfilbearbeitungController implements Initializable{
 				if(txtNachname.getText().matches(nachnameRegex)) {
 					benutzerkonto.setNachname(txtNachname.getText());
 				} else {
-					new CodingSessionDialog().erstelleNachnameValidierungDialog();
+					new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiger Nachname", 
+							"Bitte gebe einen gültigen Nachnamen ein!");
 				}
 			}
 		} else {
@@ -130,7 +132,8 @@ public class ProfilbearbeitungController implements Initializable{
 				if(txtNickname.getText().matches(nicknameRegex)) {
 					benutzerkonto.setNickname(txtNickname.getText());
 				} else {
-					new CodingSessionDialog().erstelleNicknameValidierungDialog();
+					new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiger Nickname", 
+							"Bitte gebe einen gültigen Nicknamen ein!");
 				}
 			}
 		}
@@ -191,10 +194,12 @@ public class ProfilbearbeitungController implements Initializable{
 						new CodingSessionDialog().erstellePasswoerterWiderspruchDialog();
 					}
 				} else {
-					new CodingSessionDialog().erstellePasswortValidierungDialog();
+					new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiges Passwort", 
+							"Bitte gebe ein gültiges Passwort ein!");
 				}		
 			} else {
-				new CodingSessionDialog().erstelleAltesPasswortValidierungDialog();
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiges Passwort", 
+						"Das alte Passwort stimmt nicht mit dem des Benutzers überein!");
 			}
 		}
 		

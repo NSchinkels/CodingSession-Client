@@ -96,84 +96,6 @@ public class CodingSessionDialog {
 			// Dialog
 		}
 	}
-
-	public void erstelleEmailValidierungDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültige E-Mail-Adresse");
-		alert.setHeaderText(null);
-		alert.setContentText("Bitte gebe eine gültige E-Mail-Adresse ein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	}
-
-	public void erstellePasswortValidierungDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültiges Passwort");
-		alert.setHeaderText(null);
-		alert.setContentText("Bitte gebe ein gültiges Passwort ein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	}
-
-	public void erstelleVornameValidierungDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültiger Vorname");
-		alert.setHeaderText(null);
-		alert.setContentText("Bitte gebe einen gültigen Vornamen ein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	}
-
-	public void erstelleNachnameValidierungDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültiger Nachname");
-		alert.setHeaderText(null);
-		alert.setContentText("Bitte gebe einen gültigen Nachnamen ein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	}
-
-	public void erstelleNicknameValidierungDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültiger Nickname");
-		alert.setHeaderText(null);
-		alert.setContentText("Bitte gebe einen gültigen Nicknamen ein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	}
-
-	public void erstelleAltesPasswortValidierungDialog() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Ungültiges Passwort");
-		alert.setHeaderText(null);
-		alert.setContentText("Das alte Passwort stimmt nicht mit dem des Benutzers überein!");
-
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
-		dialogPane.getStyleClass().add("dialog");
-
-		alert.showAndWait();
-	}
 	
 	public void erstelleGeburtsortValidierungDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
@@ -332,7 +254,7 @@ public class CodingSessionDialog {
 		alert.showAndWait();
 	}
 	
-	public void erstelleFehlermeldung(String ueberschrift, String fehler){
+	public void erstelleFehlermeldungDialog(String ueberschrift, String fehler){
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle(ueberschrift);
 		alert.setHeaderText(null);

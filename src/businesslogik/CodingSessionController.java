@@ -97,7 +97,7 @@ public class CodingSessionController implements Initializable {
 			// Alle CodingSessions werden geholt
 			packageExplorer = new PackageExplorerController(benutzerEmail);
 		} catch (PersistenzException e1) {
-			new CodingSessionDialog().erstelleFehlermeldung("Datenbank-Fehler",
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Datenbank-Fehler",
 					"Es gab einen Fehler mit der Datenbank.\n Bitte starte eine neue CodingSession");
 		}
 		// Liste wird erstellt und gefüllt
@@ -120,7 +120,7 @@ public class CodingSessionController implements Initializable {
 		try {
 			chat = Datenhaltung.leseChat(codingSessionModell.getId());
 		} catch (Exception e1) {
-			new CodingSessionDialog().erstelleFehlermeldung("Datenbank-Fehler",
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Datenbank-Fehler",
 					"Es gab einen Fehler mit der Datenbank.\n Bitte starte eine neue CodingSession");
 		}
 		// Wenn es noch keinen Chat in der DB gab, wird ein neuer erstellt
@@ -184,7 +184,7 @@ public class CodingSessionController implements Initializable {
 						// nicht unendlich weiterläuft
 						running = false;
 					} catch (Exception e2) {
-						new CodingSessionDialog().erstelleFehlermeldung("JMS-Fehler",
+						new CodingSessionDialog().erstelleFehlermeldungDialog("JMS-Fehler",
 								"Es gab einen Fehler im JMS.\n Bitte starte eine neue CodingSession");
 						running = false;
 					}

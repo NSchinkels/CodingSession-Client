@@ -39,7 +39,7 @@ public class KommunikationOutgoing {
 			kommunikationStart.setTopicCode(session.createTopic(topic));
 			producerCode = session.createProducer(kommunikationStart.getTopicCode());
 		} catch (JMSException e) {
-			new CodingSessionDialog().erstelleFehlermeldung("CodingSession: Start fehlgeschlagen",
+			new CodingSessionDialog().erstelleFehlermeldungDialog("CodingSession: Start fehlgeschlagen",
 					"Die CodingSession konnte nicht gestartet werden.");
 		}
 
@@ -58,7 +58,7 @@ public class KommunikationOutgoing {
 			kommunikationStart.setTopicChat(session.createTopic(topic));
 			producerChat = session.createProducer(kommunikationStart.getTopicChat());
 		} catch (JMSException e) {
-			new CodingSessionDialog().erstelleFehlermeldung("Anmeldung fehlgeschlagen",
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Anmeldung fehlgeschlagen",
 					"Du konntest dich nicht am Chat anmdelden!");
 		}
 
@@ -77,7 +77,7 @@ public class KommunikationOutgoing {
 			textMessage.setStringProperty("sender", benutzerId);
 			producerCode.send(textMessage);
 		} catch (JMSException e) {
-			new CodingSessionDialog().erstelleFehlermeldung("Veröffentlichung fehlgeschlagen",
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Veröffentlichung fehlgeschlagen",
 					"Dein Code konnte nicht veröffentlicht werden");
 		}
 
@@ -100,7 +100,7 @@ public class KommunikationOutgoing {
 			textMessage.setStringProperty("sender", sender);
 			producerChat.send(textMessage);
 		} catch (JMSException e) {
-			new CodingSessionDialog().erstelleFehlermeldung("Senden fehlgeschlagen",
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Senden fehlgeschlagen",
 					"Deine Nachricht konnte nicht gesendet werden");
 		}
 
@@ -123,7 +123,7 @@ public class KommunikationOutgoing {
 			om.setStringProperty("id", freundEmail);
 			kommunikationStart.getProducerEinladung().send(om);
 		} catch (Exception e2) {
-			new CodingSessionDialog().erstelleFehlermeldung("Einladung fehlgeschlagen", 
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Einladung fehlgeschlagen", 
 					"Du kannst nicht eingeladen werden!");
 		}
 
