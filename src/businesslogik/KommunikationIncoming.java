@@ -54,7 +54,8 @@ public class KommunikationIncoming {
 			try {
 				topsubCode.close();
 			} catch (JMSException e) {
-				new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht an der CodingSession anmdelden");
+				new CodingSessionDialog().erstelleFehlermeldung("Anmeldung fehlgeschlagen", 
+						"Du konntest dich nicht an der CodingSession anmelden.");
 			}
 		}
 		try {
@@ -70,7 +71,8 @@ public class KommunikationIncoming {
 							change = true;
 						}
 					} catch (JMSException e) {
-						new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht an der CodingSession anmdelden");
+						new CodingSessionDialog().erstelleFehlermeldung("Anmeldung fehlgeschlagen", 
+								"Du konntest dich nicht an der CodingSession anmelden.");
 					}
 				}
 			};
@@ -104,7 +106,8 @@ public class KommunikationIncoming {
 			};
 			kommunikationStart.getTopsubEinladung().setMessageListener(listnerFuerEinladung);
 		} catch (Exception e1) {
-			new CodingSessionDialog().erstelleFehlerMeldung("Sie koennen nicht eingeladen werden");
+			new CodingSessionDialog().erstelleFehlermeldung("Einladung fehlgeschlagen", 
+					"Du kannst nicht eingeladen werden!");
 		}
 	}
 
@@ -122,7 +125,8 @@ public class KommunikationIncoming {
 			try {
 				tobsubChat.close();
 			} catch (JMSException e) {
-				new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht am Chat anmdelden");
+				new CodingSessionDialog().erstelleFehlermeldung("Anmeldung fehlgeschlagen",
+						"Du konntest dich nicht am Chat anmdelden!");
 			}
 		}
 		try {
@@ -133,7 +137,8 @@ public class KommunikationIncoming {
 						try {
 							((LinkedList<String>) chatLog).addLast(message.getStringProperty("sender") + ": " + ((TextMessage) message).getText());
 						} catch (JMSException e) {
-							new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht am Chat anmdelden");
+							new CodingSessionDialog().erstelleFehlermeldung("Anmeldung fehlgeschlagen",
+									"Du konntest dich nicht am Chat anmdelden!");
 						}
 					}
 				}
@@ -141,7 +146,8 @@ public class KommunikationIncoming {
 			};
 			tobsubChat.setMessageListener(listnerFuerChat);
 		} catch (Exception e1) {
-			new CodingSessionDialog().erstelleFehlerMeldung("Sie konnten sich nicht am Chat anmdelden");
+			new CodingSessionDialog().erstelleFehlermeldung("Anmeldung fehlgeschlagen",
+					"Du konntest dich nicht am Chat anmdelden!");
 		}
 
 	}

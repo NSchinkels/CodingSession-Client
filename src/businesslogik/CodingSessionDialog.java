@@ -332,11 +332,11 @@ public class CodingSessionDialog {
 		alert.showAndWait();
 	}
 	
-	public void erstelleFehlerMeldung(String meldung){
+	public void erstelleFehlermeldung(String ueberschrift, String fehler){
 		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Fehler");
+		alert.setTitle(ueberschrift);
 		alert.setHeaderText(null);
-		alert.setContentText(meldung);
+		alert.setContentText(fehler);
 
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
