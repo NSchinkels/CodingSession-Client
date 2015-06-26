@@ -17,7 +17,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-
+/**
+ * 
+ * Der CodingSessionController beinhaltet die Hauptfunktion unseres Programms.
+ * Hier mit können Benutzer zusammen programmiern und chatten.
+ *
+ */
 public class CodingSessionController implements Initializable {
 
 	// Das CodingSessionModell der aktuellen CodingSessin

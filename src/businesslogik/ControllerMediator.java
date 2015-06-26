@@ -1,22 +1,25 @@
 package businesslogik;
 
-import java.io.IOException;
-
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
+/**
+ * 
+ * Ein ControllerMediator der Kommunikation zwichen den Controllern regelt Er
+ * arbeitet mit Singelto Entwurfsmuster
+ * Manche Controller haben hier noch keine Funktion
+ */
 public class ControllerMediator {
 
 	private CodingSessionController codingsession;
 	private CommunityFeedController communityfeed;
-	private FreundeSucheController freundesuche;
 	private HauptfensterController hauptfenster;
-	private ProfilbearbeitungController profilbearbeitung;
-	private ProfilController profil;
 	private Benutzerkonto benutzerkonto;
+	private FreundeSucheController freundesuche;
+	private ProfilController profil;
+	private ProfilbearbeitungController profilbearbeitung;
+
+
+	public static ControllerMediator getInstance() {
+		return ControllerMediatorHolder.INSTANCE;
+	}
 
 	public Benutzerkonto getBenutzerkonto() {
 		return benutzerkonto;
@@ -24,14 +27,6 @@ public class ControllerMediator {
 
 	public void setBenutzerkonto(Benutzerkonto benutzerkonto) {
 		this.benutzerkonto = benutzerkonto;
-	}
-
-	private ControllerMediator() {
-
-	}
-
-	public static ControllerMediator getInstance() {
-		return ControllerMediatorHolder.INSTANCE;
 	}
 
 	public void setHauptfenster(HauptfensterController hauptfenster) {
@@ -61,9 +56,11 @@ public class ControllerMediator {
 	public void addCommunityFeed(Beitrag beitrag) {
 		communityfeed.addBeitrag(beitrag);
 	}
-	public void neuerCommunityFee(){
+
+	public void neuerCommunityFee() {
 		hauptfenster.neuerCf();
 	}
+
 	public void beenden() {
 		if (codingsession != null)
 			codingsession.beenden();
@@ -102,7 +99,7 @@ public class ControllerMediator {
 		codingsession.killThread();
 		hauptfenster.schliesseCodingSession();
 	}
-
+	//Eine Instanz wird erstellt
 	private static class ControllerMediatorHolder {
 		private static final ControllerMediator INSTANCE = new ControllerMediator();
 	}

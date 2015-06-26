@@ -3,7 +3,12 @@ package businesslogik;
 import java.io.Serializable;
 
 import javax.persistence.*;
-
+/**
+ * Das Modell einer CodingSession. Sie beinhaltet den Code 
+ * sowie andere selbsterklärende Variablen
+ * 
+ *
+ */
 @Entity
 @Table(name="CodingSessionModell")
 public class CodingSessionModell implements Serializable{
@@ -105,7 +110,9 @@ public class CodingSessionModell implements Serializable{
 		public void setCode(String code) {
 			this.code = code;
 		}
-		
+		/**
+		 * Die Methode toString wurde überschrieben um das Modell in einer List anzeigen zu lassen
+		 */
 		public String toString(){
 			return "Titel : "+this.titel;
 		}
