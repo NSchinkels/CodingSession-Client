@@ -9,7 +9,7 @@
     <class>businesslogik.Chat</class>
     <class>businesslogik.CodingSessionModell</class>
     <class>businesslogik.Beitrag</class>
-    <class>busineslogik.CommunityFeedController</class>
+    <class>businesslogik.CommunityFeedController</class>
     <class>businesslogik.ProfilModell</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"  />
@@ -21,7 +21,7 @@
      <!-- EclipseLink should create the database schema automatically> 
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
       <property name="eclipselink.ddl-generation.output-mode"
-        value="both" />  -->
+        value="both" /-->  
     </properties>
 
   </persistence-unit>

@@ -96,7 +96,7 @@ public class CommunityFeedController implements Initializable,Serializable{
 		CommunityFeedController cf=new CommunityFeedController();
 		cf.setBeitrag(beitraege);
 		try {
-			Datenhaltung.schreibeCF(cf);
+			Datenhaltung.schreibeCF(this);
 		} catch (PersistenzException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

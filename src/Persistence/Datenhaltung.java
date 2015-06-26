@@ -173,6 +173,7 @@ public class Datenhaltung {
 			em.persist(CF);
 			em.getTransaction().commit();
 		} catch (Exception e) {
+			e.printStackTrace();
 			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
 			throw new PersistenzException(
