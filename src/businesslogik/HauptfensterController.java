@@ -84,17 +84,8 @@ public class HauptfensterController implements Initializable {
 			}
 		};
 		hauptfensterThread.start();
-		try {
 			this.neuesProfil();
-			FXMLLoader loaderCF = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));
-			communityFeedController = new CommunityFeedController();
-			ControllerMediator.getInstance().setCommunityfeed(communityFeedController);
-			loaderCF.setController(communityFeedController);
-			Parent rootCF = (Parent) loaderCF.load();
-			tabCommunityFeed.setContent(rootCF);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			this.neuerCf();
 	}
 
 	public void neueCodingSession(boolean dialog, CodingSessionModell codingSessionModell) {
@@ -183,6 +174,26 @@ public class HauptfensterController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public void neuerCf(){
+		FXMLLoader loaderCF = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));
+		try {
+			communityFeedController = Datenhaltung.leseCF();
+		} catch (PersistenzException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ControllerMediator.getInstance().setCommunityfeed(communityFeedController);
+		loaderCF.setController(communityFeedController);
+		Parent rootCF = null;
+		try {
+			rootCF = (Parent) loaderCF.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		tabCommunityFeed.setContent(rootCF);
+
 	}
 
 	public void schliesseCodingSession() {

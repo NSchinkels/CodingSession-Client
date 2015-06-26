@@ -61,7 +61,9 @@ public class ControllerMediator {
 	public void addCommunityFeed(Beitrag beitrag) {
 		communityfeed.addBeitrag(beitrag);
 	}
-
+	public void neuerCommunityFee(){
+		hauptfenster.neuerCf();
+	}
 	public void beenden() {
 		if (codingsession != null)
 			codingsession.beenden();

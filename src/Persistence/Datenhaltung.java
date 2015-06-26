@@ -192,8 +192,9 @@ public class Datenhaltung {
 	public static CommunityFeedController leseCF() throws PersistenzException {
 		CommunityFeedController CF = null;
 		try {
-			CF = em.find(CommunityFeedController.class, "1");
+			CF = em.find(CommunityFeedController.class, 1);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new PersistenzException(
 					"Fehler bei der Synchronisation mit der Datenbank");
 		}

@@ -92,7 +92,7 @@ public class CodingSessionController implements Initializable {
 			// Alle CodingSessions werden geholt
 			packageExplorer = new PackageExplorerController(benutzerEmail);
 		} catch (PersistenzException e1) {
-			new CodingSessionDialog().erstelleFeherMeldung("Es gab einen Fehler mit der Datenbank\n Bitte starten sie eine neue CodingSession");
+			new CodingSessionDialog().erstelleFehlerMeldung("Es gab einen Fehler mit der Datenbank\n Bitte starten sie eine neue CodingSession");
 		}
 		// Liste wird erstellt und gefüllt
 		ObservableList<CodingSessionModell> codingSessionItems = listCodingSession.getItems();
@@ -114,7 +114,7 @@ public class CodingSessionController implements Initializable {
 		try {
 			chat = Datenhaltung.leseChat(codingSessionModell.getId());
 		} catch (Exception e1) {
-			new CodingSessionDialog().erstelleFeherMeldung("Es gab einen Fehler mit der Datenbank\n Bitte starten sie eine neue CodingSession");
+			new CodingSessionDialog().erstelleFehlerMeldung("Es gab einen Fehler mit der Datenbank\n Bitte starten sie eine neue CodingSession");
 		}
 		// Wenn es noch keinen Chat in der DB gab, wird ein neuer erstellt
 		if (chat == null) {
@@ -147,7 +147,7 @@ public class CodingSessionController implements Initializable {
 								if (!netCode.equals(code)) {
 									// Code wird aktualisert und angezeigt
 									code = netCode;
-									CodingSessionController.this.aktualisiereCode(txtCodingSession.getText(), false);
+									txtCodingSession.setText(code);
 								}
 							} else {
 								// kein neuer Code da eigenen Code aus dem
@@ -175,10 +175,9 @@ public class CodingSessionController implements Initializable {
 					} catch (InterruptedException e1) {
 						// Der Thread wird beim beenden interrupted damit dieser
 						// nicht unendlich weiterläuft
+						running = false;
 					} catch (Exception e2) {
-						new CodingSessionDialog().erstelleFeherMeldung("Es gab einen Fehler im JMS\n Bitte starten sie eine neue CodingSession");
-
-					} finally {
+						new CodingSessionDialog().erstelleFehlerMeldung("Es gab einen Fehler im JMS\n Bitte starten sie eine neue CodingSession");
 						running = false;
 					}
 				}
@@ -286,10 +285,10 @@ public class CodingSessionController implements Initializable {
 	public void aktualisiereCode(String neuerCode, boolean selbst) {
 		if (!neuerCode.equals(netCode)) {
 			code = neuerCode;
-		}
-		if (selbst) {
-			kommunikationOut.veroeffentlicheCode(code);
-			netCode = neuerCode;
+			if (selbst) {
+				kommunikationOut.veroeffentlicheCode(code);
+				netCode = neuerCode;
+			}
 		}
 	}
 
