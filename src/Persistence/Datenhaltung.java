@@ -283,9 +283,5 @@ public class Datenhaltung {
 			throw new PersistenzException();
 		}
 	}
-	public static void refresh(){
-		em.close();
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		em = factory.createEntityManager();
-	}
+
 }

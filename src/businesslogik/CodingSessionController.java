@@ -97,6 +97,15 @@ public class CodingSessionController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		// Es wird ein neuer Chat erstellt
+		chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
+		try {
+			//Falls es einen in der Db gibt wird der geladen
+			chat.setVerlauf(Datenhaltung.leseChat(codingSessionModell.getId()).getVerlauf());
+			chat.setErst(false);
+		} catch (Exception e) {
+		}
+		chat.start();
 		// wenn gespeichert werden soll und die CodingSession vom Benutzer ist
 		// wird gespeichert
 		if (codingSessionModell.isSpeichern() && codingSessionModell.getBenutzerMail().equals(benutzerEmail)) {
@@ -128,23 +137,6 @@ public class CodingSessionController implements Initializable {
 				}
 			}
 		});
-		// Chat wird aus der DB geladen
-		try {
-			chat = Datenhaltung.leseChat(codingSessionModell.getId());
-		} catch (Exception e1) {
-			e1.printStackTrace();
-			new CodingSessionDialog().erstelleFehlermeldungDialog("Datenbank-Fehler", "Es gab einen Fehler mit der Datenbank.\n Bitte starte eine neue CodingSession");
-		}
-		// Wenn es noch keinen Chat in der DB gab, wird ein neuer erstellt
-
-		chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
-		try {
-			chat.setVerlauf(Datenhaltung.leseChat(codingSessionModell.getId()).getVerlauf());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		chat.start();
 		txtChatRead.setText(chat.getChat());
 
 		// Der Producer und Subscriber vom JMS wird gestartet
@@ -351,10 +343,10 @@ public class CodingSessionController implements Initializable {
 		try {
 			if (codingSessionModell.getBenutzerMail().equals(benutzerEmail)) {
 				Datenhaltung.schreibeCS(codingSessionModell);
-				chat.speichern();
+				//chat.speichern();
 			}
-		} catch (PersistenzException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
+			System.out.println(chat.getChat()+chat.getId()+chat.getSize()+chat.getSender()+codingSessionModell.getAnzahlTeilnehmer()+codingSessionModell.getBenutzerMail()+codingSessionModell.getCode()+codingSessionModell.getId()+codingSessionModell.getTitel());
 			e.printStackTrace();
 		}
 	}

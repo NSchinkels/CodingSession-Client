@@ -25,6 +25,7 @@ public class Chat {
 	@Transient
 	private int size = 0;
 	private String sender;
+	private boolean erst = true;
 	@Transient
 	private KommunikationOutgoing kommunikationOut;
 	@Transient
@@ -58,26 +59,25 @@ public class Chat {
 		kommunikationIn.bekommeChat(id, verlauf);
 	}
 
-	
-
 	/**
 	 * Schreibt den Chat an die Datenbank
+	 * 
+	 * @throws PersistenzException
 	 */
 
-	public void speichern() {
-		try {
+	public void speichern() throws PersistenzException {
+		if (erst) {
+			erst = false;
 			Datenhaltung.schreibeChat(this);
-		} catch (PersistenzException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		//Datenhaltung.refreshChat(this);
 	}
+
 	/**
 	 * 
 	 * @return Der komplette formatierte Chat wird returned
 	 * 
 	 */
-	
 
 	public String getChat() {
 		String c = "";
@@ -86,7 +86,6 @@ public class Chat {
 		}
 		return c;
 	}
-
 
 	public String getSender() {
 		return sender;
@@ -115,6 +114,7 @@ public class Chat {
 	public List<String> getVerlauf() {
 		return this.verlauf;
 	}
+
 	public void setKommunikationOut(KommunikationOutgoing kommunikationOut) {
 		this.kommunikationOut = kommunikationOut;
 
@@ -124,4 +124,13 @@ public class Chat {
 		this.kommunikationIn = kommunikationIn;
 
 	}
+
+	public boolean isErst() {
+		return erst;
+	}
+
+	public void setErst(boolean erst) {
+		this.erst = erst;
+	}
+	
 }

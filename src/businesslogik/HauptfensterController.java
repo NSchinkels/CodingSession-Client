@@ -139,7 +139,6 @@ public class HauptfensterController implements Initializable {
 	public void neuerCf() {
 
 		try {
-			Datenhaltung.refresh();
 			FXMLLoader loaderCF = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));
 			communityFeedController = Datenhaltung.leseCF();
 			ControllerMediator.getInstance().setCommunityfeed(communityFeedController);
