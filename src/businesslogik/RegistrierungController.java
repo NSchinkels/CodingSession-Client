@@ -127,8 +127,7 @@ public class RegistrierungController implements Initializable {
 			konto = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), 
 					txtVorname.getText(), txtNachname.getText(), id);
 
-			// Hauptfenster das bk geben
-			ControllerMediator.getInstance().setBenutzerkonto(konto);
+
 			profilModell = new ProfilModell(txtEmail.getText());
 			
 			try {
@@ -145,8 +144,8 @@ public class RegistrierungController implements Initializable {
 			konto = new BenutzerkontoGeschuetzt(txtEmail.getText(), txtPasswort.getText(), 
 					txtNickname.getText(), id);
 
-			// Hauptfenster das bk geben
-			ControllerMediator.getInstance().setBenutzerkonto(konto);
+			
+			
 			profilModell = new ProfilModell(txtEmail.getText());
 			
 			try {
@@ -160,6 +159,7 @@ public class RegistrierungController implements Initializable {
 
 		if (konto != null) {
 			try {
+				ControllerMediator.getInstance().setBenutzerkonto(((BenutzerkontoGeschuetzt)konto).getEchtesKonto());
 				((Node) (event.getSource())).getScene().getWindow().hide();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/hauptfenster.fxml"));
 				Parent root = (Parent) loader.load();
