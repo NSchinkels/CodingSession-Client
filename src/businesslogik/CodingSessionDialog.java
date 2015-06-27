@@ -82,7 +82,7 @@ public class CodingSessionDialog {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("CodingSession schliessen");
 		alert.setHeaderText(null);
-		alert.setContentText("Willst du die CodingSession wirklich schließen?\n" + "Alle nicht gespeicherten Änderungen gehen verloren.");
+		alert.setContentText("Willst du die CodingSession wirklich schließen?");
 
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(getClass().getResource("/view/css/styles.css").toExternalForm());
