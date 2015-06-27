@@ -104,12 +104,12 @@ public class ProfilController implements Initializable {
 				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 					if (mouseEvent.getClickCount() == 2) {
 						ControllerMediator.getInstance().einladen(listViewFreunde.getSelectionModel().getSelectedItem());
-						try {
-							new CodingSessionDialog().erstelleFehlermeldungDialog("Freund", Datenhaltung.leseProfil(listViewFreunde.getSelectionModel().getSelectedItem()).toString());
-						} catch (PersistenzException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+//						try {
+////							new CodingSessionDialog().erstelleFehlermeldungDialog("Freund", Datenhaltung.leseProfil(listViewFreunde.getSelectionModel().getSelectedItem()).toString());
+//						} catch (PersistenzException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
 					}
 				}
 			}
