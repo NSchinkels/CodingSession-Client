@@ -42,6 +42,7 @@
 .tab, .tab-pane {
     -fx-tab-min-width:90px;
     -fx-background-insets: 0 1 0 1;
+    -fx-border-color: white;
 }
 
 .tab-pane .tab {
