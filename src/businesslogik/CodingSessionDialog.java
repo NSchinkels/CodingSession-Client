@@ -105,16 +105,14 @@ public class CodingSessionDialog {
 		dialog.setTitle("CodingSession starten");
 		dialog.setHeaderText(null);
 
+		Label lblSpeichern = new Label("Soll die nachfolgende CodingSession in Zukunft gespeichert werden?");
+		
 		txtTitel = new TextField();
 		txtTitel.setPromptText("Titel der CodingSession");
 
-		Label lblTitel = new Label("Titel: ");
-		Label lblSpeichern = new Label("Soll die nachfolgende CodingSession in Zukunft gespeichert werden?");
-
 		GridPane grid = new GridPane();
-		grid.add(lblTitel, 1, 1);
-		grid.add(txtTitel, 2, 1);
-		grid.add(lblSpeichern, 1, 2);
+		grid.add(lblSpeichern, 0, 0);
+		grid.add(txtTitel, 0, 1);
 		dialog.getDialogPane().setContent(grid);
 
 		ButtonType jaButtonType = new ButtonType("Ja", ButtonData.YES);
