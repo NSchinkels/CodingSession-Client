@@ -108,7 +108,7 @@ public class ProfilController implements Initializable {
 					}
 					if (mouseEvent.getClickCount() == 2) {
 						try {
-							System.out.println(Datenhaltung.leseProfil(listViewFreunde.getSelectionModel().getSelectedItem()));
+							new CodingSessionDialog().erstelleFehlermeldungDialog("Freund",Datenhaltung.leseProfil(listViewFreunde.getSelectionModel().getSelectedItem()).toString());
 						} catch (PersistenzException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

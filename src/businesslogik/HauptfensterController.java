@@ -160,8 +160,6 @@ public class HauptfensterController implements Initializable {
 		try {
 			rootCF = (Parent) loaderCF.load();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		tabCommunityFeed.setContent(rootCF);
 

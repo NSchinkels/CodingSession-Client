@@ -70,4 +70,7 @@ public class ProfilModell implements Serializable{
 	public void setProgrammierkenntnisse(String programmierkenntnisse){
 		this.programmierkenntnisse = programmierkenntnisse;
 	}
+	public String toString(){
+		return "Geburtsdatum: "+this.geburtsdatum+"/nGeburtsort: "+this.geburtsort+"/nWohnort: "+this.wohnort+"/nProgramirkenntinse: "+this.programmierkenntnisse+"/nJob: "+this.aktuellerJob;
+	}
 }
