@@ -171,4 +171,7 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 			return true;
 		}
 	}
+	public BenutzerkontoOriginal getEchtesKonto(){
+		return this.echtesKonto;
+	}
 }

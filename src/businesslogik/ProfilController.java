@@ -22,10 +22,9 @@ import javafx.scene.input.MouseEvent;
 
 public class ProfilController implements Initializable {
 
-	//Regulaerer Ausdruck fuer die Freunde-Suche
-	private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+"
-		    								+ "(\\.[A-Za-z0-9]+)*(\\-[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	
+	// Regulaerer Ausdruck fuer die Freunde-Suche
+	private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+" + "(\\.[A-Za-z0-9]+)*(\\-[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
 	ProfilbearbeitungController bearbeitung;
 	Benutzerkonto benutzerkonto;
 	ProfilModell profilModell = new ProfilModell();
@@ -55,7 +54,7 @@ public class ProfilController implements Initializable {
 
 	@FXML
 	private ListView<String> listViewFreunde;
-	
+
 	@FXML
 	private TextField txtSucheFreunde;
 
@@ -67,15 +66,15 @@ public class ProfilController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		benutzerkonto = ControllerMediator.getInstance().getBenutzerkonto();
 		freundesliste = benutzerkonto.getFreunde();
-		
+
 		try {
 			profilModell = Datenhaltung.leseProfil(benutzerkonto.getEmail());
 		} catch (PersistenzException e) {
 			e.printStackTrace();
 		}
 		listViewFreunde.getItems().clear();
-		freundeslisteItems=listViewFreunde.getItems();
-		for(String e:freundesliste){
+		freundeslisteItems = listViewFreunde.getItems();
+		for (String e : freundesliste) {
 			freundeslisteItems.add(e);
 		}
 
@@ -103,12 +102,10 @@ public class ProfilController implements Initializable {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-					if (mouseEvent.getClickCount() == 3) {
-						ControllerMediator.getInstance().einladen(listViewFreunde.getSelectionModel().getSelectedItem());
-					}
 					if (mouseEvent.getClickCount() == 2) {
+						ControllerMediator.getInstance().einladen(listViewFreunde.getSelectionModel().getSelectedItem());
 						try {
-							new CodingSessionDialog().erstelleFehlermeldungDialog("Freund",Datenhaltung.leseProfil(listViewFreunde.getSelectionModel().getSelectedItem()).toString());
+							new CodingSessionDialog().erstelleFehlermeldungDialog("Freund", Datenhaltung.leseProfil(listViewFreunde.getSelectionModel().getSelectedItem()).toString());
 						} catch (PersistenzException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -138,17 +135,16 @@ public class ProfilController implements Initializable {
 	@FXML
 	public void txtSucheFreundeGeklickt(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
-			if(txtSucheFreunde.getText().matches(EMAIL_REGEX)){
+			if (txtSucheFreunde.getText().matches(EMAIL_REGEX)) {
 				benutzerkonto.addFreund(txtSucheFreunde.getText());
 				freundeslisteItems.add(txtSucheFreunde.getText());
 				try {
-					Datenhaltung.schreibeDB((BenutzerkontoOriginal)(benutzerkonto));
+					Datenhaltung.schreibeDB((BenutzerkontoOriginal) (benutzerkonto));
 				} catch (PersistenzException e) {
 					e.printStackTrace();
 				}
 			} else {
-				new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültige E-Mail-Adresse", 
-						"Bitte gebe eine gültige E-Mail-Adresse ein!");
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültige E-Mail-Adresse", "Bitte gebe eine gültige E-Mail-Adresse ein!");
 			}
 		}
 	}
