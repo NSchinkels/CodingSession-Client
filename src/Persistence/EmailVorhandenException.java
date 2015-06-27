@@ -5,6 +5,11 @@ package Persistence;
  *
  */
 public class EmailVorhandenException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	EmailVorhandenException(){
 		super();
 	}

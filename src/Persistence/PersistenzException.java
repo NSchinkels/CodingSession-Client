@@ -5,6 +5,11 @@ package Persistence;
  *
  */
 public class PersistenzException extends Exception{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	PersistenzException(){
 		super();
 	}

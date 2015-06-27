@@ -31,7 +31,6 @@ public class Chat {
 	private KommunikationIncoming kommunikationIn;
 
 	public Chat() {
-		this.verlauf = new LinkedList<String>();
 	}
 
 	public Chat(KommunikationOutgoing kommunikationOut, KommunikationIncoming kommunikationIn, String sender, int id) {
@@ -40,10 +39,6 @@ public class Chat {
 		this.kommunikationOut = kommunikationOut;
 		this.kommunikationIn = kommunikationIn;
 		this.sender = sender;
-		// Startet das JMS Topic fure den Chat als Producer
-		kommunikationOut.starteChat("Chat" + id);
-		// Startet das JMS Topic als Subscriber
-		kommunikationIn.bekommeChat(id, verlauf);
 	}
 
 	/**
@@ -56,19 +51,14 @@ public class Chat {
 		kommunikationOut.veroeffentlicheChat(nachricht, sender);
 	}
 
-	public void setKommunikationOut(KommunikationOutgoing kommunikationOut) {
-		this.kommunikationOut = kommunikationOut;
+	public void start() {
+		// Startet das JMS Topic fure den Chat als Producer
 		kommunikationOut.starteChat("Chat" + id);
-	}
-
-	public void setKommunikationIn(KommunikationIncoming kommunikationIn) {
-		this.kommunikationIn = kommunikationIn;
+		// Startet das JMS Topic als Subscriber
 		kommunikationIn.bekommeChat(id, verlauf);
 	}
 
-	public List<String> empfangen() {
-		return this.verlauf;
-	}
+	
 
 	/**
 	 * Schreibt den Chat an die Datenbank
@@ -82,6 +72,21 @@ public class Chat {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 
+	 * @return Der komplette formatierte Chat wird returned
+	 * 
+	 */
+	
+
+	public String getChat() {
+		String c = "";
+		for (String a : verlauf) {
+			c += a;
+		}
+		return c;
+	}
+
 
 	public String getSender() {
 		return sender;
@@ -107,18 +112,16 @@ public class Chat {
 		return this.id;
 	}
 
-	/**
-	 * 
-	 * @return Der komplette formatierte Chat wird returned
-	 * 
-	 */
+	public List<String> getVerlauf() {
+		return this.verlauf;
+	}
+	public void setKommunikationOut(KommunikationOutgoing kommunikationOut) {
+		this.kommunikationOut = kommunikationOut;
 
-	public String getChat() {
-		String c = "";
-		for (String a : verlauf) {
-			c += a;
-		}
-		return c;
 	}
 
+	public void setKommunikationIn(KommunikationIncoming kommunikationIn) {
+		this.kommunikationIn = kommunikationIn;
+
+	}
 }

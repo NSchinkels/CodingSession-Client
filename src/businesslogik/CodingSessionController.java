@@ -17,6 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+
 /**
  * 
  * Der CodingSessionController beinhaltet die Hauptfunktion unseres Programms.
@@ -36,6 +37,9 @@ public class CodingSessionController implements Initializable {
 
 	// Neuester Code aus der JMS, zu �berpr�fungszwecken notwendig
 	private String netCode = "";
+
+	// Groesse des angezeigten Chats
+	private int chatsize = -1;
 
 	// Kommunikation
 	private KommunikationIncoming kommunikationIn;
@@ -93,12 +97,20 @@ public class CodingSessionController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		// wenn gespeichert werden soll und die CodingSession vom Benutzer ist
+		// wird gespeichert
+		if (codingSessionModell.isSpeichern() && codingSessionModell.getBenutzerMail().equals(benutzerEmail)) {
+			try {
+				Datenhaltung.schreibeCS(codingSessionModell);
+			} catch (PersistenzException e) {
+				new CodingSessionDialog().erstelleFehlermeldungDialog("CodingSession speichern", "Die CodingSession konnte nicht gepseichert werden");
+			}
+		}
 		try {
 			// Alle CodingSessions werden geholt
 			packageExplorer = new PackageExplorerController(benutzerEmail);
 		} catch (PersistenzException e1) {
-			new CodingSessionDialog().erstelleFehlermeldungDialog("Datenbank-Fehler",
-					"Es gab einen Fehler mit der Datenbank.\n Bitte starte eine neue CodingSession");
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Datenbank-Fehler", "Es gab einen Fehler mit der Datenbank.\n Bitte starte eine neue CodingSession");
 		}
 		// Liste wird erstellt und gefüllt
 		ObservableList<CodingSessionModell> codingSessionItems = listCodingSession.getItems();
@@ -120,26 +132,27 @@ public class CodingSessionController implements Initializable {
 		try {
 			chat = Datenhaltung.leseChat(codingSessionModell.getId());
 		} catch (Exception e1) {
-			new CodingSessionDialog().erstelleFehlermeldungDialog("Datenbank-Fehler",
-					"Es gab einen Fehler mit der Datenbank.\n Bitte starte eine neue CodingSession");
+			e1.printStackTrace();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Datenbank-Fehler", "Es gab einen Fehler mit der Datenbank.\n Bitte starte eine neue CodingSession");
 		}
 		// Wenn es noch keinen Chat in der DB gab, wird ein neuer erstellt
-		if (chat == null) {
-			chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
-			System.out.println("Chat war null");
-		} else {
-			// Wenn er doch in der DB war werden noch nicht persitierte Objekte
-			// gestetzt
-			chat.setKommunikationOut(kommunikationOut);
-			chat.setKommunikationIn(kommunikationIn);
-			chat.setSize(chat.empfangen().size());
-			txtChatRead.setText(chat.getChat());
+
+		chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
+		try {
+			chat.setVerlauf(Datenhaltung.leseChat(codingSessionModell.getId()).getVerlauf());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		chat.start();
+		txtChatRead.setText(chat.getChat());
+
 		// Der Producer und Subscriber vom JMS wird gestartet
 		kommunikationOut.starteCs("CodingSession" + codingSessionModell.getId());
-		kommunikationIn.bekommeCode("CodingSession" + codingSessionModell.getId(), codingSessionModell.getBenutzerMail());
+		kommunikationIn.bekommeCode("CodingSession" + codingSessionModell.getId(), benutzerEmail);
 		netCode = code = codingSessionModell.getCode();
 		txtCodingSession.setText(code);
+
 		codingSessionThread = new Thread() {
 
 			public void run() {
@@ -164,15 +177,15 @@ public class CodingSessionController implements Initializable {
 						}
 						// Wenn es neue Nachrichten gibt wird das Chat Fenster
 						// aktualsiert
-						if (chat.empfangen().size() > chat.getSize()) {
+						{
 							txtChatRead.setText(chat.getChat());
-							chat.setSize(chat.empfangen().size());
+							chat.setSize(chat.getVerlauf().size());
+							chatsize = chat.getSize();
 						}
-						// Alles 30 Sekunden werden Chat und CodingSession
+						// Alles 60 Sekunden werden Chat und CodingSession
 						// persistiert
-						if (speicherCounter++ > 150 && codingSessionModell.isSpeichern()) {
+						if (speicherCounter++ > 300 && codingSessionModell.isSpeichern()) {
 							speichern();
-							chat.speichern();
 							speicherCounter = 0;
 						}
 						// Aktueller Code wird an das Modell Objekt
@@ -184,8 +197,7 @@ public class CodingSessionController implements Initializable {
 						// nicht unendlich weiterläuft
 						running = false;
 					} catch (Exception e2) {
-						new CodingSessionDialog().erstelleFehlermeldungDialog("JMS-Fehler",
-								"Es gab einen Fehler im JMS.\n Bitte starte eine neue CodingSession");
+						new CodingSessionDialog().erstelleFehlermeldungDialog("JMS-Fehler", "Es gab einen Fehler im JMS.\n Bitte starte eine neue CodingSession");
 						running = false;
 					}
 				}
@@ -235,16 +247,19 @@ public class CodingSessionController implements Initializable {
 	}
 
 	/**
-	 * Momentan unimplemtiert
+	 * Metohde die aus Key presses auf dem Fenster der CodingSession reagiert
 	 * 
 	 * @param event
 	 */
 
 	@FXML
 	public void txtCodingSessionFormatierung(KeyEvent event) {
-		if (event.getCode() == KeyCode.ENTER) {
+		if (event.isControlDown() && event.getCode() == KeyCode.S) {
+			this.speichern();
+		}
+		if (event.isControlDown() && event.getCode() == KeyCode.I) {
 			synchronized (txtCodingSession) {
-				// txtCodingSession.setText(einruecken(txtCodingSession.getText()));
+				txtCodingSession.setText(einruecken(txtCodingSession.getText()));
 			}
 		}
 	}
@@ -267,13 +282,10 @@ public class CodingSessionController implements Initializable {
 	 * darf nich hoeher als 10 werden weil dann das JMS nicht mehr responsiv
 	 * genug ist
 	 * 
-	 * @param benutzerEmail
-	 *            Die uebergebene Email wird gespeichert
 	 * @return
 	 */
-	public boolean addTeilnehmer(String benutzerEmail) {
+	public boolean addTeilnehmer() {
 		if (codingSessionModell.getAnzahlTeilnehmer() < 10) {
-			codingSessionModell.addTeilnehmer(benutzerEmail);
 			return true;
 		}
 		return false;
@@ -328,7 +340,6 @@ public class CodingSessionController implements Initializable {
 	 */
 
 	public void sendeEinladung(String benutzer) {
-		System.out.println("Sende Einladung zu " + benutzer);
 		kommunikationOut.ladeEin(codingSessionModell, benutzer);
 	}
 
@@ -338,7 +349,10 @@ public class CodingSessionController implements Initializable {
 
 	public void speichern() {
 		try {
-			Persistence.Datenhaltung.schreibeCS(codingSessionModell);
+			if (codingSessionModell.getBenutzerMail().equals(benutzerEmail)) {
+				Datenhaltung.schreibeCS(codingSessionModell);
+				chat.speichern();
+			}
 		} catch (PersistenzException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

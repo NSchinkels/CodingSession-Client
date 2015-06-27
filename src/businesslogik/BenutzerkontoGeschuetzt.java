@@ -1,6 +1,6 @@
 package businesslogik;
 
-import java.util.LinkedList;
+
 import java.util.List;
 
 import Persistence.*;
@@ -17,11 +17,17 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 			
 	private BenutzerkontoOriginal echtesKonto;
 	//ID hier noch notwedig? Evntl. entfernen?
+	@SuppressWarnings("unused")
 	private String vorname;
+	@SuppressWarnings("unused")
 	private String nachname;
+	@SuppressWarnings("unused")
 	private String nickname;
+	@SuppressWarnings("unused")
 	private String email;
+	@SuppressWarnings("unused")
 	private String passwort;
+	@SuppressWarnings("unused")
 	private int id;
 
 	/**

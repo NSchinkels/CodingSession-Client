@@ -1,6 +1,5 @@
 package businesslogik;
 
-import java.util.LinkedList;
 import java.util.List;
 /**
  * Klasse die als Proxy für das Proxy-Muster dienen soll, bitte immer die zum erstellen nutzen
@@ -28,7 +27,7 @@ public abstract class Benutzerkonto {
 	public abstract void delFreund(String freundEmail);
 
 	public abstract List<String> getFreunde();
-	//zum testen
+
 	public String toString(){
 		return this.getName();
 	}

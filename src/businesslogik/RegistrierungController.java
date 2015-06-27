@@ -26,8 +26,7 @@ import javafx.stage.Stage;
 public class RegistrierungController implements Initializable {
 
 	// Zwischenzeitlich, bis bessere Loesung gefunden ist.
-	int id = 5;
-
+	int id=1;
 	private Benutzerkonto konto;
 	private ProfilModell profilModell;
 
@@ -78,7 +77,7 @@ public class RegistrierungController implements Initializable {
 		choiceBox.setTooltip(new Tooltip("Mit welchem Namen m�chtest du dich registrieren?"));
 		choiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
-			public void changed(ObservableValue observable, String oldValue, String newValue) {
+			public void changed(@SuppressWarnings("rawtypes") ObservableValue observable, String oldValue, String newValue) {
 				if (choiceBox.getValue().equals("Realname")) {
 					hboxNickname.setVisible(false);
 					hboxVorname.setVisible(true);

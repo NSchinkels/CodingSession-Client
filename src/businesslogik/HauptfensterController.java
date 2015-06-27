@@ -77,14 +77,6 @@ public class HauptfensterController implements Initializable {
 		}
 		if (dialog) {
 			codingSessionModell = new CodingSessionDialog().erstelleCsStartenDialog();
-			if (codingSessionModell.isSpeichern()) {
-				try {
-					Datenhaltung.schreibeCS(codingSessionModell);
-				} catch (PersistenzException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 		}
 		codingSessionController = null;
 		try {
@@ -117,7 +109,6 @@ public class HauptfensterController implements Initializable {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profilbearbeitung.fxml"));
 			profilbearbeitungController = new ProfilbearbeitungController();
-			ControllerMediator.getInstance().setProfilbearbeitung(profilbearbeitungController);
 			loader.setController(profilbearbeitungController);
 			Parent root = (Parent) loader.load();
 			tabProfil.setText("Profil: Profilbearbeitung");
@@ -131,7 +122,6 @@ public class HauptfensterController implements Initializable {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profil.fxml"));
 			profilController = new ProfilController();
-			ControllerMediator.getInstance().setProfil(profilController);
 			loader.setController(profilController);
 			Parent root = (Parent) loader.load();
 			tabProfil.setText("Profil");
@@ -147,21 +137,18 @@ public class HauptfensterController implements Initializable {
 	 */
 
 	public void neuerCf() {
-		FXMLLoader loaderCF = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));
+
 		try {
+			Datenhaltung.refresh();
+			FXMLLoader loaderCF = new FXMLLoader(getClass().getResource("/view/fxml/community_feed.fxml"));
 			communityFeedController = Datenhaltung.leseCF();
-		} catch (PersistenzException e) {
-			// TODO Auto-generated catch block
+			ControllerMediator.getInstance().setCommunityfeed(communityFeedController);
+			loaderCF.setController(communityFeedController);
+			Parent rootCF = (Parent) loaderCF.load();
+			tabCommunityFeed.setContent(rootCF);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		ControllerMediator.getInstance().setCommunityfeed(communityFeedController);
-		loaderCF.setController(communityFeedController);
-		Parent rootCF = null;
-		try {
-			rootCF = (Parent) loaderCF.load();
-		} catch (IOException e) {
-		}
-		tabCommunityFeed.setContent(rootCF);
 
 	}
 

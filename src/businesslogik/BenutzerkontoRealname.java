@@ -3,10 +3,13 @@ package businesslogik;
 import javax.persistence.*;
 
 
-import java.io.*;
-
 @Entity
 public class BenutzerkontoRealname extends BenutzerkontoOriginal{
+	/**
+	 * 
+	 */
+	@Transient
+	private static final long serialVersionUID = 1L;
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

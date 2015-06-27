@@ -8,6 +8,12 @@ import javax.persistence.*;
 @Table(name="ProfilModell")
 public class ProfilModell implements Serializable{
 	
+	/**
+	 * 
+	 */
+	
+	@Transient
+	private static final long serialVersionUID = 1L;
 	@Id
 	private String benutzerMail;
 	private String geschlecht;

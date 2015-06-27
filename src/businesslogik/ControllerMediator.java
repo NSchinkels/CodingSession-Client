@@ -12,8 +12,6 @@ public class ControllerMediator {
 	private CommunityFeedController communityfeed;
 	private HauptfensterController hauptfenster;
 	private Benutzerkonto benutzerkonto;
-	private ProfilController profil;
-	private ProfilbearbeitungController profilbearbeitung;
 
 
 	public static ControllerMediator getInstance() {
@@ -40,14 +38,6 @@ public class ControllerMediator {
 		this.communityfeed = communityfeed;
 	}
 
-	public void setProfil(ProfilController profil) {
-		this.profil = profil;
-	}
-
-	public void setProfilbearbeitung(ProfilbearbeitungController profilbearbeitung) {
-		this.profilbearbeitung = profilbearbeitung;
-	}
-
 	public void addCommunityFeed(Beitrag beitrag) {
 		communityfeed.addBeitrag(beitrag);
 	}
@@ -62,6 +52,9 @@ public class ControllerMediator {
 	}
 
 	public void einladungAngenommen() {
+		CodingSessionModell cmod=KommunikationIncoming.getEinladung();
+		System.out.println(cmod.getAnzahlTeilnehmer()+cmod.getBenutzerMail()+cmod.getCode()+cmod.getId()+cmod.getTitel());
+		
 		hauptfenster.neueCodingSession(false, KommunikationIncoming.getEinladung());
 	}
 

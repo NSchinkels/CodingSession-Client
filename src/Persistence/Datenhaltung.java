@@ -3,12 +3,12 @@ package Persistence;
 import javax.persistence.*;
 
 import businesslogik.*;
+
 import java.util.List;
 
 public class Datenhaltung {
 	private static final String PERSISTENCE_UNIT_NAME = "Benutzerkonten";
-	private static EntityManagerFactory factory = Persistence
-			.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	private static EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	private static EntityManager em = factory.createEntityManager();
 
 	/**
@@ -17,8 +17,7 @@ public class Datenhaltung {
 	 * @param bk
 	 * @throws PersistenzException
 	 */
-	public static void schreibeDB(BenutzerkontoOriginal konto)
-			throws PersistenzException {
+	public static void schreibeDB(BenutzerkontoOriginal konto) throws PersistenzException {
 		try {
 			em.getTransaction().begin();
 			em.persist(konto);
@@ -26,15 +25,13 @@ public class Datenhaltung {
 		} catch (Exception e) {
 			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
-			throw new PersistenzException(
-					"Fehler bei der Synchronisation mit der Datenbank");
+			throw new PersistenzException("Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
 			// em.flush();
 		}
 	}
 
-	public static void updateDB(BenutzerkontoOriginal konto)
-			throws PersistenzException {
+	public static void updateDB(BenutzerkontoOriginal konto) throws PersistenzException {
 		try {
 			em.getTransaction().begin();
 			em.merge(konto);
@@ -42,8 +39,7 @@ public class Datenhaltung {
 		} catch (Exception e) {
 			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
-			throw new PersistenzException(
-					"Fehler bei der Synchronisation mit der Datenbank");
+			throw new PersistenzException("Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
 			// em.flush();
 		}
@@ -55,8 +51,7 @@ public class Datenhaltung {
 	 * @param cs
 	 * @throws PersistenzException
 	 */
-	public static void schreibeCS(CodingSessionModell cs)
-			throws PersistenzException {
+	public static void schreibeCS(CodingSessionModell cs) throws PersistenzException {
 		try {
 			em.getTransaction().begin();
 			em.persist(cs);
@@ -64,8 +59,7 @@ public class Datenhaltung {
 		} catch (Exception e) {
 			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
-			throw new PersistenzException(
-					"Fehler bei der Synchronisation mit der Datenbank");
+			throw new PersistenzException("Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
 			// em.flush();
 		}
@@ -79,8 +73,7 @@ public class Datenhaltung {
 	 * @return BenutzerKontoOriginal
 	 * @throws PersistenzException
 	 */
-	public static BenutzerkontoOriginal leseDB(String email)
-			throws PersistenzException {
+	public static BenutzerkontoOriginal leseDB(String email) throws PersistenzException {
 		BenutzerkontoOriginal konto = null;
 		try {
 			konto = em.find(BenutzerkontoOriginal.class, email);
@@ -99,14 +92,11 @@ public class Datenhaltung {
 	 * @return
 	 * @throws PersistenzException
 	 */
-	public static List<CodingSessionModell> leseCS(String email)
-			throws PersistenzException {
+	@SuppressWarnings("unchecked")
+	public static List<CodingSessionModell> leseCS(String email) throws PersistenzException {
 		List<CodingSessionModell> list = null;
 		try {
-			Query q = em
-					.createQuery(
-							"Select c from CodingSessionModell c where c.benutzerMail = :cmail",
-							CodingSessionModell.class);
+			Query q = em.createQuery("Select c from CodingSessionModell c where c.benutzerMail = :cmail", CodingSessionModell.class);
 			q.setParameter("cmail", email);
 			list = q.getResultList();
 		} catch (Exception e) {
@@ -122,6 +112,7 @@ public class Datenhaltung {
 	 * @throws PersistenzException
 	 */
 	public static void schreibeChat(Chat ch) throws PersistenzException {
+	
 		try {
 			em.getTransaction().begin();
 			em.persist(ch);
@@ -129,10 +120,9 @@ public class Datenhaltung {
 		} catch (Exception e) {
 			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
-			throw new PersistenzException(
-					"Fehler bei der Synchronisation mit der Datenbank");
+			throw new PersistenzException("Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			// em.flush();
+			//em.flush();
 		}
 	}
 
@@ -148,6 +138,7 @@ public class Datenhaltung {
 	// Hab hier nicht richtig verstanden, nach welchen Parameter du suchen
 	// musst, evntl. noch bescheid geben gez. Break Free
 	public static Chat leseChat(int id) throws PersistenzException {
+		
 		Chat chat = null;
 		try {
 			chat = em.find(Chat.class, id);
@@ -166,8 +157,8 @@ public class Datenhaltung {
 	 * @throws PersistenzException
 	 */
 
-	public static void schreibeCF(CommunityFeedController CF)
-			throws PersistenzException {
+	public static void schreibeCF(CommunityFeedController CF) throws PersistenzException {
+		
 		try {
 			em.getTransaction().begin();
 			em.persist(CF);
@@ -176,10 +167,9 @@ public class Datenhaltung {
 			e.printStackTrace();
 			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
-			throw new PersistenzException(
-					"Fehler bei der Synchronisation mit der Datenbank");
+			throw new PersistenzException("Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			// em.flush();
+			//em.flush();
 		}
 	}
 
@@ -190,13 +180,13 @@ public class Datenhaltung {
 	 * @throws PersistenzException
 	 */
 	public static CommunityFeedController leseCF() throws PersistenzException {
+		
 		CommunityFeedController CF = null;
 		try {
 			CF = em.find(CommunityFeedController.class, 1);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new PersistenzException(
-					"Fehler bei der Synchronisation mit der Datenbank");
+			throw new PersistenzException("Fehler bei der Synchronisation mit der Datenbank");
 		}
 		return CF;
 	}
@@ -207,8 +197,7 @@ public class Datenhaltung {
 	 * @param PM
 	 * @throws PersistenzException
 	 */
-	public static void schreibeProfil(ProfilModell PM)
-			throws PersistenzException {
+	public static void schreibeProfil(ProfilModell PM) throws PersistenzException {
 		try {
 			em.getTransaction().begin();
 			em.persist(PM);
@@ -216,10 +205,9 @@ public class Datenhaltung {
 		} catch (Exception e) {
 			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
-			throw new PersistenzException(
-					"Fehler bei der Synchronisation mit der Datenbank");
+			throw new PersistenzException("Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
-			// em.flush();
+			//em.flush();
 		}
 	}
 
@@ -230,14 +218,12 @@ public class Datenhaltung {
 	 * @return
 	 * @throws PersistenzException
 	 */
-	public static ProfilModell leseProfil(String email)
-			throws PersistenzException {
+	public static ProfilModell leseProfil(String email) throws PersistenzException {
 		ProfilModell PM = null;
 		try {
 			PM = em.find(ProfilModell.class, email);
 		} catch (Exception e) {
-			throw new PersistenzException(
-					"Fehler bei der Synchronisation mit der Datenbank");
+			throw new PersistenzException("Fehler bei der Synchronisation mit der Datenbank");
 		}
 		return PM;
 	}
@@ -250,8 +236,7 @@ public class Datenhaltung {
 		} catch (Exception e) {
 			if (em.getTransaction() != null && em.getTransaction().isActive())
 				em.getTransaction().rollback();
-			throw new PersistenzException(
-					"Fehler bei der Synchronisation mit der Datenbank");
+			throw new PersistenzException("Fehler bei der Synchronisation mit der Datenbank");
 		} finally {
 			// em.flush();
 		}
@@ -271,8 +256,7 @@ public class Datenhaltung {
 	 * @throws PersistenzException
 	 * @throws EmailVorhandenException
 	 */
-	public static void mailVorhanden(String email)
-			throws EmailVorhandenException {
+	public static void mailVorhanden(String email) throws EmailVorhandenException {
 
 		if (em.find(BenutzerkontoOriginal.class, email) != null) {
 			throw new EmailVorhandenException();
@@ -288,8 +272,7 @@ public class Datenhaltung {
 	 * @throws PersistenzException
 	 * @throws FalschesPasswortException
 	 */
-	public static boolean passwortRichtig(String email, String passwort)
-			throws PersistenzException {
+	public static boolean passwortRichtig(String email, String passwort) throws PersistenzException {
 		try {
 			if (leseDB(email).getPasswort().equals(passwort)) {
 				return true;
@@ -299,5 +282,10 @@ public class Datenhaltung {
 		} catch (Exception e) {
 			throw new PersistenzException();
 		}
+	}
+	public static void refresh(){
+		em.close();
+		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		em = factory.createEntityManager();
 	}
 }

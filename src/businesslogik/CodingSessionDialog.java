@@ -31,6 +31,7 @@ public class CodingSessionDialog {
 		if (result.get() == ButtonType.OK) {
 			ControllerMediator.getInstance().beenden();
 			Platform.exit();
+			System.exit(0);
 		} else {
 			// Falls der Benutzer den Button Abbrechen klickt, schliesst der
 			// Dialog
@@ -65,13 +66,15 @@ public class CodingSessionDialog {
 
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == jaButtonType) {
+				codingSessionModell.setSpeichern(true);
 				return new Beitrag(codingSessionModell, txtBetreff.getText(), txtBeschreibung.getText(), false);
 			} else if (dialogButton == neinButtonType) {
+				codingSessionModell.setSpeichern(false);
 				return new Beitrag(codingSessionModell, txtBetreff.getText(), txtBeschreibung.getText(), true);
 			}
 			return null;
 		});
-
+		
 		ControllerMediator.getInstance().addCommunityFeed(dialog.showAndWait().get());
 	}
 	
@@ -105,7 +108,7 @@ public class CodingSessionDialog {
 		dialog.setTitle("CodingSession starten");
 		dialog.setHeaderText(null);
 
-		Label lblSpeichern = new Label("Soll die nachfolgende CodingSession in Zukunft gespeichert werden?");
+		Label lblSpeichern = new Label("Soll die nachfolgende CodingSession gespeichert werden?");
 		
 		txtTitel = new TextField();
 		txtTitel.setPromptText("Titel der CodingSession");
@@ -123,6 +126,7 @@ public class CodingSessionDialog {
 
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == jaButtonType) {
+				//Es gibt noch keine ID Verwaltung. Es ist bekannt das diese Methode nicht gut ist
 				return new CodingSessionModell((int) (Math.random() * 10000), ControllerMediator.getInstance().getBenutzerkonto().getEmail(), txtTitel.getText(), true, "Hier bitte Code eingeben");
 			} else if (dialogButton == neinButtonType) {
 				return new CodingSessionModell((int) (Math.random() * 10000), ControllerMediator.getInstance().getBenutzerkonto().getEmail(), txtTitel.getText(), false, "Hier bitte Code eingeben");

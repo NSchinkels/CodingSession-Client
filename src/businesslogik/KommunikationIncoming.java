@@ -97,7 +97,6 @@ public class KommunikationIncoming {
 							// werden
 							Platform.runLater(new Runnable() {
 								public void run() {
-									System.out.println("einladung run");
 									new CodingSessionDialog().erstelleEinladungDialog(csEinladung.getBenutzerMail());
 								}
 							});
@@ -136,7 +135,7 @@ public class KommunikationIncoming {
 				public void onMessage(Message message) {
 					if (message instanceof TextMessage) {
 						try {
-							((LinkedList<String>) chatLog).addLast(message.getStringProperty("sender") + ": " + ((TextMessage) message).getText());
+							chatLog.add(message.getStringProperty("sender") + ": " + ((TextMessage) message).getText());
 						} catch (JMSException e) {
 							new CodingSessionDialog().erstelleFehlermeldungDialog("Anmeldung fehlgeschlagen", "Du konntest dich nicht am Chat anmdelden!");
 						}
@@ -146,18 +145,15 @@ public class KommunikationIncoming {
 			};
 			tobsubChat.setMessageListener(listnerFuerChat);
 		} catch (Exception e1) {
+			e1.printStackTrace();
 			new CodingSessionDialog().erstelleFehlermeldungDialog("Anmeldung fehlgeschlagen", "Du konntest dich nicht am Chat anmdelden!");
+
 		}
 
 	}
 
 	public static CodingSessionModell getEinladung() {
-		if (csEinladung != null) {
-			return csEinladung;
-		} else {
-			// throw new Exception("Konnte den Einlader nicht starten");
-			return null;
-		}
+		return csEinladung;
 	}
 
 	public String getCode() {
