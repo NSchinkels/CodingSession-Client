@@ -101,8 +101,8 @@ public class CodingSessionController implements Initializable {
 		chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
 		try {
 			// Falls es einen in der Db gibt wird der geladen
-			if (Datenhaltung.leseChat(codingSessionModell.getId()) != null){
-				chat=Datenhaltung.leseChat(codingSessionModell.getId());
+			if (Datenhaltung.leseChat(codingSessionModell.getId()) != null) {
+				chat = Datenhaltung.leseChat(codingSessionModell.getId());
 				chat.setKommunikationIn(kommunikationIn);
 				chat.setKommunikationOut(kommunikationOut);
 				chat.setSender(benutzerEmail);
@@ -149,7 +149,6 @@ public class CodingSessionController implements Initializable {
 		kommunikationIn.bekommeCode("CodingSession" + codingSessionModell.getId(), benutzerEmail);
 		netCode = code = codingSessionModell.getCode();
 		txtCodingSession.setText(code);
-
 		codingSessionThread = new Thread() {
 
 			public void run() {
@@ -194,8 +193,10 @@ public class CodingSessionController implements Initializable {
 						// nicht unendlich weiterläuft
 						running = false;
 					} catch (Exception e2) {
-						new CodingSessionDialog().erstelleFehlermeldungDialog("JMS-Fehler", "Es gab einen Fehler im JMS.\n Bitte starte eine neue CodingSession");
-						running = false;
+						e2.printStackTrace();
+						// new
+						// CodingSessionDialog().erstelleFehlermeldungDialog("JMS-Fehler",
+						// "Es gab einen Fehler im JMS.\n Bitte starte eine neue CodingSession");
 					}
 				}
 			}
@@ -346,11 +347,13 @@ public class CodingSessionController implements Initializable {
 	 */
 
 	public void speichern() {
-		try {
+		if (this.benutzerEmail.equals(codingSessionModell.getBenutzerMail())) {
+			try {
 				Datenhaltung.schreibeCS(codingSessionModell);
 				chat.speichern();
-		} catch (Exception e) {
-			new CodingSessionDialog().erstelleFehlermeldungDialog("Speichern", "Es konnte nicht gespeichert werden");
+			} catch (Exception e) {
+				new CodingSessionDialog().erstelleFehlermeldungDialog("Speichern", "Es konnte nicht gespeichert werden");
+			}
 		}
 	}
 
