@@ -101,8 +101,12 @@ public class CodingSessionController implements Initializable {
 		chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
 		try {
 			// Falls es einen in der Db gibt wird der geladen
-			if (Datenhaltung.leseChat(codingSessionModell.getId()) != null)
-				chat.setVerlauf(Datenhaltung.leseChat(codingSessionModell.getId()).getVerlauf());
+			if (Datenhaltung.leseChat(codingSessionModell.getId()) != null){
+				chat=Datenhaltung.leseChat(codingSessionModell.getId());
+				chat.setKommunikationIn(kommunikationIn);
+				chat.setKommunikationOut(kommunikationOut);
+				chat.setSender(benutzerEmail);
+			}
 		} catch (Exception e) {
 			// Excetion wird hier geworfen wenn der Chat nicht in der Db ist
 		}
@@ -343,11 +347,8 @@ public class CodingSessionController implements Initializable {
 
 	public void speichern() {
 		try {
-			if (codingSessionModell.getBenutzerMail().equals(benutzerEmail)) {
 				Datenhaltung.schreibeCS(codingSessionModell);
 				chat.speichern();
-
-			}
 		} catch (Exception e) {
 			new CodingSessionDialog().erstelleFehlermeldungDialog("Speichern", "Es konnte nicht gespeichert werden");
 		}

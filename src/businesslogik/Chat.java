@@ -77,7 +77,7 @@ public class Chat {
 	
 	public void speichern() throws PersistenzException{
 		synchronized(verlauf){
-			//Datenhaltung.schreibeChat(this);
+			Datenhaltung.schreibeChat(this);
 		}
 	}
 
