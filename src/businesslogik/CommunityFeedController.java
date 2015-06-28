@@ -15,8 +15,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
@@ -42,6 +40,7 @@ public class CommunityFeedController implements Initializable, Serializable {
 	private ListView<Beitrag> listCommunityFeed;
 
 	public CommunityFeedController() {
+		// beitraege=new LinkedList<Beitrag>();
 	}
 
 	/**
@@ -60,6 +59,10 @@ public class CommunityFeedController implements Initializable, Serializable {
 			public void handle(MouseEvent mouseEvent) {
 				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 					if (mouseEvent.getClickCount() == 2) {
+//						CodingSessionModell codingSession = listCommunityFeed.getSelectionModel().getSelectedItem().getSession();
+//						if (codingSession.isSpeichern()) {
+//							codingSession.setBenutzerId(ControllerMediator.getInstance().getBenutzerkonto().getEmail());
+//						}
 						ControllerMediator.getInstance().changeCodingSession(listCommunityFeed.getSelectionModel().getSelectedItem().getSession());
 					}
 				}
@@ -109,6 +112,7 @@ public class CommunityFeedController implements Initializable, Serializable {
 		try {
 			Datenhaltung.schreibeCF(this);
 		} catch (PersistenzException e) {
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Community", "Konnte den Beitrag nich posten. \nBist du nicht der Eigentümer?");
 		}
 	}
 

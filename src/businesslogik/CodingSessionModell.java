@@ -3,118 +3,100 @@ package businesslogik;
 import java.io.Serializable;
 
 import javax.persistence.*;
+
 /**
- * Das Modell einer CodingSession. Sie beinhaltet den Code 
- * sowie andere selbsterklärende Variablen
+ * Das Modell einer CodingSession. Sie beinhaltet den Code sowie andere
+ * selbsterklärende Variablen
  * 
  *
  */
 @Entity
-@Table(name="CodingSessionModell")
-public class CodingSessionModell implements Serializable{
+@Table(name = "CodingSessionModell")
+public class CodingSessionModell implements Serializable {
 
-	
-		private static final long serialVersionUID = 1L;
-		// IDs
-		private String benutzerMail;
-		@Id
-		@GeneratedValue(strategy = GenerationType.AUTO)
-		private int id;
+	private static final long serialVersionUID = 1L;
+	// IDs
+	private String benutzerMail;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
-		// Daten der CS
-		private String titel;
-		private boolean speichern;
-		
-		// Teilnehmer
-		private String[] teilnehmer;
-		private int anzahlTeilnehmer = 0;
-		
-		//Geschriebener Code
-		private String code;
+	// Daten der CS
+	private String titel;
+	private boolean speichern;
 
-		
-		public CodingSessionModell(){
-			teilnehmer = new String[10];
-		}
-		
-		public CodingSessionModell(int id,String benutzerMail, String titel,
-				boolean speichern,String code) {
-			this.id=id;
-			this.benutzerMail = benutzerMail;
-			this.titel = titel;
-			this.speichern = speichern;
-			this.teilnehmer = new String[10];
-			this.anzahlTeilnehmer = 1;
-			this.code = code;
-		}
+	// Teilnehmer
+	private int anzahlTeilnehmer = 0;
 
-		public String getBenutzerMail() {
-			return benutzerMail;
-		}
+	// Geschriebener Code
+	private String code;
 
-		public void setBenutzerId(String benutzerMail) {
-			this.benutzerMail = benutzerMail;
-		}
+	public CodingSessionModell() {
+	}
 
-		public int getId() {
-			return id;
-		}
+	public CodingSessionModell(int id, String benutzerMail, String titel, boolean speichern, String code) {
+		this.id = id;
+		this.benutzerMail = benutzerMail;
+		this.titel = titel;
+		this.speichern = speichern;
+		this.anzahlTeilnehmer = 1;
+		this.code = code;
+	}
 
-		public void setId(int id) {
-			this.id = id;
-		}
+	public String getBenutzerMail() {
+		return benutzerMail;
+	}
 
-		public String getTitel() {
-			return titel;
-		}
+	public void setBenutzerId(String benutzerMail) {
+		this.benutzerMail = benutzerMail;
+	}
 
-		public void setTitel(String titel) {
-			this.titel = titel;
-		}
+	public int getId() {
+		return id;
+	}
 
-		public boolean isSpeichern() {
-			return speichern;
-		}
+	public void setId(int id) {
+		this.id = id;
+	}
 
-		public void setSpeichern(boolean speichern) {
-			this.speichern = speichern;
-		}
+	public String getTitel() {
+		return titel;
+	}
 
-		public String[] getTeilnehmer() {
-			return teilnehmer;
-		}
+	public void setTitel(String titel) {
+		this.titel = titel;
+	}
 
-		public void setTeilnehmer(String[] teilnehmer) {
-			this.teilnehmer = teilnehmer;
-		}
-		public String getTeilnehmer(int i) {
-			return teilnehmer[i];
-		}
+	public boolean isSpeichern() {
+		return speichern;
+	}
 
-		public void addTeilnehmer(String teilnehmer) {
-			this.teilnehmer[anzahlTeilnehmer] = teilnehmer;
-		}
-		
-		public int getAnzahlTeilnehmer() {
-			return anzahlTeilnehmer;
-		}
+	public void setSpeichern(boolean speichern) {
+		this.speichern = speichern;
+	}
 
-		public void setAnzahlTeilnehmer(int anzahlTeilnehmer) {
-			this.anzahlTeilnehmer = anzahlTeilnehmer;
-		}
+	public int getAnzahlTeilnehmer() {
+		return anzahlTeilnehmer;
+	}
 
-		public String getCode() {
-			return code;
-		}
+	public void setAnzahlTeilnehmer(int anzahlTeilnehmer) {
+		this.anzahlTeilnehmer = anzahlTeilnehmer;
+	}
 
-		public void setCode(String code) {
-			this.code = code;
-		}
-		/**
-		 * Die Methode toString wurde überschrieben um das Modell in einer List anzeigen zu lassen
-		 */
-		public String toString(){
-			return "Titel : "+this.titel;
-		}
-		
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	/**
+	 * Die Methode toString wurde überschrieben um das Modell in einer List
+	 * anzeigen zu lassen
+	 */
+	public String toString() {
+		return "Titel : " + this.titel;
+	}
+
 }
