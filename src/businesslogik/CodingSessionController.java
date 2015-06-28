@@ -100,10 +100,11 @@ public class CodingSessionController implements Initializable {
 		// Es wird ein neuer Chat erstellt
 		chat = new Chat(kommunikationOut, kommunikationIn, benutzerEmail, codingSessionModell.getId());
 		try {
-			//Falls es einen in der Db gibt wird der geladen
-			chat.setVerlauf(Datenhaltung.leseChat(codingSessionModell.getId()).getVerlauf());
-			chat.setErst(false);
+			// Falls es einen in der Db gibt wird der geladen
+			if (Datenhaltung.leseChat(codingSessionModell.getId()) != null)
+				chat.setVerlauf(Datenhaltung.leseChat(codingSessionModell.getId()).getVerlauf());
 		} catch (Exception e) {
+			// Excetion wird hier geworfen wenn der Chat nicht in der Db ist
 		}
 		chat.start();
 		// wenn gespeichert werden soll und die CodingSession vom Benutzer ist
@@ -169,7 +170,7 @@ public class CodingSessionController implements Initializable {
 						}
 						// Wenn es neue Nachrichten gibt wird das Chat Fenster
 						// aktualsiert
-						{
+						if (chatsize < chat.getSize()) {
 							txtChatRead.setText(chat.getChat());
 							chat.setSize(chat.getVerlauf().size());
 							chatsize = chat.getSize();
@@ -337,17 +338,18 @@ public class CodingSessionController implements Initializable {
 
 	/**
 	 * Die CodingSession wird in der DB persistiert
+	 * 
 	 */
 
 	public void speichern() {
 		try {
 			if (codingSessionModell.getBenutzerMail().equals(benutzerEmail)) {
 				Datenhaltung.schreibeCS(codingSessionModell);
-				//chat.speichern();
+				chat.speichern();
+
 			}
 		} catch (Exception e) {
-			System.out.println(chat.getChat()+chat.getId()+chat.getSize()+chat.getSender()+codingSessionModell.getAnzahlTeilnehmer()+codingSessionModell.getBenutzerMail()+codingSessionModell.getCode()+codingSessionModell.getId()+codingSessionModell.getTitel());
-			e.printStackTrace();
+			new CodingSessionDialog().erstelleFehlermeldungDialog("Speichern", "Es konnte nicht gespeichert werden");
 		}
 	}
 

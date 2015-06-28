@@ -1,10 +1,7 @@
 package businesslogik;
 
-import java.util.LinkedList;
 import java.util.List;
-
 import javafx.application.Platform;
-
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -135,7 +132,9 @@ public class KommunikationIncoming {
 				public void onMessage(Message message) {
 					if (message instanceof TextMessage) {
 						try {
-							chatLog.add(message.getStringProperty("sender") + ": " + ((TextMessage) message).getText());
+							synchronized (chatLog) {
+								chatLog.add(message.getStringProperty("sender") + ": " + ((TextMessage) message).getText());
+							}
 						} catch (JMSException e) {
 							new CodingSessionDialog().erstelleFehlermeldungDialog("Anmeldung fehlgeschlagen", "Du konntest dich nicht am Chat anmdelden!");
 						}

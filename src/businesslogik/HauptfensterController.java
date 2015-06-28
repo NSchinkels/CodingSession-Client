@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import Persistence.Datenhaltung;
-import Persistence.PersistenzException;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
