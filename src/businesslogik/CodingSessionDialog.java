@@ -18,6 +18,9 @@ import javafx.scene.layout.GridPane;
 public class CodingSessionDialog {
 	private TextField txtTitel;
 
+	/**
+	 * Erstelle einen Dialog, der beim schlieﬂen der Anwendung aufgerufen wird.
+	 */
 	public void erstelleAbmeldeDialog() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("CodingSession schliessen");
@@ -39,6 +42,11 @@ public class CodingSessionDialog {
 		}
 	}
 	
+	/**
+	 * Erstellt einen Dialog, der aufgerufen wird sobald der Benutzer seine CodingSession mit 
+	 * der Community teilen moechte.
+	 * @param codingSessionModell
+	 */
 	public void erstelleCfBeitragHinzufuegenDialog(CodingSessionModell codingSessionModell) {
 		Dialog<Beitrag> dialog = new Dialog<>();
 		dialog.setTitle("CodingSession teilen");
@@ -80,7 +88,7 @@ public class CodingSessionDialog {
 	}
 	
 	/**
-	 * Erstellt ein Dialog
+	 * Erstellt einen Dialog der beim schliessen der CodingSession aufgerufen wird.
 	 */
 	public void erstelleCsSchliessenDialog() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -102,7 +110,7 @@ public class CodingSessionDialog {
 	}
 	
 	/**
-	 * Erstellt ein Dialog
+	 * Erstellt einen Dialog der beim starten einer CodingSession aufgerufen wird.
 	 */
 	public CodingSessionModell erstelleCsStartenDialog() {
 		Dialog<CodingSessionModell> dialog = new Dialog<>();
@@ -138,6 +146,11 @@ public class CodingSessionDialog {
 		return dialog.showAndWait().get();
 	}
 	
+	/**
+	 * Erstellt einen Dialog der aufgerufen wird, sobald der Benutzer in eine 
+	 * bestehende CodingSession von einem anderen Benutzer eingeladen wird.
+	 * @param email - E-Mail-Adresse des Benutzers
+	 */
 	public void erstelleEinladungDialog(String email) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Einladung");
@@ -153,6 +166,11 @@ public class CodingSessionDialog {
 		}
 	}
 	
+	/**
+	 * Erstellt einen Dialog der bei jeglichen Fehlermeldungen aufgerufen werden kann
+	 * @param ueberschrift - Titel des Fehlermeldungsdialogs
+	 * @param fehler - Beschreibund des Fehlers im Dialog
+	 */
 	public void erstelleFehlermeldungDialog(String ueberschrift, String fehler){
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle(ueberschrift);

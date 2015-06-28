@@ -43,10 +43,6 @@ public class ControllerMediator {
 		communityfeed.addBeitrag(beitrag);
 	}
 
-	public void neuerCommunityFee() {
-		hauptfenster.neuerCf();
-	}
-
 	public void beenden() {
 		if (codingsession != null)
 			codingsession.beenden();
@@ -71,6 +67,10 @@ public class ControllerMediator {
 		hauptfenster.neueCodingSession(true, null);
 	}
 
+	public void neuerCommunityFeed() {
+		hauptfenster.neuerCf();
+	}
+	
 	public void neueProfilbearbeitung() {
 		hauptfenster.neueProfilBearbeitung();
 	}

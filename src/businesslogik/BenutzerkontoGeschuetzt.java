@@ -14,7 +14,7 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	private static final String PASSWORT_REGEX = "^[a-zA-Z0-9!�$%&/()=?@#^+-_*~'\"\\s]{8,25}$";
 	private static final String VORNAME_REGEX = "^[a-zA-Z]{3,20}$";
 	private static final String NACHNAME_REGEX = "^[a-zA-Z]{3,20}$";
-	private static final String NICKNAME_REGEX = "^[a-zA-Z][\\w_-]{3,25}$";
+	private static final String NICKNAME_REGEX = "^[a-zA-Z0-9]{3,25}$";
 			
 	private BenutzerkontoOriginal echtesKonto;
 	

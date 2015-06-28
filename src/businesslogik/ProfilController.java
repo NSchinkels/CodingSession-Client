@@ -63,6 +63,13 @@ public class ProfilController implements Initializable {
 		freundesliste = new LinkedList<String>();
 	}
 
+	/**
+	 * Liest die Profildaten des Benutzers aus der Datenbank und zeigt sie in seinem jeweiligen
+	 * Profil an. Falls noch keine Profildaten angegeben wurden, werden diese durch einen Leerstring
+	 * ersetzt. Des Weiteren wird die Freundesliste des Benutzers geladen. Bei einem Doppelklick
+	 * auf die E-Mail-Adresse des Benutzers in der Freundesliste wird dieser zu einer bestehenden
+	 * CodingSession eingeladen.
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		benutzerkonto = ControllerMediator.getInstance().getBenutzerkonto();
@@ -133,6 +140,11 @@ public class ProfilController implements Initializable {
 		ControllerMediator.getInstance().neueProfilbearbeitung();
 	}
 
+	/**
+	 * Durch die Eingabe in dem entsprechenden Suchfeld und anschliessender Bestaetigung 
+	 * mit der Taste Enter wird ein Freund zur Freundesliste hinzugefuegt.
+	 * Freunde werden ueber ihre E-Mail-Adresse gesucht (Primary Key in der Datenbank)
+	 */
 	@FXML
 	public void txtSucheFreundeGeklickt(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {

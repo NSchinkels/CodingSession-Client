@@ -14,8 +14,8 @@ import javax.jms.TopicSubscriber;
 public class KommunikationIncoming {
 	/**
 	 * Diese Klasse ist fuer die einkommende Kommunikation mit dem JMS. Sie
-	 * verwaltet die Einladungen, den Code und den Chat Diese drei Komponeten
-	 * haben jewals einen TopicSubscriber und MessageListner
+	 * verwaltet die Einladungen, den Code und den Chat. Diese drei Komponeten
+	 * haben jeweils einen TopicSubscriber und MessageListener.
 	 */
 
 	public String neuerCode = "";
@@ -47,7 +47,7 @@ public class KommunikationIncoming {
 	 *            Email des Benutzers
 	 */
 	public void bekommeCode(String topic, String benutzer) {
-		// wenn eine Cs schon gestartet wurde wird diese zuerst geloescht
+		// wenn eine CodingSession schon gestartet wurde wird diese zuerst geloescht
 		if (topsubCode != null) {
 			try {
 				topsubCode.close();
@@ -91,8 +91,7 @@ public class KommunikationIncoming {
 					try {
 						if (message.getStringProperty("id").equals(ControllerMediator.getInstance().getBenutzerkonto().getEmail())) {
 							csEinladung = ((CodingSessionModell) ((ObjectMessage) message).getObject());
-							// Dialoge muessenueber den JavaFX Thread gestartet
-							// werden
+							// Dialoge muessen ueber den JavaFX Thread gestartet werden
 							Platform.runLater(new Runnable() {
 								public void run() {
 									new CodingSessionDialog().erstelleEinladungDialog(csEinladung.getBenutzerMail());

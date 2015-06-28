@@ -29,9 +29,11 @@ public class CommunityFeedController implements Initializable, Serializable {
 	@Transient
 	private static final long serialVersionUID = 1L;
 	@OneToMany(targetEntity = Beitrag.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	// Inhalt des Cfs
+	
+	// Inhalt des CommunityFeeds
 	private List<Beitrag> beitraege;
-	// Da es nur einen CFController geben soll PK ID auf 1 gesetzt
+	
+	// Da es nur einen CommunityFeedController geben soll PK ID auf 1 gesetzt
 	@Id
 	private int ID = 1;
 
@@ -44,7 +46,7 @@ public class CommunityFeedController implements Initializable, Serializable {
 	}
 
 	/**
-	 * Methode für FXMl die beim start ausgeführt wird
+	 * Methode fuerr FXML, die beim start ausgeführt wird
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -81,7 +83,7 @@ public class CommunityFeedController implements Initializable, Serializable {
 	}
 
 	/**
-	 * Der Benutzer kann eine neue Cs starten
+	 * Der Benutzer kann eine neue CodingSession starten
 	 * 
 	 * @param event
 	 */
@@ -91,17 +93,17 @@ public class CommunityFeedController implements Initializable, Serializable {
 	}
 
 	/**
-	 * Der Cf wird aktualisert
+	 * Der CommunityFeed wird aktualisert
 	 * 
 	 * @param event
 	 */
 	@FXML
 	public void communityFeedAktualisierenGeklickt(ActionEvent event) {
-		ControllerMediator.getInstance().neuerCommunityFee();
+		ControllerMediator.getInstance().neuerCommunityFeed();
 	}
 
 	/**
-	 * Ein neuer Beitrag wird zum CF hinzugefügt
+	 * Ein neuer Beitrag wird zum CommunityFeed hinzugefuegt
 	 * 
 	 * @param beitrag
 	 *            Der neue Beitrag

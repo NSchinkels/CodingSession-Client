@@ -281,7 +281,6 @@ public class CodingSessionController implements Initializable {
 	 * darf nich hoeher als 10 werden weil dann das JMS nicht mehr responsiv
 	 * genug ist
 	 * 
-	 * @return
 	 */
 	public boolean addTeilnehmer() {
 		if (codingSessionModell.getAnzahlTeilnehmer() < 10) {
@@ -358,26 +357,26 @@ public class CodingSessionController implements Initializable {
 		}
 	}
 
-	// Funktion zum Einr�cken des Codes
+	// Funktion zum Einruecken des Codes
 	public static String einruecken(String eingabe) {
 
 		String tabulator = "";
 
-		// for-Schleife durchl�uft gesamten eingabe-String
+		// for-Schleife durchlaeuft gesamten eingabe-String
 		for (int i = 0; i < eingabe.length(); i++) {
 
-			// Tabulator wird hinzugef�gt bei offener Klammer
+			// Tabulator wird hinzugefuegt bei offener Klammer
 			if (eingabe.charAt(i) == '{') {
 				tabulator = tabulator + "\t";
 			}
 
 			// Bei Zeilenumbruch wird der Tabulator-String eingef�gt, sozusagen
-			// String wird "einger�ckt"
+			// String wird "eingerueckt"
 			if (eingabe.charAt(i) == '\n') {
 
-				// �berpr�fung, ob eine geschlossene Klammer in voriger Zeile
+				// Ueberpruefung, ob eine geschlossene Klammer in voriger Zeile
 				// oder neuer Zeile
-				// am Ende vorhanden war, um diese richtig "auszur�cken"
+				// am Ende vorhanden war, um diese richtig "auszuruecken"
 				if (eingabe.charAt(i + 1) == '}' || eingabe.charAt(i - 1) == '}') {
 					if (!tabulator.equals("")) {
 						tabulator = tabulator.substring(0, tabulator.length() - 1);

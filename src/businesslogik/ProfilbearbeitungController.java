@@ -77,6 +77,10 @@ public class ProfilbearbeitungController implements Initializable{
 	@FXML
 	private PasswordField pwdPasswortBestaetigung;
 	
+	/**
+	 * Die Profilbearbeitung zeigt je nach Art des Benutzerskontos 
+	 * ein Vor- und Nachname Textfeld oder ein Nickname Textfeld an.
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		hboxVorname.managedProperty().bind(hboxVorname.visibleProperty());
@@ -100,8 +104,12 @@ public class ProfilbearbeitungController implements Initializable{
 	public void abmeldenGeklickt(ActionEvent event){
 		new CodingSessionDialog().erstelleAbmeldeDialog();
 	}
-	
-	//Wenn Zeit uebrig bleibt, mach ich das noch schoener.
+
+	/**
+	 * Speichert alle Daten, die in den ausgefuellten Textfeldern stehen, in dem jeweiligen
+	 * Profil des Benutzers. Bei einem Fehlschlag werden entsprechende Fehlermeldungen
+	 * angezeigt.
+	 */
 	@FXML
 	public void aenderungenSpeichernGeklickt(ActionEvent event){
 		try {
@@ -218,11 +226,18 @@ public class ProfilbearbeitungController implements Initializable{
 		}	
 	}
 	
+	/**
+	 * Fuehrt den Benutzer zurueck zu seinem Profil.
+	 */
 	@FXML
 	public void zurueckZumProfilGeklickt(ActionEvent event) {
 		ControllerMediator.getInstance().neuesProfil();
 	}
 	
+	/**
+	 * Prueft ob der uebergebene String leer ist.
+	 * @param text - String, der ueberprueft werden soll.
+	 */
 	private boolean istLeer(String text){
 		if(text.equals(null) || text.trim().isEmpty()) {
 			return true;

@@ -17,10 +17,10 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 
 public class HauptfensterController implements Initializable {
 	/**
-	 * Das Hauotfenster der Anwendung besitzt die Controller der Untefenster Es
-	 * erstellt Oberfläche der Fenster und verbindet die Controller mit dieser
-	 * Desweitern werden hier die Kommunikations Objekte erstellt und das
-	 * Benutzerkonto gespeichert
+	 * Das Hauptfenster der Anwendung besitzt die Controller der Unterfenster.
+	 * Es erstellt Oberflaeche der Fenster und verbindet die Controller mit dieser.
+	 * Des Weiteren werden hier die Kommunikations-Objekte erstellt und das
+	 * Benutzerkonto gespeichert.
 	 */
 	ProfilController profilController;
 	CommunityFeedController communityFeedController;
@@ -105,6 +105,9 @@ public class HauptfensterController implements Initializable {
 		}
 	}
 
+	/**
+	 * Die Profilbearbeitung wird in einem Tab geladen.
+	 */
 	public void neueProfilBearbeitung() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profilbearbeitung.fxml"));
@@ -118,6 +121,9 @@ public class HauptfensterController implements Initializable {
 		}
 	}
 
+	/**
+	 * Das Profil wird in einem Tab geladen.
+	 */
 	public void neuesProfil() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/profil.fxml"));
@@ -132,8 +138,9 @@ public class HauptfensterController implements Initializable {
 	}
 
 	/**
-	 * Der Cf wird von der Datenbank gelesen Diese Methode wird auch aufgerufen
-	 * falls der CF neu geladen werden soll
+	 * Der CommunityFeed wird von der Datenbank gelesen.
+	 * Diese Methode wird auch aufgerufen, falls der 
+	 * CommunityFeed neu geladen werden soll.
 	 */
 
 	public void neuerCf() {
