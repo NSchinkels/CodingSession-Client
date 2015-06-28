@@ -22,11 +22,15 @@ public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Ser
 	@Id
 	private String emailAdresse;
 	private String passwort;
-	//Achtung: Hier wurde testweise der statische Kontext entfernt
+	
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ElementCollection
 	private List<String> freund ;
+	
+	//Default Konstruktor f�r JPA notwendig
+	public BenutzerkontoOriginal(){}
+	
 	
 	/**Konstruktor musste angepasst werden um erstmal das Problem mit der ID 
 	 * zu umgehen; id wird jetzt zeitweise mit übergeben**/
@@ -35,25 +39,25 @@ public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Ser
 		this.passwort = pw;
 		this.id = id;
 	}
-	//default Konstruktor hinzugefügt,da für JPA notwendig
-	public BenutzerkontoOriginal(){}
 	
-	// Einige getter/setter rausgelassen, da jeglicher Sinn fehlt
-	
+	@Override
 	public String getEmail() {
 		return emailAdresse;
 	}
 	
+	@Override
 	public int getID() {
 		return id;
 	}
 	
+	@Override
 	public String getPasswort(){
 		return this.passwort;
 	}
 	
 	public abstract String getName();
 	
+	@Override
 	public void setPasswort(String passwort){
 		this.passwort = passwort;
 	}
@@ -64,18 +68,21 @@ public abstract class BenutzerkontoOriginal extends Benutzerkonto implements Ser
 	
 	public abstract void setNickname(String nickname);
 	
+	@Override
 	public void addFreund(String freundEmail) {
 		if(!freund.contains(freundEmail)) {
 			freund.add(freundEmail);
 		}
 	}
 	
+	@Override
 	public void delFreund(String freundEmail) {
 		if(freund.contains(freundEmail)) {
 			freund.remove(freundEmail);
 		}
 	}
 	
+	@Override
 	public List<String> getFreunde() {
 		return freund;
 	}

@@ -17,7 +17,7 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	private static final String NICKNAME_REGEX = "^[a-zA-Z][\\w_-]{3,25}$";
 			
 	private BenutzerkontoOriginal echtesKonto;
-	//ID hier noch notwedig? Evntl. entfernen?
+	
 	@SuppressWarnings("unused")
 	private String vorname;
 	@SuppressWarnings("unused")
@@ -35,28 +35,11 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 	 * Erstellt einen neuen Benutzer mit Nicknamen. Prueft, ob E-Mail oder
 	 * Benutzername bereits vergeben sind, und ob die Daten valide sind.
 	 * 
-	 * Eingebene Daten muessen weiterhin noch ueberprueft werden, werde bei
-	 * gelegenheit das Passwort hashen(gez. BreakFree)
-	 * 
-	 * @param email
-	 *            - E-Mail des Benutzers
-	 * @param pw
-	 *            - Passwort des Benutzers
-	 * @param name
-	 *            - Name des Benutzers
-	 * @param benutzerliste
-	 *            - Liste, in der die Benutzer abgespeichert werden
-	 * @param id
-	 *            - ID des Benutzers
-	 * @return Neuen Benutzer
-	 * @throws Exception
-	 *             Falls die Daten nicht valide sind
+	 * @param email - E-Mail-Adresse des Benutzers
+	 * @param pw - Passwort des Benutzers
+	 * @param name - Name des Benutzers
+	 * @param id - ID des Benutzers
 	 */
-	
-	//Nur vorruebergehend
-	public BenutzerkontoGeschuetzt(){
-		
-	}
 	
 	public BenutzerkontoGeschuetzt(String email, String pw, String name, int id){
 		this.email = email;
@@ -76,6 +59,16 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		}
 	}
 	
+	/**
+	 * Erstellt einen neuen Benutzer mit Vor- und Nachnamen. Prueft, ob E-Mail oder
+	 * Benutzername bereits vergeben sind, und ob die Daten valide sind.
+	 * 
+	 * @param email - E-Mail-Adresse des Benutzers
+	 * @param pw - Passwort des Benutzers
+	 * @param vor - Vorname des Benutzers
+	 * @param nach - Nachname des Benutzers
+	 * @param id - ID des Benutzers
+	 */
 	public BenutzerkontoGeschuetzt(String email, String pw, String vor, String nach, int id){
 		this.email = email;
 		this.passwort = pw;
@@ -95,50 +88,70 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		}
 	}
 	
+	@Override
 	public String getEmail(){
 		return echtesKonto.getEmail();
 	}
 	
+	@Override
 	public int getID(){
 		return echtesKonto.getID();
 	}
 	
+	@Override
 	public String getPasswort(){
 		return echtesKonto.getPasswort();
 	}
 	
+	@Override
 	public String getName(){
 		return echtesKonto.getName();
 	}
 	
+	@Override
 	public void setPasswort(String passwort){
 		this.passwort = passwort;
 	}
 	
+	@Override
 	public void setVorname(String vorname){
 		
 	}
 	
+	@Override
 	public void setNachname(String nachname){
 		
 	}
 	
+	@Override
 	public void setNickname(String nickname){
 		
 	}
 	
+	@Override
 	public void addFreund(String freundEmail){
 		echtesKonto.addFreund(freundEmail);
 	}
 	
+	@Override
 	public void delFreund(String freundEmail){
 		echtesKonto.delFreund(freundEmail);
 	}
 	
+	@Override
 	public List<String> getFreunde(){
 		return echtesKonto.getFreunde();
 	}
 	
+	/**
+	 * Ueberprueft ob die als Parameter uebergebenen Daten des Benutzers mit den Regulaeren
+	 * Ausdruecken uebereinstimmen. Beim Fehlschlag werden entsprechende Fehlerdialoge aufgerufen.
+	 * 
+	 * @param vorname - Vorname des Benutzers
+	 * @param nachname - Nachname des Benutzers
+	 * @param email - E-Mail-Adresse des Benutzers
+	 * @param passwort - Passwort des Benutzers
+	 */
 	public static boolean ueberpruefeReal(String vorname, String nachname, String email, String passwort) {
 		if(!vorname.matches(VORNAME_REGEX)) {
 			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiger Vorname", 
@@ -161,6 +174,14 @@ public class BenutzerkontoGeschuetzt extends Benutzerkonto {
 		}
 	}
 
+	/**
+	 * Ueberprueft ob die als Parameter uebergebenen Daten des Benutzers mit den Regulaeren
+	 * Ausdruecken uebereinstimmen. Beim Fehlschlag werden entsprechende Fehlerdialoge aufgerufen.
+	 * 
+	 * @param nickname - Nickname des Benutzers
+	 * @param email - E-Mail-Adresse des Benutzers
+	 * @param passwort - Passwort des Benutzers
+	 */
 	public static boolean ueberpruefeNick(String nickname, String email, String passwort) {
 		if(!nickname.matches(NICKNAME_REGEX)) {
 			new CodingSessionDialog().erstelleFehlermeldungDialog("Ungültiger Nickname", 

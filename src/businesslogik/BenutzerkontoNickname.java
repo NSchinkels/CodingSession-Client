@@ -17,13 +17,17 @@ public class BenutzerkontoNickname extends BenutzerkontoOriginal {
 	private int id;
 	private String nickname;
 
+	//Default Konstruktor f�r JPA notwendig
+	public BenutzerkontoNickname(){
+			
+	}
+		
 	public BenutzerkontoNickname(String email, String pw, String name,int id) {
 		super(email, pw,id);
 		this.nickname = name;
 	}
-	//default Konstruktor hinzugefügt,da für JPA notwendig
-	public BenutzerkontoNickname(){}
 	
+	@Override
 	public String getName() {
 		return nickname;
 	}
